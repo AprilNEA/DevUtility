@@ -5,29 +5,26 @@
 <p align="center">
     <img src=./src/icons/logo.svg width=138/>
 </p>
-<h1 align="center">DevUtils</h1>
-<p align="center"><strong>All-in-one Toolbox for Developers</strong></p>
-<div align="center">
-<img src="https://hits.siyue.best/v1/hits?url=https://github.com/AprilNEA/DevUtils&bgRight=000&bgLeft=000&border=square" />
+<h1 align="center">Developer Utility</h1>
+<p align="center"><strong>All-in-one Utility Box for Developers</strong></p>
+
+<p align="center">
+  <a href="https://github.com/AprilNEA/DevUtility/stargazers"><img src="https://img.shields.io/github/stars/AprilNEA/DevUtility" alt="Stars Badge"/></a>
+  <a href="https://github.com/AprilNEA/DevUtility/network/members"><img src="https://img.shields.io/github/forks/AprilNEA/DevUtility" alt="Forks Badge"/></a>
+  <a href="https://github.com/AprilNEA/DevUtility/pulls"><img src="https://img.shields.io/github/issues-pr/AprilNEA/DevUtility" alt="Pull Requests Badge"/></a>
+  <a href="https://github.com/AprilNEA/DevUtility/issues"><img src="https://img.shields.io/github/issues-closed/AprilNEA/DevUtility" alt="Issues Badge"/></a>
+  <a href="https://github.com/AprilNEA/DevUtility/blob/main/LICENSE"><img src="https://img.shields.io/github/license/AprilNEA/DevUtility" alt="License Badge"/></a>
+  <br/> 
+  <img src="https://hits.aprilnea.com/hits?url=https://github.com/AprilNEA/DevUtility" />
+</p>
 
 </div>
 
-<div align="center">
-
-[Demo](https://utils.sku.moe) / [Technical Specifications](https://manual.sku.moe/project/devutils) / [GitHub Sponsor](https://github.com/sponsors/AprilNEA) / [爱发电](https://afdian.net/a/aprilnea)
-
-</div>
-
-## Showcase
-
-![showcase-v0.1.1-beta.png](https://s2.loli.net/2023/12/22/R5gLHlsfchtMETC.png)
-
-![showcase-gpt-tokenizer-v0.0.1-beta+2.png](https://s2.loli.net/2023/12/18/9jxAtUDQFYagZRn.png)
 
 ## Tools
 
 | Tools Name                  | JavaScript Implementation          | Rust Implementation             |
-|-----------------------------|------------------------------------|---------------------------------|
+| --------------------------- | ---------------------------------- | ------------------------------- |
 | Base64 String Encode/Decode | :white_check_mark:                 |                                 |
 | Base64 Image Encode/Decode  | :white_check_mark:                 |                                 |
 | GPT Tokenizer               | :white_check_mark: `gpt-tokenizer` | :o: `tiktoken-rs`               |
@@ -35,4 +32,8 @@
 | JSON ↔ YAML ↔ TOML          | :white_check_mark:                 |                                 |
 | JWT Debugger                | :white_check_mark:                 |                                 |
 | Unix Time Converter         | :white_check_mark:                 |                                 |
+
+## Project Status
+
+![Project Status](https://repobeats.axiom.co/api/embed/0529cb5e27377848133ad8196106758f6a908472.svg "Repobeats analytics image")
 

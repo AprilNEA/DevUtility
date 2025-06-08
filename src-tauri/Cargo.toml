@@ -1,28 +1,40 @@
 [package]
-name = "devutils"
+name = "utility-dev"
 version = "0.1.0"
-description = "All-in-one Toolbox for Developers"
-authors = ["AprilNEA"]
-license = ""
-repository = ""
-default-run = "devutils"
+description = "A Tauri App"
+authors = ["you"]
 edition = "2021"
-rust-version = "1.60"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[lib]
+# The `_lib` suffix may seem redundant but it is necessary
+# to make the lib name unique and wouldn't conflict with the bin name.
+# This seems to be only an issue on Windows, see https://github.com/rust-lang/cargo/issues/8519
+name = "utility_dev_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
 [build-dependencies]
-tauri-build = { version = "1.5.0", features = [] }
+tauri-build = { version = "2", features = [] }
 
 [dependencies]
-serde_json = "1.0"
-serde = { version = "1.0", features = ["derive"] }
-tauri = { version = "1.5.3", features = [ "window-set-always-on-top", "clipboard-all"] }
-# JSON Validate/Format
-jsonpath_lib = "0.3.0"
+tauri = { version = "2", features = ["macos-private-api"] }
+tauri-plugin-opener = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+window-vibrancy = "0.6.0"
 
-[features]
-# this feature is used for production builds or when `devPath` points to the filesystem and the built-in dev server is disabled.
-# If you use cargo directly instead of tauri's cli you can use this feature flag to switch between tauri's `dev` and `build` modes.
-# DO NOT REMOVE!!
-custom-protocol = [ "tauri/custom-protocol" ]
+# Generators
+uuid-simd = "0.8.0"
+uuid = { version = "1.17", features = [
+  "v1",
+  "v3",
+  "v4",
+  "v5",
+  "v6",
+  "v7",
+  "v8",
+  "serde",
+] }
+ulid = "1.2.1"
+nanoid = "0.4.0"
