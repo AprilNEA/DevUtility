@@ -46,6 +46,9 @@ function App() {
             <Route path="rsa-key-generator" component={RSABasicToolsPage} />
           </Route>
         </Route>
+        <Route path="/codec" nest>
+          <Route path="base64" component={Base64Tool} />
+        </Route>
       </AppSidebar>
     </Router>
   );
