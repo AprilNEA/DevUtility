@@ -394,43 +394,65 @@ export default function AppSidebar({
 }: React.ComponentProps<typeof Sidebar>) {
   const [title, setTitle] = useState("Developer Utility");
   const [pathname] = useLocation();
+  const [search, setSearch] = useState("");
+
+  // Filter navMain based on search
+  const filteredNav = search.trim()
+    ? navMain
+        .map((category) => {
+          const filteredItems = category.items.filter((util) => {
+            const q = search.toLowerCase();
+            return (
+              util.title.toLowerCase().includes(q) ||
+              category.title.toLowerCase().includes(q)
+            );
+          });
+          return filteredItems.length > 0
+            ? { ...category, items: filteredItems }
+            : undefined;
+        })
+        .filter((cat): cat is typeof navMain[number] => Boolean(cat))
+    : navMain;
 
   return (
     <SidebarProvider className="bg-transparent">
       <Sidebar {...props}>
         <SidebarHeader data-tauri-drag-region className="pt-12">
-          <SearchForm />
+          <SearchForm value={search} onChange={(e) => setSearch(e.target.value)} />
         </SidebarHeader>
         <SidebarContent className="-pr-1 mr-1">
-          {/* We create a SidebarGroup for each parent. */}
-          {navMain.map((category) => (
-            <SidebarGroup key={category.title}>
-              <SidebarGroupLabel className="text-sidebar-foreground">
-                {category.title}
-              </SidebarGroupLabel>
-              <SidebarGroupContent>
-                <SidebarMenu>
-                  {category.items.map((util) => {
-                    const href = `/${category.url}/${util.url}`;
-                    return (
-                      <SidebarMenuItem key={util.title}>
-                        <SidebarMenuButton asChild isActive={pathname === href}>
-                          <Link
-                            href={href}
-                            className="flex items-center gap-2 truncate text-sidebar-foreground"
-                            onClick={() => setTitle(util.title)}
-                          >
-                            <util.icon className="h-4 w-4" />
-                            {util.title}
-                          </Link>
-                        </SidebarMenuButton>
-                      </SidebarMenuItem>
-                    );
-                  })}
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </SidebarGroup>
-          ))}
+          {filteredNav.length === 0 ? (
+            <div className="p-4 text-muted-foreground text-sm">No results found.</div>
+          ) : (
+            filteredNav.map((category) => (
+              <SidebarGroup key={category.title}>
+                <SidebarGroupLabel className="text-sidebar-foreground">
+                  {category.title}
+                </SidebarGroupLabel>
+                <SidebarGroupContent>
+                  <SidebarMenu>
+                    {category.items.map((util) => {
+                      const href = `/${category.url}/${util.url}`;
+                      return (
+                        <SidebarMenuItem key={util.title}>
+                          <SidebarMenuButton asChild isActive={pathname === href}>
+                            <Link
+                              href={href}
+                              className="flex items-center gap-2 truncate text-sidebar-foreground"
+                              onClick={() => setTitle(util.title)}
+                            >
+                              <util.icon className="h-4 w-4" />
+                              {util.title}
+                            </Link>
+                          </SidebarMenuButton>
+                        </SidebarMenuItem>
+                      );
+                    })}
+                  </SidebarMenu>
+                </SidebarGroupContent>
+              </SidebarGroup>
+            ))
+          )}
         </SidebarContent>
         <SidebarRail />
       </Sidebar>

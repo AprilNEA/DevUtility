@@ -22,9 +22,19 @@ import {
   SidebarInput,
 } from "@/components/ui/sidebar"
 
-export function SearchForm({ ...props }: React.ComponentProps<"form">) {
+export interface SearchFormProps {
+  value: string
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  className?: string
+}
+
+export function SearchForm({ value, onChange, className }: SearchFormProps) {
+  // Prevent form submission from refreshing the page
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+  }
   return (
-    <form {...props}>
+    <form className={className} onSubmit={handleSubmit} autoComplete="off">
       <SidebarGroup className="py-0">
         <SidebarGroupContent className="relative">
           <Label htmlFor="search" className="sr-only">
@@ -32,8 +42,10 @@ export function SearchForm({ ...props }: React.ComponentProps<"form">) {
           </Label>
           <SidebarInput
             id="search"
-            placeholder="Search the docs..."
+            placeholder="Search tools and utilities..."
             className="pl-8"
+            value={value}
+            onChange={onChange}
           />
           <Search className="pointer-events-none absolute top-1/2 left-2 size-4 -translate-y-1/2 opacity-50 select-none" />
         </SidebarGroupContent>
