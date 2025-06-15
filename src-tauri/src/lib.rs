@@ -17,6 +17,7 @@
 )]
 
 mod utility;
+use dev_utility_core;
 use tauri::Manager;
 use window_vibrancy::*;
 
@@ -52,6 +53,7 @@ pub fn run() {
         .plugin(tauri_plugin_opener::init())
         .invoke_handler(tauri::generate_handler![
             greet,
+            dev_utility_core::demo_function,
             utility::generator::generate_uuid_v4,
             utility::generator::generate_uuid_v7,
             utility::generator::generate_ulid,

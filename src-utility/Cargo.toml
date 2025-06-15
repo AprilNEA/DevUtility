@@ -1,0 +1,23 @@
+[package]
+name = "dev-utility-core"
+version = "0.1.0"
+authors = ["AprilNEA <github@sku.moe>"]
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[features]
+default = []
+
+web = ["wasm-bindgen"]
+desktop = ["tauri"]
+
+[dependencies]
+universal-function-macro = { path = "../crates/universal-function-macro" }
+
+wasm-bindgen = { version = "0.2.84", optional = true }
+tauri = { workspace = true, optional = true }
+
+[dev-dependencies]
+wasm-bindgen-test = { version = "0.3.34" }
