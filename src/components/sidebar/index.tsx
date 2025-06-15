@@ -26,6 +26,9 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
   SidebarProvider,
   SidebarRail,
   SidebarTrigger,
@@ -61,37 +64,54 @@ import {
   ImageIcon,
   PinIcon,
   PinOffIcon,
+  ChevronRightIcon,
 } from "lucide-react";
 import { SearchForm } from "./search-form";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { useSidebar } from "../ui/sidebar";
 import { cn } from "@/lib/utils";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "../ui/collapsible";
 
-// This is sample data.
-const navMain = [
+type NavItem = {
+  title: string;
+  slug: string;
+  icon: React.ElementType;
+};
+
+type Nav = {
+  title: string;
+  slug: string;
+  items: (NavItem | (NavItem & { subItems: NavItem[] }))[];
+};
+
+const navMain: Nav[] = [
   {
     title: "Format / Validate / Minify",
-    url: "formatter",
+    slug: "formatter",
     items: [
       {
         title: "JSON Format/Validate",
-        url: "json",
+        slug: "json",
         icon: FileJsonIcon,
       },
       {
         title: "HTML Beautify/Minify",
-        url: "html",
+        slug: "html",
         icon: FileCodeIcon,
       },
       {
         title: "CSS Beautify/Minify",
-        url: "css",
+        slug: "css",
         icon: FileIcon,
       },
       {
         title: "JS Beautify/Minify",
-        url: "js",
+        slug: "js",
         icon: FileCode2Icon,
       },
       // {
@@ -128,11 +148,11 @@ const navMain = [
   },
   {
     title: "Data Converter",
-    url: "#",
+    slug: "#",
     items: [
       {
         title: "URL Parser",
-        url: "url-parser",
+        slug: "url-parser",
         icon: LinkIcon,
       },
       // {
@@ -269,11 +289,11 @@ const navMain = [
   // },
   {
     title: "Generators",
-    url: "generator",
+    slug: "generator",
     items: [
       {
         title: "UUID/ULID Generate/Decode",
-        url: "id",
+        slug: "id",
         icon: HashIcon,
       },
       // {
@@ -300,16 +320,23 @@ const navMain = [
   },
   {
     title: "Cryptography & Security",
-    url: "cryptography",
+    slug: "cryptography",
     items: [
       {
         title: "RSA Debugger",
-        url: "rsa-debugger",
+        slug: "rsa-tools",
         icon: KeyIcon,
+        subItems: [
+          {
+            title: "RSA Key Generator",
+            slug: "rsa-key-generator",
+            icon: KeyIcon,
+          },
+        ],
       },
       {
         title: "AES Debugger",
-        url: "aes-debugger",
+        slug: "aes-debugger",
         icon: KeyIcon,
       },
     ],
@@ -410,18 +437,54 @@ export default function AppSidebar({
               </SidebarGroupLabel>
               <SidebarGroupContent>
                 <SidebarMenu>
-                  {category.items.map((util) => {
-                    const href = `/${category.url}/${util.url}`;
+                  {category.items.map((item) => {
+                    if ("subItems" in item) {
+                      return (
+                        <Collapsible
+                          key={item.title}
+                          asChild
+                          // defaultOpen={item.isActive}
+                          className="group/collapsible"
+                        >
+                          <SidebarMenuItem>
+                            <CollapsibleTrigger asChild>
+                              <SidebarMenuButton tooltip={item.title}>
+                                {item.icon && <item.icon />}
+                                <span>{item.title}</span>
+                                <ChevronRightIcon className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                              </SidebarMenuButton>
+                            </CollapsibleTrigger>
+                            <CollapsibleContent>
+                              <SidebarMenuSub>
+                                {item.subItems.map((subItem) => (
+                                  <SidebarMenuSubItem key={subItem.title}>
+                                    <SidebarMenuSubButton asChild>
+                                      <Link
+                                        href={`/${category.slug}/${item.slug}/${subItem.slug}`}
+                                      >
+                                        <subItem.icon className="h-4 w-4" />
+                                        <span>{subItem.title}</span>
+                                      </Link>
+                                    </SidebarMenuSubButton>
+                                  </SidebarMenuSubItem>
+                                ))}
+                              </SidebarMenuSub>
+                            </CollapsibleContent>
+                          </SidebarMenuItem>
+                        </Collapsible>
+                      );
+                    }
+                    const href = `/${category.slug}/${item.slug}`;
                     return (
-                      <SidebarMenuItem key={util.title}>
+                      <SidebarMenuItem key={item.title}>
                         <SidebarMenuButton asChild isActive={pathname === href}>
                           <Link
                             href={href}
                             className="flex items-center gap-2 truncate text-sidebar-foreground"
-                            onClick={() => setTitle(util.title)}
+                            onClick={() => setTitle(item.title)}
                           >
-                            <util.icon className="h-4 w-4" />
-                            {util.title}
+                            <item.icon className="h-4 w-4" />
+                            {item.title}
                           </Link>
                         </SidebarMenuButton>
                       </SidebarMenuItem>
