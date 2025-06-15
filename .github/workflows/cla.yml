@@ -26,7 +26,7 @@ jobs:
           path-to-document: 'https://github.com/AprilNEA/DevUtility/blob/master/CLA-INDIVIDUAL.md'
           branch: 'cla-signatures'
           allowlist: 'dependabot[bot],renovate[bot],github-actions[bot],AprilNEA'
-          commit-message: 'CLA Signature: @$CONTRIBUTOR'
+          signed-commit-message: 'CLA Signature: $contributorName has signed the CLA in $owner/$repo#$pullRequestNo'
           custom-notsigned-prcomment: |
             🔒 **CLA Signature Required for DevUtility**
             
@@ -35,10 +35,10 @@ jobs:
             ## Choose Your CLA Type:
             
             ### 👤 Individual Contributors
-            If you're contributing as an individual: **[Individual CLA](https://github.com/AprilNEA/DevUtility/blob/main/CLA-INDIVIDUAL.md)**
+            If you're contributing as an individual: **[Individual CLA](https://github.com/AprilNEA/DevUtility/blob/master/CLA-INDIVIDUAL.md)**
             
             ### 🏢 Corporate Contributors  
-            If you're contributing on behalf of your company: **[Corporate CLA](https://github.com/AprilNEA/DevUtility/blob/main/CLA-CORPORATE.md)**
+            If you're contributing on behalf of your company: **[Corporate CLA](https://github.com/AprilNEA/DevUtility/blob/master/CLA-CORPORATE.md)**
             
             ## ✅ For Individual Contributors - Sign Now:
             Simply comment below with:
