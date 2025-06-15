@@ -2,7 +2,7 @@
 
 Thank you for your interest in contributing!
 
-## Contributor License Agreement (CLA)
+## 🔒 Contributor License Agreement (CLA)
 
 Before we can accept your contributions, you need to sign our CLA:
 
@@ -12,7 +12,17 @@ Please review and sign our [Individual CLA](./CLA-INDIVIDUAL.md).
 ### For Corporate Contributors  
 If you're contributing on behalf of your company, please use our [Corporate CLA](./CLA-CORPORATE.md).
 
-## How to Sign
+### Why We Require a CLA
+DevUtility uses a **dual-licensing model**:
+- **GPL-3.0**: Free for open source projects
+- **Commercial License**: Available for businesses and proprietary projects
+
+The CLA allows AprilNEA LLC to:
+- Maintain both licensing options legally
+- Provide commercial licenses to businesses
+- Ensure project sustainability and ongoing development
+
+## ✅ How to Sign the CLA
 
 ### Automated Process (Recommended)
 1. Create a pull request
