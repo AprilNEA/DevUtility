@@ -22,6 +22,7 @@ export enum InvokeFunction {
   FormatJson = "format_json",
   EncodeBase64 = "encode_base64",
   DecodeBase64 = "decode_base64",
+  GenerateRsaKey = "generate_rsa_key",
 }
 export enum HashAlgorithm {
   MD2 = "md2",
@@ -55,3 +56,7 @@ export type IndentStyle =
   | { [IndentStyleEnum.Spaces]: number }
   | IndentStyleEnum.Tabs
   | IndentStyleEnum.Minified;
+export type RsaKeyPair = {
+  privateKey: string;
+  publicKey: string;
+};

@@ -11,8 +11,6 @@
 //
 // See LICENSE file for details or contact admin@aprilnea.com
 
-#[cfg(feature = "web")]
-use wasm_bindgen::prelude::*;
-
 pub mod core;
 pub use core::*;
+pub mod error;

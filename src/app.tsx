@@ -41,13 +41,13 @@ function App() {
           <Route path="id" component={IdGeneratorPage} />
           <Route path="hash" component={HashGeneratorPage} />
         </Route>
+        <Route path="/codec" nest>
+          <Route path="base64" component={Base64Tool} />
+        </Route>
         <Route path="/cryptography" nest>
           <Route path="rsa-tools" nest>
             <Route path="rsa-key-generator" component={RSABasicToolsPage} />
           </Route>
-        </Route>
-        <Route path="/codec" nest>
-          <Route path="base64" component={Base64Tool} />
         </Route>
       </AppSidebar>
     </Router>

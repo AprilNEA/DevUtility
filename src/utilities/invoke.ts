@@ -14,7 +14,11 @@
  */
 
 import { invoke as invokeCore, InvokeOptions } from "@tauri-apps/api/core";
-import { InvokeFunction, IndentStyle, HashResult } from "./types";
+import { InvokeFunction, IndentStyle, HashResult, RsaKeyPair } from "./types";
+import useSWRMutation, {
+  SWRMutationConfiguration,
+  SWRMutationResponse,
+} from "swr/mutation";
 
 export const IS_TAURI = "__TAURI__" in window;
 
@@ -27,6 +31,7 @@ interface UtilitiesArgs {
   [InvokeFunction.GenerateHashes]: { input: string };
   [InvokeFunction.EncodeBase64]: { input: string };
   [InvokeFunction.DecodeBase64]: { input: string };
+  [InvokeFunction.GenerateRsaKey]: { bits: number };
 }
 
 interface UtilitiesReturns {
@@ -38,6 +43,7 @@ interface UtilitiesReturns {
   [InvokeFunction.GenerateHashes]: HashResult;
   [InvokeFunction.EncodeBase64]: string;
   [InvokeFunction.DecodeBase64]: string;
+  [InvokeFunction.GenerateRsaKey]: RsaKeyPair;
 }
 
 export function utilityInvoke<T extends InvokeFunction>(
@@ -46,4 +52,21 @@ export function utilityInvoke<T extends InvokeFunction>(
   options?: InvokeOptions
 ): Promise<UtilitiesReturns[T]> {
   return invokeCore(cmd, args, options);
+}
+
+export function useUtilityInvoke<T extends InvokeFunction>(
+  cmd: T,
+  options?: SWRMutationConfiguration<
+    UtilitiesReturns[T],
+    Error,
+    T,
+    UtilitiesArgs[T],
+    UtilitiesReturns[T]
+  >
+): SWRMutationResponse<UtilitiesReturns[T], Error, T, UtilitiesArgs[T]> {
+  return useSWRMutation<UtilitiesReturns[T], Error, T, UtilitiesArgs[T]>(
+    cmd,
+    (_, { arg }) => utilityInvoke(cmd, arg),
+    options
+  );
 }

@@ -32,18 +32,20 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { KeySquare, Puzzle, Shuffle } from "lucide-react";
+import { useUtilityInvoke } from "@/utilities/invoke";
+import { InvokeFunction } from "@/utilities/types";
 
 // Key Generator Component
 function KeyGenerator() {
+  const { data, trigger } = useUtilityInvoke(InvokeFunction.GenerateRsaKey);
   const [keyBitLength, setKeyBitLength] = useState<string>("2048");
-  const [generatedPublicKey, setGeneratedPublicKey] = useState<string>("");
-  const [generatedPrivateKey, setGeneratedPrivateKey] = useState<string>("");
 
-  const onGenerateKeyPair = () => {
-    setGeneratedPublicKey("");
-    setGeneratedPrivateKey("");
+  const onGenerateKeyPair = async () => {
+    await trigger({
+      bits: parseInt(keyBitLength),
+    });
   };
-  
+
   return (
     <Card>
       <CardHeader>
@@ -64,9 +66,7 @@ function KeyGenerator() {
             </SelectContent>
           </Select>
         </div>
-        <Button
-          onClick={() => alert(`生成 ${keyBitLength}位 密钥对... (占位符)`)}
-        >
+        <Button onClick={onGenerateKeyPair}>
           <KeySquare className="mr-2 h-4 w-4" /> 生成密钥对
         </Button>
         <div>
@@ -76,7 +76,7 @@ function KeyGenerator() {
             placeholder="生成的公钥将显示在此处"
             rows={6}
             readOnly
-            value={generatedPublicKey}
+            value={data?.publicKey}
           />
         </div>
         <div>
@@ -86,7 +86,7 @@ function KeyGenerator() {
             placeholder="生成的私钥将显示在此处"
             rows={10}
             readOnly
-            value={generatedPrivateKey}
+            value={data?.privateKey}
           />
         </div>
       </CardContent>
