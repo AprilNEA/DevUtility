@@ -7,9 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "tauri": "tauri",
-    "wasm": "wasm-pack build --target web --scope dev-utility --out-name core --out-dir ../pkg src-utility --features web ",
-    "license": "addlicense -f ./LICENSE ."
+    "tauri": "tauri"
   },
   "dependencies": {
     "@radix-ui/react-checkbox": "^1.3.2",
