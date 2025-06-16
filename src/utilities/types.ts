@@ -20,6 +20,8 @@ export enum InvokeFunction {
   GenerateUuidV7 = "generate_uuid_v7",
   GenerateHashes = "generate_hashes",
   FormatJson = "format_json",
+  EncodeBase64 = "encode_base64",
+  DecodeBase64 = "decode_base64",
 }
 export enum HashAlgorithm {
   MD2 = "md2",

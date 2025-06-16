@@ -53,7 +53,9 @@ pub fn run() {
         .plugin(tauri_plugin_opener::init())
         .invoke_handler(tauri::generate_handler![
             greet,
-            dev_utility_core::demo_function,
+            dev_utility_core::codec::decode_base64,
+            dev_utility_core::codec::encode_base64,
+            dev_utility_core::cryptography::generate_rsa_key,
             utility::generator::generate_uuid_v4,
             utility::generator::generate_uuid_v7,
             utility::generator::generate_ulid,

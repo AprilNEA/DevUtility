@@ -25,6 +25,8 @@ interface UtilitiesArgs {
   [InvokeFunction.GenerateUuidV7]: { count: number; timestamp?: number };
   [InvokeFunction.FormatJson]: { input: string; style: IndentStyle };
   [InvokeFunction.GenerateHashes]: { input: string };
+  [InvokeFunction.EncodeBase64]: { input: string };
+  [InvokeFunction.DecodeBase64]: { input: string };
 }
 
 interface UtilitiesReturns {
@@ -34,6 +36,8 @@ interface UtilitiesReturns {
   [InvokeFunction.GenerateUuidV7]: string;
   [InvokeFunction.FormatJson]: string;
   [InvokeFunction.GenerateHashes]: HashResult;
+  [InvokeFunction.EncodeBase64]: string;
+  [InvokeFunction.DecodeBase64]: string;
 }
 
 export function utilityInvoke<T extends InvokeFunction>(

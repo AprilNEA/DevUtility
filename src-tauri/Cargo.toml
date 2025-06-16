@@ -1,10 +1,10 @@
 [package]
-name = "devutility-desktop"
+name = "dev-utility-desktop"
 version = "0.1.2"
+authors = ["AprilNEA  <github@sku.moe>"]
 description = "⚡ Universal developer toolkit for software, hardware, and security professionals."
-authors = ["AprilNEA"]
-license = "GPL-3.0-or-later OR Commercial"
-license-file = "LICENSE"
+license-file = "../LICENSE"
+repository = "https://github.com/AprilNEA/DevUtility"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html

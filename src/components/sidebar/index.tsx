@@ -341,41 +341,42 @@ const navMain: Nav[] = [
       },
     ],
   },
-  // {
-  //   title: "Encoder, Decoder",
-  //   items: [
-  //     {
-  //       title: "Base64 String Encode/Decode",
-  //       url: "base64-string",
-  //       icon: FileTextIcon,
-  //     },
-  //     {
-  //       title: "Base64 Image Encode/Decode",
-  //       url: "base64-image",
-  //       icon: ImageIcon,
-  //     },
-  //     {
-  //       title: "URL Encode/Decode",
-  //       url: "url-encoder",
-  //       icon: LinkIcon,
-  //     },
-  //     {
-  //       title: "HTML Entity Encode/Decode",
-  //       url: "html-entity",
-  //       icon: FileCodeIcon,
-  //     },
-  //     {
-  //       title: "Backslash Escape/Unescape",
-  //       url: "backslash-escape",
-  //       icon: TextIcon,
-  //     },
-  //     {
-  //       title: "Certificate Decoder (X.509)",
-  //       url: "certificate-decoder",
-  //       icon: FileTextIcon,
-  //     },
-  //   ],
-  // },
+  {
+    title: "Encoder, Decoder",
+    url: "codec",
+    items: [
+      {
+        title: "Base64 Encode/Decode",
+        url: "base64",
+        icon: FileTextIcon,
+      },
+      //     {
+      //       title: "Base64 Image Encode/Decode",
+      //       url: "base64-image",
+      //       icon: ImageIcon,
+      //     },
+      //     {
+      //       title: "URL Encode/Decode",
+      //       url: "url-encoder",
+      //       icon: LinkIcon,
+      //     },
+      //     {
+      //       title: "HTML Entity Encode/Decode",
+      //       url: "html-entity",
+      //       icon: FileCodeIcon,
+      //     },
+      //     {
+      //       title: "Backslash Escape/Unescape",
+      //       url: "backslash-escape",
+      //       icon: TextIcon,
+      //     },
+      //     {
+      //       title: "Certificate Decoder (X.509)",
+      //       url: "certificate-decoder",
+      //       icon: FileTextIcon,
+      //     },
+    ],
+  },
 ];
 
 const InsetHeader: React.FC<{ title: string }> = ({ title }) => {

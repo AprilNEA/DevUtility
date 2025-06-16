@@ -11,12 +11,18 @@
 //
 // See LICENSE file for details or contact admin@aprilnea.com
 
+use base64::{engine::general_purpose::STANDARD as BASE64, Engine as _};
 use universal_function_macro::universal_function;
 
-#[cfg(feature = "web")]
-use wasm_bindgen::prelude::*;
+#[universal_function]
+pub fn decode_base64(input: &str) -> Result<String, String> {
+    BASE64
+        .decode(input)
+        .map_err(|e| e.to_string())
+        .and_then(|bytes| String::from_utf8(bytes).map_err(|e| e.to_string()))
+}
 
 #[universal_function]
-pub fn demo_function(a: usize, b: usize) -> usize {
-    a + b
+pub fn encode_base64(input: &str) -> String {
+    BASE64.encode(input.as_bytes())
 }

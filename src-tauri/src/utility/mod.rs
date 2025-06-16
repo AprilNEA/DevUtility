@@ -11,6 +11,5 @@
 //
 // See LICENSE file for details or contact admin@aprilnea.com
 
-pub mod codec;
 pub mod formatter;
 pub mod generator;

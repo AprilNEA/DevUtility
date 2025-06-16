@@ -26,6 +26,7 @@ import { CssBeautifyMinifyTool } from "./utilities/formatter/css";
 import IdGeneratorPage from "./utilities/generators/id";
 import HashGeneratorPage from "./utilities/generators/hash";
 import RSABasicToolsPage from "./utilities/cryptography/rsa-tools/rsa-debugger";
+import Base64Tool from "./utilities/codec/base64";
 
 function App() {
   return (

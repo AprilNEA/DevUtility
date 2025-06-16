@@ -1,7 +1,10 @@
 [package]
 name = "dev-utility-core"
 version = "0.1.0"
-authors = ["AprilNEA <github@sku.moe>"]
+authors = ["AprilNEA  <github@sku.moe>"]
+description = "⚡ Universal developer toolkit for software, hardware, and security professionals."
+license-file = "../LICENSE"
+repository = "https://github.com/AprilNEA/DevUtility"
 edition = "2021"
 
 [lib]
@@ -18,6 +21,17 @@ universal-function-macro = { path = "../crates/universal-function-macro" }
 
 wasm-bindgen = { version = "0.2.84", optional = true }
 tauri = { workspace = true, optional = true }
+
+serde = { workspace = true }
+thiserror = "2.0.10"
+
+rsa = "0.9.8"
+rand = "0.8"
+pkcs8 = { version = "0.10", features = ["pem"] }
+pkcs1 = { version = "0.7", features = ["pem"] }
+
+# Codec
+base64 = "0.22.1"
 
 [dev-dependencies]
 wasm-bindgen-test = { version = "0.3.34" }
