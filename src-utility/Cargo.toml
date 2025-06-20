@@ -25,13 +25,19 @@ tauri = { workspace = true, optional = true }
 serde = { workspace = true }
 thiserror = "2.0.10"
 
+# Cryptography
 rsa = "0.9.8"
 rand = "0.8"
 pkcs8 = { version = "0.10", features = ["pem"] }
 pkcs1 = { version = "0.7", features = ["pem"] }
 
+num-bigint = { version = "0.4.6", features = ["serde"] }
+num-bigint-dig = { version = "0.8.4", features = ["serde"] }
+num-integer = { version = "0.1.46" }
+
 # Codec
 base64 = "0.22.1"
+
 
 [dev-dependencies]
 wasm-bindgen-test = { version = "0.3.34" }

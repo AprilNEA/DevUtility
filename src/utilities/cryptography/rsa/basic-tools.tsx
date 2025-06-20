@@ -96,11 +96,14 @@ function KeyGenerator() {
 
 // Key Analyzer Component
 function KeyAnalyzer() {
+  const { data, trigger } = useUtilityInvoke(InvokeFunction.AnalyzeRsaKey);
   const [keyToAnalyze, setKeyToAnalyze] = useState<string>("");
-  const [keyAnalysisResult, setKeyAnalysisResult] = useState<string>("");
-  const [analyzeKeyType, setAnalyzeKeyType] = useState<"public" | "private">(
-    "public"
-  );
+
+  const onAnalyzeKey = async () => {
+    await trigger({
+      key: keyToAnalyze,
+    });
+  };
 
   return (
     <Card>
@@ -111,40 +114,15 @@ function KeyAnalyzer() {
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        <Tabs
-          defaultValue="publicKeyAnalyze"
-          onValueChange={(value: string) =>
-            setAnalyzeKeyType(value as "public" | "private")
-          }
-        >
-          <TabsList className="grid w-full grid-cols-2 mb-4">
-            <TabsTrigger value="public">公钥分析</TabsTrigger>
-            <TabsTrigger value="private">私钥分析</TabsTrigger>
-          </TabsList>
-          <TabsContent value="public">
-            <Label htmlFor="publicKeyInputAnalyze">公钥 (PEM)</Label>
-            <Textarea
-              id="publicKeyInputAnalyze"
-              placeholder="在此处粘贴公钥"
-              rows={8}
-              value={analyzeKeyType === "public" ? keyToAnalyze : ""}
-              onChange={(e) => setKeyToAnalyze(e.target.value)}
-            />
-          </TabsContent>
-          <TabsContent value="private">
-            <Label htmlFor="privateKeyInputAnalyze">私钥 (PEM)</Label>
-            <Textarea
-              id="privateKeyInputAnalyze"
-              placeholder="在此处粘贴私钥"
-              rows={12}
-              value={analyzeKeyType === "private" ? keyToAnalyze : ""}
-              onChange={(e) => setKeyToAnalyze(e.target.value)}
-            />
-          </TabsContent>
-        </Tabs>
-        <Button
-          onClick={() => alert(`分析 ${analyzeKeyType} 密钥... (占位符)`)}
-        >
+        <Label htmlFor="publicKeyInputAnalyze">公钥 (PEM) / 私钥 (PEM)</Label>
+        <Textarea
+          id="publicKeyInputAnalyze"
+          placeholder="在此处粘贴公钥"
+          rows={8}
+          value={keyToAnalyze}
+          onChange={(e) => setKeyToAnalyze(e.target.value)}
+        />
+        <Button onClick={onAnalyzeKey}>
           <Puzzle className="mr-2 h-4 w-4" /> 分析密钥
         </Button>
         <div>
@@ -154,7 +132,7 @@ function KeyAnalyzer() {
             placeholder="密钥参数将显示在此处"
             rows={10}
             readOnly
-            value={keyAnalysisResult}
+            value={JSON.stringify(data, null, 2)}
           />
         </div>
       </CardContent>

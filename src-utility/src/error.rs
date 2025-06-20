@@ -7,6 +7,8 @@ pub enum UtilityError {
     Io(#[from] std::io::Error),
     #[error("Runtime error: {0}")]
     Runtime(String),
+    #[error("Invalid input: {0}")]
+    InvalidInput(String),
 }
 
 impl serde::Serialize for UtilityError {

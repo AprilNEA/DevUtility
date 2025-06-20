@@ -14,7 +14,13 @@
  */
 
 import { invoke as invokeCore, InvokeOptions } from "@tauri-apps/api/core";
-import { InvokeFunction, IndentStyle, HashResult, RsaKeyPair } from "./types";
+import {
+  InvokeFunction,
+  IndentStyle,
+  HashResult,
+  RsaKeyPair,
+  RsaKeyAnalysis,
+} from "./types";
 import useSWRMutation, {
   SWRMutationConfiguration,
   SWRMutationResponse,
@@ -32,6 +38,7 @@ interface UtilitiesArgs {
   [InvokeFunction.EncodeBase64]: { input: string };
   [InvokeFunction.DecodeBase64]: { input: string };
   [InvokeFunction.GenerateRsaKey]: { bits: number };
+  [InvokeFunction.AnalyzeRsaKey]: { key: string };
 }
 
 interface UtilitiesReturns {
@@ -44,6 +51,7 @@ interface UtilitiesReturns {
   [InvokeFunction.EncodeBase64]: string;
   [InvokeFunction.DecodeBase64]: string;
   [InvokeFunction.GenerateRsaKey]: RsaKeyPair;
+  [InvokeFunction.AnalyzeRsaKey]: RsaKeyAnalysis;
 }
 
 export function utilityInvoke<T extends InvokeFunction>(

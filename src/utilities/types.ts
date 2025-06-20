@@ -23,7 +23,9 @@ export enum InvokeFunction {
   EncodeBase64 = "encode_base64",
   DecodeBase64 = "decode_base64",
   GenerateRsaKey = "generate_rsa_key",
+  AnalyzeRsaKey = "analyze_rsa_key",
 }
+
 export enum HashAlgorithm {
   MD2 = "md2",
   MD4 = "md4",
@@ -59,4 +61,70 @@ export type IndentStyle =
 export type RsaKeyPair = {
   privateKey: string;
   publicKey: string;
+};
+
+export enum KeyType {
+  Public = "Public",
+  Private = "Private",
+}
+
+export type PublicKeyParams = {
+  n: string;     // Modulus
+  e: string;     // Public exponent
+  nHex: string;  // Modulus in hex
+  eHex: string;  // Public exponent in hex
+  nBits: number; // Modulus bit length
+};
+
+export type PrivateKeyParams = {
+  n: string;    // Modulus
+  e: string;    // Public exponent
+  d: string;    // Private exponent
+  p: string;    // First prime
+  q: string;    // Second prime
+  dp: string;   // d mod (p-1)
+  dq: string;   // d mod (q-1)
+  qinv: string; // q^-1 mod p
+  // Hex representations
+  nHex: string;
+  eHex: string;
+  dHex: string;
+  pHex: string;
+  qHex: string;
+  dpHex: string;
+  dqHex: string;
+  qinvHex: string;
+};
+
+export type DerivedParams = {
+  phiN: string;       // Euler's totient φ(n) = (p-1)(q-1)
+  lambdaN: string;    // Carmichael function λ(n)
+  pMinus1: string;    // p - 1
+  qMinus1: string;    // q - 1
+  keySizeBits: number;  // Actual key size in bits
+  keySizeBytes: number; // Key size in bytes
+};
+
+export type SecurityInfo = {
+  recommendedMinimumBits: number;
+  isSecure: boolean;
+  securityLevel: string;
+  vulnerabilities: string[];
+  recommendations: string[];
+};
+
+export type KeyFingerprint = {
+  sha256: string;
+  sha1: string;
+  md5: string;
+};
+
+export type RsaKeyAnalysis = {
+  keyType: KeyType;
+  keySize: number;
+  publicParams?: PublicKeyParams;
+  privateParams?: PrivateKeyParams;
+  derivedParams?: DerivedParams;
+  // securityInfo?: SecurityInfo;
+  // fingerprint?: KeyFingerprint;
 };
