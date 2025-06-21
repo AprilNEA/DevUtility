@@ -13,6 +13,70 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/components/sidebar/index.tsx:466
+#: src/components/sidebar/index.tsx:350
+msgid "AES Debugger"
+msgstr ""
+
+#: src/components/sidebar/index.tsx:361
+msgid "Base64 Encode/Decode"
+msgstr ""
+
+#: src/components/sidebar/index.tsx:329
+msgid "Cryptography & Security"
+msgstr ""
+
+#: src/components/sidebar/index.tsx:115
+msgid "CSS Beautify/Minify"
+msgstr ""
+
+#: src/components/sidebar/index.tsx:157
+msgid "Data Converter"
+msgstr ""
+
+#: src/components/sidebar/index.tsx:357
+msgid "Encoder, Decoder"
+msgstr ""
+
+#: src/components/sidebar/index.tsx:101
+msgid "Format / Validate / Minify"
+msgstr ""
+
+#: src/components/sidebar/index.tsx:298
+msgid "Generators"
+msgstr ""
+
+#: src/components/sidebar/index.tsx:110
+msgid "HTML Beautify/Minify"
+msgstr ""
+
+#: src/components/sidebar/index.tsx:120
+msgid "JS Beautify/Minify"
+msgstr ""
+
+#: src/components/sidebar/index.tsx:105
+msgid "JSON Format/Validate"
+msgstr ""
+
+#: src/components/sidebar/index.tsx:343
+msgid "Key Analyzer"
+msgstr ""
+
+#: src/components/sidebar/index.tsx:338
+msgid "Key Generator"
+msgstr ""
+
+#: src/components/sidebar/index.tsx:469
 msgid "No results found."
 msgstr "无结果"
+
+#: src/components/sidebar/index.tsx:333
+msgid "RSA Debugger"
+msgstr ""
+
+#: src/components/sidebar/index.tsx:161
+msgid "URL Parser"
+msgstr ""
+
+#: src/components/sidebar/index.tsx:302
+msgid "UUID/ULID Generate/Decode"
+msgstr ""
