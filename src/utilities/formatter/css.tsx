@@ -103,7 +103,7 @@ function minifyCss(css: string): string {
     .trim();
 }
 
-export function CssBeautifyMinifyTool() {
+export default function CssBeautifyMinifyTool() {
   const [inputCss, setInputCss] = useState(sampleCssMinified);
   const [outputCss, setOutputCss] = useState("");
   const [indentation, setIndentation] = useState("2"); // "2", "4", "tab"

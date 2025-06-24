@@ -43,4 +43,3 @@ pub struct CounterInfo {
     pub last_increment: Option<u64>, // Last increment timestamp
     pub sync_status: SyncStatus,     // Synchronization status
 }
-

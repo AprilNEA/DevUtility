@@ -13,7 +13,7 @@ const MODES = [
   { label: "Decode", value: "decode" },
 ];
 
-const Base64Tool: React.FC = () => {
+export default function Base64CodecPage() {
   const [mode, setMode] = useState("encode");
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
@@ -109,5 +109,3 @@ const Base64Tool: React.FC = () => {
     </Card>
   );
 };
-
-export default Base64Tool;

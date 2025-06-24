@@ -13,8 +13,8 @@
  * See LICENSE file for details or contact admin@aprilnea.com
  */
 
-import { invoke as invokeCore, InvokeOptions } from "@tauri-apps/api/core";
-import {
+import { invoke as invokeCore, type InvokeOptions } from "@tauri-apps/api/core";
+import type {
   InvokeFunction,
   IndentStyle,
   HashResult,
@@ -26,8 +26,8 @@ import {
   TotpValidationResult,
 } from "./types";
 import useSWRMutation, {
-  SWRMutationConfiguration,
-  SWRMutationResponse,
+  type SWRMutationConfiguration,
+  type SWRMutationResponse,
 } from "swr/mutation";
 
 export const IS_TAURI = "__TAURI__" in window;
@@ -43,7 +43,7 @@ interface UtilitiesArgs {
   [InvokeFunction.DecodeBase64]: { input: string };
   [InvokeFunction.GenerateRsaKey]: { bits: number };
   [InvokeFunction.AnalyzeRsaKey]: { key: string };
-  [InvokeFunction.GenerateTotpSecret]: { 
+  [InvokeFunction.GenerateTotpSecret]: {
     issuer: string;
     account: string;
     algorithm: TotpHashAlgorithm;
