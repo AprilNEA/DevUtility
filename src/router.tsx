@@ -16,51 +16,28 @@
 import "./index.css";
 
 import { Router, Route } from "wouter";
-
 import AppSidebar from "./components/sidebar";
+import utilities, { type UtilityMeta } from "./utilities/meta";
 
-import JsonFormatterPage from "./utilities/formatter/json";
-import HtmlEncoderDecoderPage from "./utilities/formatter/html";
-import { CssBeautifyMinifyTool } from "./utilities/formatter/css";
-
-import IdGeneratorPage from "./utilities/generators/id";
-import HashGeneratorPage from "./utilities/generators/hash";
-
-import Base64EncoderDecoderPage from "./utilities/codec/base64";
-import RSAKeyGeneratorPage from "./utilities/cryptography/rsa/generator";
-import RSAKeyAnalyzerPage from "./utilities/cryptography/rsa/analyzer";
-// import RSAKeyConverterPage from "./utilities/cryptography/rsa/converter";
-
-// import HotpDebuggerPage from "./utilities/cryptography/oath/hotp";
-import TotpDebuggerPage from "./utilities/cryptography/oath/totp";
+const convertToRoute = (utility: UtilityMeta) => {
+  if ("items" in utility) {
+    // utility group
+    return (
+      <Route path={utility.key} nest>
+        {utility.items.map((item) => convertToRoute(item))}
+      </Route>
+    );
+  } else {
+    // single utility
+    return <Route path={utility.key} component={utility.page} />;
+  }
+};
 
 function App() {
   return (
     <Router>
       <AppSidebar>
-        <Route path="/formatter" nest>
-          <Route path="json" component={JsonFormatterPage} />
-          <Route path="html" component={HtmlEncoderDecoderPage} />
-          <Route path="css" component={CssBeautifyMinifyTool} />
-        </Route>
-        <Route path="/generator" nest>
-          <Route path="id" component={IdGeneratorPage} />
-          <Route path="hash" component={HashGeneratorPage} />
-        </Route>
-        <Route path="/codec" nest>
-          <Route path="base64" component={Base64EncoderDecoderPage} />
-        </Route>
-        <Route path="/cryptography" nest>
-          <Route path="rsa" nest>
-            <Route path="generator" component={RSAKeyGeneratorPage} />
-            <Route path="analyzer" component={RSAKeyAnalyzerPage} />
-            {/* <Route path="converter" component={RSAKeyConverterPage} /> */}
-          </Route>
-          <Route path="oath" nest>
-            {/* <Route path="hotp" component={HotpDebuggerPage} /> */}
-            <Route path="totp" component={TotpDebuggerPage} />
-          </Route>
-        </Route>
+        {utilities.map((utility) => convertToRoute(utility))}
       </AppSidebar>
     </Router>
   );
