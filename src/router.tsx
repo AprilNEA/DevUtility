@@ -31,6 +31,9 @@ import RSAKeyGeneratorPage from "./utilities/cryptography/rsa/generator";
 import RSAKeyAnalyzerPage from "./utilities/cryptography/rsa/analyzer";
 // import RSAKeyConverterPage from "./utilities/cryptography/rsa/converter";
 
+// import HotpDebuggerPage from "./utilities/cryptography/oath/hotp";
+import TotpDebuggerPage from "./utilities/cryptography/oath/totp";
+
 function App() {
   return (
     <Router>
@@ -52,6 +55,10 @@ function App() {
             <Route path="generator" component={RSAKeyGeneratorPage} />
             <Route path="analyzer" component={RSAKeyAnalyzerPage} />
             {/* <Route path="converter" component={RSAKeyConverterPage} /> */}
+          </Route>
+          <Route path="oath" nest>
+            {/* <Route path="hotp" component={HotpDebuggerPage} /> */}
+            <Route path="totp" component={TotpDebuggerPage} />
           </Route>
         </Route>
       </AppSidebar>

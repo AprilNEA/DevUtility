@@ -20,6 +20,10 @@ import {
   HashResult,
   RsaKeyPair,
   RsaKeyAnalysis,
+  TotpHashAlgorithm,
+  TotpSecret,
+  TotpResult,
+  TotpValidationResult,
 } from "./types";
 import useSWRMutation, {
   SWRMutationConfiguration,
@@ -39,6 +43,30 @@ interface UtilitiesArgs {
   [InvokeFunction.DecodeBase64]: { input: string };
   [InvokeFunction.GenerateRsaKey]: { bits: number };
   [InvokeFunction.AnalyzeRsaKey]: { key: string };
+  [InvokeFunction.GenerateTotpSecret]: { 
+    issuer: string;
+    account: string;
+    algorithm: TotpHashAlgorithm;
+    digits: number;
+    period: number;
+    label?: string;
+    image?: string;
+    addIssuerPrefix: boolean;
+  };
+  [InvokeFunction.GenerateTotpCode]: {
+    secret: string;
+    algorithm: TotpHashAlgorithm;
+    digits: number;
+    period: number;
+  };
+  [InvokeFunction.ValidateTotpCode]: {
+    secret: string;
+    code: string;
+    algorithm: TotpHashAlgorithm;
+    digits: number;
+    period: number;
+    window: number;
+  };
 }
 
 interface UtilitiesReturns {
@@ -52,6 +80,9 @@ interface UtilitiesReturns {
   [InvokeFunction.DecodeBase64]: string;
   [InvokeFunction.GenerateRsaKey]: RsaKeyPair;
   [InvokeFunction.AnalyzeRsaKey]: RsaKeyAnalysis;
+  [InvokeFunction.GenerateTotpSecret]: TotpSecret;
+  [InvokeFunction.GenerateTotpCode]: TotpResult;
+  [InvokeFunction.ValidateTotpCode]: TotpValidationResult;
 }
 
 export function utilityInvoke<T extends InvokeFunction>(

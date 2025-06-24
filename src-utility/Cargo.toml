@@ -70,5 +70,10 @@ nanoid = "0.4.0"
 # Formatters
 sonic-rs = "0.5.1"
 
+# OATH/TOTP/HOTP
+base32 = "0.5"
+hmac = "0.12"
+urlencoding = "2.1"
+
 [dev-dependencies]
 wasm-bindgen-test = { version = "0.3.34" }

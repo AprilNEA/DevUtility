@@ -24,6 +24,10 @@ export enum InvokeFunction {
   DecodeBase64 = "decode_base64",
   GenerateRsaKey = "generate_rsa_key",
   AnalyzeRsaKey = "analyze_rsa_key",
+  // TOTP Functions
+  GenerateTotpSecret = "generate_totp_secret",
+  GenerateTotpCode = "generate_totp_code",
+  ValidateTotpCode = "validate_totp_code",
 }
 
 export enum HashAlgorithm {
@@ -127,4 +131,45 @@ export type RsaKeyAnalysis = {
   derivedParams?: DerivedParams;
   // securityInfo?: SecurityInfo;
   // fingerprint?: KeyFingerprint;
+};
+
+// TOTP Types
+export enum TotpHashAlgorithm {
+  SHA1 = "SHA1",
+  SHA256 = "SHA256", 
+  SHA512 = "SHA512",
+}
+
+export type TotpConfig = {
+  secret: string;
+  issuer: string;
+  account: string;
+  algorithm: TotpHashAlgorithm;
+  digits: number;
+  period: number;
+  label?: string;
+  image?: string;
+};
+
+export type TotpSecret = {
+  secret: string;
+  qrCodeUrl: string;
+  provisioningUri: string;
+};
+
+export type TotpResult = {
+  code: string;
+  timeRemaining: number;
+  timeUsed: number;
+  algorithm: TotpHashAlgorithm;
+  digits: number;
+  period: number;
+};
+
+export type TotpValidationResult = {
+  isValid: boolean;
+  timeOffset: number;
+  usedTimeWindow: number;
+  currentTimeWindow: number;
+  message: string;
 };

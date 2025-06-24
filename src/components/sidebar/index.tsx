@@ -331,6 +331,23 @@ const navMain: Nav[] = [
     slug: "cryptography",
     items: [
       {
+        title: msg`OATH Debugger`,
+        slug: "oath",
+        icon: KeyIcon,
+        subItems: [
+          {
+            title: msg`HOTP Debugger`,
+            slug: "hotp",
+            icon: KeyIcon,
+          },
+          {
+            title: msg`TOTP Debugger`,
+            slug: "totp",
+            icon: KeyIcon,
+          }
+        ]
+      },
+      {
         title: msg`RSA Debugger`,
         slug: "rsa",
         icon: KeyIcon,
