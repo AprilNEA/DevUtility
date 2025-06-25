@@ -1,4 +1,4 @@
-import { MessageDescriptor } from "@lingui/core";
+import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import {
   FileCode2Icon,
@@ -13,18 +13,19 @@ import {
   RotateCcwKeyIcon,
 } from "lucide-react";
 import type { RouteComponentProps } from "wouter";
+import { lazy } from "react";
 
-import JsonFormatterPage from "./formatter/json";
-import HtmlEncoderDecoderPage from "./formatter/html";
-import CssBeautifyMinifyToolPage from "./formatter/css";
-import IdGeneratorPage from "./generators/id";
-import HashGeneratorPage from "./generators/hash";
-import Base64EncoderDecoderPage from "./codec/base64";
-import RSAKeyGeneratorPage from "./cryptography/rsa/generator";
-import RSAKeyAnalyzerPage from "./cryptography/rsa/analyzer";
-// import RSAKeyConverterPage from "./cryptography/rsa/converter";
-// import HotpDebuggerPage from "./cryptography/oath/hotp";
-import TotpDebuggerPage from "./cryptography/oath/totp";
+const JsonFormatterPage = lazy(() => import("./formatter/json"));
+const HtmlEncoderDecoderPage = lazy(() => import("./formatter/html"));
+const CssBeautifyMinifyToolPage = lazy(() => import("./formatter/css"));
+const IdGeneratorPage = lazy(() => import("./generators/id"));
+const HashGeneratorPage = lazy(() => import("./generators/hash"));
+const Base64EncoderDecoderPage = lazy(() => import("./codec/base64"));
+const RSAKeyGeneratorPage = lazy(() => import("./cryptography/rsa/generator"));
+const RSAKeyAnalyzerPage = lazy(() => import("./cryptography/rsa/analyzer"));
+// const RSAKeyConverterPage = lazy(() => import("./cryptography/rsa/converter"));
+// const HotpDebuggerPage = lazy(() => import("./cryptography/oath/hotp"));
+const TotpDebuggerPage = lazy(() => import("./cryptography/oath/totp"));
 
 export type Utility = {
   key: string;
