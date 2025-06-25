@@ -14,6 +14,8 @@
 use serde::{Deserialize, Serialize};
 use sonic_rs;
 
+use crate::error::UtilityError;
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "lowercase")]
 pub enum IndentStyle {
@@ -23,12 +25,14 @@ pub enum IndentStyle {
 }
 
 #[tauri::command]
-pub fn format_json(input: &str, style: IndentStyle) -> String {
-    let value: sonic_rs::Value = sonic_rs::from_str(input).unwrap();
-    // let pretty_str = sonic_rs::to_string_pretty(&value).unwrap_or_else(|_| "{}".to_string());
+pub fn format_json(input: &str, style: IndentStyle) -> Result<String, UtilityError> {
+    let value: sonic_rs::Value =
+        sonic_rs::from_str(input).map_err(|e| UtilityError::ParseError(e.to_string()))?;
     match style {
-        IndentStyle::Minified => sonic_rs::to_string(&value).unwrap_or_else(|_| "{}".to_string()),
-        IndentStyle::Spaces(size) => sonic_rs::to_string_pretty(&value)
+        IndentStyle::Minified => {
+            Ok(sonic_rs::to_string(&value).unwrap_or_else(|_| "{}".to_string()))
+        }
+        IndentStyle::Spaces(size) => Ok(sonic_rs::to_string_pretty(&value)
             .unwrap_or_else(|_| "{}".to_string())
             .lines()
             .map(|line| {
@@ -41,8 +45,8 @@ pub fn format_json(input: &str, style: IndentStyle) -> String {
                 format!("{}{}", " ".repeat(indent_level * size), line.trim_start())
             })
             .collect::<Vec<_>>()
-            .join("\n"),
-        IndentStyle::Tabs => sonic_rs::to_string_pretty(&value)
+            .join("\n")),
+        IndentStyle::Tabs => Ok(sonic_rs::to_string_pretty(&value)
             .unwrap_or_else(|_| "{}".to_string())
             .lines()
             .map(|line| {
@@ -51,6 +55,6 @@ pub fn format_json(input: &str, style: IndentStyle) -> String {
                 format!("{}{}", "\t".repeat(indent_level), line.trim_start())
             })
             .collect::<Vec<_>>()
-            .join("\n"),
+            .join("\n")),
     }
 }

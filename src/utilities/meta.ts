@@ -12,7 +12,7 @@ import {
   RadarIcon,
   RotateCcwKeyIcon,
 } from "lucide-react";
-import { RouteComponentProps } from "wouter";
+import type { RouteComponentProps } from "wouter";
 
 import JsonFormatterPage from "./formatter/json";
 import HtmlEncoderDecoderPage from "./formatter/html";
