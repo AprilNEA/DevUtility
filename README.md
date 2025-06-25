@@ -16,10 +16,14 @@
   <a href="https://github.com/AprilNEA/DevUtility/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-Dual%20License-blue" alt="License Badge"/></a>
   <a href="https://translate.utility.dev"><img src="https://badges.crowdin.net/devutility/localized.svg" alt="Crowdin Badge"/></a>
   <br/> 
+  <a href="https://utility.dev" target="_blank"><img alt="documentation" src="https://img.shields.io/badge/docs-online-brightgreen"></a>
+  <a href="https://x.com/DevUtilityApp" target="_blank"><img alt="twitter" src="https://img.shields.io/twitter/follow/DevUtilityApp"></a>
+  <a href="https://t.me/DevUtility" target="_blank"><img alt="telegram" src="https://img.shields.io/badge/channel-telegram-blueviolet?style=square&logo=Telegram"></a>
   <img src="https://hits.aprilnea.com/hits?url=https://github.com/AprilNEA/DevUtility" />
 </p>
 
 ### 💫 Key Capabilities
+
 - 💻 **Software Development**: Advanced tools for code analysis, debugging, and optimization
 - 🔧 **Hardware Engineering**: Comprehensive utilities for hardware testing and analysis
 - 🔒 **Cybersecurity** : Built-in security tools for vulnerability assessment and testing
@@ -35,51 +39,27 @@
 - 🔄 **Cross-Platform** : Unified codebase for desktop, web, and mobile platforms
 - ⚡ **Native Performance** : Optimized for each platform while maintaining consistent functionality
 
+## 📦 Utilities Screen
 
-## 📦 Utilities
+![](https://utility.dev/images/screenshots/v0-1-5/input-output-layout.png)
 
-| Utility Name                   | Web Implementation        | Desktop Implementation          |
-| ------------------------------ | ------------------------- | ------------------------------- |
-| **Generator**                  |                           |                                 |
-| UUID/UILD/NanoID               | :white_check_mark:  WASM  | :white_check_mark:              |
-| **Formatter**                  |                           |                                 |
-| JSON Format/Validate           | :white_check_mark: `JSON` | :white_check_mark: `serde_json` |
-| **Codec**                      |                           |                                 |
-| Base64 Encode/Decode           | :white_circle:            |                                 |
-| JSON ↔ YAML ↔ TOML             | :white_circle:            |                                 |
-| JWT Debugger                   | :white_circle:            |                                 |
-| Unix Time Converter            | :white_circle:            |                                 |
-| **RSA Debug - Basic Tools**    |                           |                                 |
-| RSA Key Generation             |                           |                                 |
-| RSA Key Analysis               |                           |                                 |
-| RSA Format Converter           |                           |                                 |
-| **RSA Debug - Encryption**     |                           |                                 |
-| RSA Encrypt/Decrypt            |                           |                                 |
-| RSA Padding Schemes            |                           |                                 |
-| Modulo Calculator              |                           |                                 |
-| **RSA Debug - Signatures**     |                           |                                 |
-| RSA Sign/Verify                |                           |                                 |
-| PSS Debugger                   |                           |                                 |
-| Hash Algorithms                |                           |                                 |
-| **RSA Debug - Advanced Tools** |                           |                                 |
-| Math Analysis                  |                           |                                 |
-| Security Analysis              |                           |                                 |
-
-## Project Status
+## 📊 Project Status
 
 ![Project Status](https://repobeats.axiom.co/api/embed/0529cb5e27377848133ad8196106758f6a908472.svg "Repobeats analytics image")
 
-## Licensing
+## 📄 Licensing
 
 This project is dual-licensed:
 
 ### Open Source License (GPL-3.0)
+
 - Free to use for personal or open source projects
 - Must comply with GPL v3 terms
 - Derivative works must be open source
 - See LICENSE-GPL for details
 
 ### Commercial License (Paid)
+
 - For commercial/proprietary use
 - No obligation to open source
 - Includes technical support

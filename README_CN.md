@@ -13,10 +13,21 @@
   <a href="https://github.com/AprilNEA/DevUtility/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-Dual%20License-blue" alt="License Badge"/></a>
   <a href="https://translate.utility.dev"><img src="https://badges.crowdin.net/devutility/localized.svg" alt="Crowdin Badge"/></a>
   <br/> 
+  <a href="https://utility.dev" target="_blank"><img alt="documentation" src="https://img.shields.io/badge/docs-online-brightgreen"></a>
+  <a href="https://x.com/DevUtilityApp" target="_blank"><img alt="twitter" src="https://img.shields.io/twitter/follow/DevUtilityApp"></a>
+  <a href="https://t.me/DevUtility" target="_blank"><img alt="telegram" src="https://img.shields.io/badge/channel-telegram-blueviolet?style=square&logo=Telegram"></a>
   <img src="https://hits.aprilnea.com/hits?url=https://github.com/AprilNEA/DevUtility" />
 </p>
 
-## 许可协议
+## 📦 工具截图
+
+![](https://utility.dev/images/screenshots/v0-1-5/input-output-layout.png)
+
+## 📊 项目状态
+
+![Project Status](https://repobeats.axiom.co/api/embed/0529cb5e27377848133ad8196106758f6a908472.svg "Repobeats analytics image")
+
+## 📄 许可协议
 
 本项目采用双重许可：
 
