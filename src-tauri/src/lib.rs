@@ -31,9 +31,9 @@ pub fn run() {
     tauri::Builder::default()
         // .plugin(tauri_plugin_shell::init())
         // .plugin(tauri_plugin_os::init())
-        // // .plugin(tauri_plugin_updater::Builder::new().build())
-        // .plugin(tauri_plugin_opener::init())
-        // .plugin(tauri_plugin_clipboard_manager::init())
+        .plugin(tauri_plugin_updater::Builder::new().build())
+        .plugin(tauri_plugin_opener::init())
+        .plugin(tauri_plugin_clipboard_manager::init())
         .setup(|app| {
             let window = app.get_webview_window("main").unwrap();
 
@@ -61,19 +61,14 @@ pub fn run() {
                         let separator = PredefinedMenuItem::separator(app)?;
                         let _ = submenu.insert(&separator, about_position + 1);
 
-                        let preference_item = MenuItem::with_id(
-                            app,
-                            "preferences",
-                            "Preferences",
-                            true,
-                            None::<&str>,
-                        )?;
+                        let preference_item =
+                            MenuItem::with_id(app, "settings", "Settings", true, Some("cmd+,"))?;
 
                         let _ = submenu.insert(&preference_item, about_position + 2);
                     }
                 }
             }
-            
+
             if let Some(item) = global_menu.get(HELP_SUBMENU_ID) {
                 let _ = global_menu.remove(&item);
             }

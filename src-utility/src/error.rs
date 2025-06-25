@@ -7,6 +7,8 @@ pub enum UtilityError {
     Io(#[from] std::io::Error),
     #[error("Runtime error: {0}")]
     Runtime(String),
+    #[error("Decode error: {0}")]
+    DecodeError(String),
     #[error("Parse error: {0}")]
     ParseError(String),
     #[error("Invalid input: {0}")]

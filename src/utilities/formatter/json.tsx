@@ -14,9 +14,8 @@
  */
 
 import { useDebouncedValue } from "foxact/use-debounced-value";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -34,25 +33,22 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import {
-  Zap,
-  Clipboard,
-  FileText,
-  Trash2,
-  Settings,
-  Copy,
-  HelpCircle,
   ChevronDown,
-  ZapIcon,
   SettingsIcon,
+  HelpCircleIcon,
+  ChevronDownIcon,
 } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-// import { InvokeFunction } from "@/tauri";
-import { utilityInvoke } from "@/utilities/invoke";
-import { IndentStyle, IndentStyleEnum, InvokeFunction } from "../types";
-import { copyToClipboard, readFromClipboard } from "@/lib/copyboard";
-import { msg } from "@lingui/core/macro";
-import InputOutputLayout from "@/components/layout/input-output";
+import { useUtilityInvoke } from "@/utilities/invoke";
+import { type IndentStyle, IndentStyleEnum, InvokeFunction } from "../types";
+import InputOutputLayout, {
+  ClearTool,
+  PasteTool,
+  LoadFileTool,
+  CopyTool,
+  ContinuousModeTool,
+} from "@/components/layout/input-output";
 
 const jsonExampleInput = `{
   "store": {
@@ -85,10 +81,10 @@ const jsonExampleInput = `{
 }`;
 
 export default function JsonFormatterPage() {
-  const [inputJson, setInputJson] = useState(jsonExampleInput);
-  const debouncedInputJson = useDebouncedValue(inputJson, 100, false);
+  const { trigger } = useUtilityInvoke(InvokeFunction.FormatJson);
+  const [input, setInput] = useState(jsonExampleInput);
+  const [output, setOutput] = useState("");
 
-  const [outputJson, setOutputJson] = useState("");
   const [style, setStyle] = useState<IndentStyle>({
     [IndentStyleEnum.Spaces]: 2,
   }); // "2", "4", "tab"
@@ -100,32 +96,22 @@ export default function JsonFormatterPage() {
   const [continuousMode, setContinuousMode] = useState(true);
   const [sortKeys, setSortKeys] = useState(true);
 
-  const handleFormat = async () => {
-    const result = await utilityInvoke(InvokeFunction.FormatJson, {
-      input: debouncedInputJson,
-      style,
-    });
-    console.log(result);
-    setOutputJson(result);
-  };
+  const debouncedInput = useDebouncedValue(input, 100, false);
+
+  const handleFormat = useCallback(
+    async (input: string, style: IndentStyle) => {
+      const result = await trigger({
+        input,
+        style,
+      });
+      setOutput(result);
+    },
+    [trigger],
+  );
 
   useEffect(() => {
-    handleFormat();
-  }, [debouncedInputJson, style]);
-
-  const handleLoadSample = () => {
-    setInputJson(jsonExampleInput);
-  };
-
-  const handlePasteFromClipboard = async () => {
-    const clipboardContent = await readFromClipboard();
-    setInputJson(clipboardContent);
-  };
-
-  const handleClearInput = () => {
-    setInputJson("");
-    setOutputJson("");
-  };
+    handleFormat(debouncedInput, style);
+  }, [handleFormat, debouncedInput, style]);
 
   const handleResetSettings = () => {
     setAutoDetect(true);
@@ -135,82 +121,23 @@ export default function JsonFormatterPage() {
     setSortKeys(true);
   };
 
-
   const inputToolbar = (
     <>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="text-muted-foreground hover:text-foreground h-8 w-8"
-            onClick={handleFormat}
-            // disabled={continuousMode}
-          >
-            <ZapIcon size={18} />
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent
-          side="bottom"
-          className="bg-popover text-popover-foreground border"
-        >
-          <p>Format JSON</p>
-        </TooltipContent>
-      </Tooltip>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="text-muted-foreground hover:text-foreground h-8 w-8"
-            onClick={handlePasteFromClipboard}
-          >
-            <Clipboard size={18} />
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent
-          side="bottom"
-          className="bg-popover text-popover-foreground border"
-        >
-          <p>Paste from Clipboard</p>
-        </TooltipContent>
-      </Tooltip>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="text-muted-foreground hover:text-foreground h-8 w-8"
-            onClick={handleLoadSample}
-          >
-            <FileText size={18} />
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent
-          side="bottom"
-          className="bg-popover text-popover-foreground border"
-        >
-          <p>Load Sample JSON</p>
-        </TooltipContent>
-      </Tooltip>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="text-muted-foreground hover:text-foreground h-8 w-8"
-            onClick={handleClearInput}
-          >
-            <Trash2 size={18} />
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent
-          side="bottom"
-          className="bg-popover text-popover-foreground border"
-        >
-          <p>Clear Input</p>
-        </TooltipContent>
-      </Tooltip>
+      <ContinuousModeTool />
+      <PasteTool
+        onPaste={(text) => {
+          setInput(text);
+        }}
+      />
+      <LoadFileTool button={{}} />
+      <ClearTool
+        button={{
+          onClick: () => {
+            setInput("");
+            setOutput("");
+          },
+        }}
+      />
 
       <DropdownMenu>
         <DropdownMenu>
@@ -412,7 +339,6 @@ export default function JsonFormatterPage() {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
@@ -420,7 +346,7 @@ export default function JsonFormatterPage() {
             size="sm"
             className="h-8 text-xs bg-background border-input hover:bg-accent text-foreground hover:text-accent-foreground"
           >
-            JSON <ChevronDown size={14} className="ml-1" />
+            JSON <ChevronDownIcon size={14} className="ml-1" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent
@@ -516,24 +442,7 @@ export default function JsonFormatterPage() {
           </DropdownMenuRadioGroup>
         </DropdownMenuContent>
       </DropdownMenu>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="text-muted-foreground hover:text-foreground h-8 w-8"
-            onClick={() => copyToClipboard(outputJson)}
-          >
-            <Copy size={18} />
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent
-          side="bottom"
-          className="bg-popover text-popover-foreground border"
-        >
-          <p>Copy Output</p>
-        </TooltipContent>
-      </Tooltip>
+      <CopyTool content={output} />
     </>
   );
 
@@ -551,7 +460,7 @@ export default function JsonFormatterPage() {
             size="icon"
             className="text-muted-foreground hover:text-foreground h-8 w-8"
           >
-            <HelpCircle size={18} />
+            <HelpCircleIcon size={18} />
           </Button>
         </TooltipTrigger>
         <TooltipContent
@@ -568,14 +477,14 @@ export default function JsonFormatterPage() {
     <InputOutputLayout
       inputToolbar={inputToolbar}
       inputProps={{
-        value: inputJson,
-        onChange: (e) => setInputJson(e.target.value),
+        value: input,
+        onChange: (e) => setInput(e.target.value),
         placeholder: "Paste your JSON here",
       }}
       outputToolbar={outputToolbar}
       outputBottomBar={outputBottomBar}
       outputProps={{
-        value: outputJson,
+        value: output,
         readOnly: true,
         placeholder: "Formatted JSON will appear here",
       }}

@@ -22,7 +22,7 @@ use rsa::traits::{PrivateKeyParts, PublicKeyParts};
 use rsa::BigUint;
 use rsa::{RsaPrivateKey, RsaPublicKey};
 use serde::{Deserialize, Serialize};
-use sha2::{Digest, Sha256};
+use sha2::Digest;
 use universal_function_macro::universal_function;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
