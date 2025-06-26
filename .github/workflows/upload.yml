@@ -36,6 +36,7 @@ jobs:
 
       - name: Build manifest file
         env:
+          GH_TOKEN: ${{ github.token }}
           CDN_BASE_URL: ${{ secrets.CDN_BASE_URL }}
           RELEASE_NOTES: ${{ github.event.release.body }}
         run: |
