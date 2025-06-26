@@ -1,6 +1,22 @@
+/**
+ * Copyright (c) 2023-2025, ApriilNEA LLC.
+ *
+ * Dual licensed under:
+ * - GPL-3.0 (open source)
+ * - Commercial license (contact us)
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * See LICENSE file for details or contact admin@aprilnea.com
+ */
+
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import {
+  BrainIcon,
   FileCode2Icon,
   FileCodeIcon,
   FileIcon,
@@ -12,9 +28,10 @@ import {
   RadarIcon,
   RotateCcwKeyIcon,
 } from "lucide-react";
-import type { RouteComponentProps } from "wouter";
 import { lazy } from "react";
+import type { RouteComponentProps } from "wouter";
 
+const GptTokenizerPage = lazy(() => import("./ai/tokenizer"));
 const JsonFormatterPage = lazy(() => import("./formatter/json"));
 const HtmlEncoderDecoderPage = lazy(() => import("./formatter/html"));
 const CssBeautifyMinifyToolPage = lazy(() => import("./formatter/css"));
@@ -46,6 +63,18 @@ export type UtilityGroup = {
 export type UtilityMeta = Utility | UtilityGroup;
 
 const utilities: UtilityMeta[] = [
+  {
+    key: "ai",
+    title: msg`AI`,
+    items: [
+      {
+        key: "tokenizer",
+        icon: BrainIcon,
+        title: msg`Tokenizer`,
+        page: GptTokenizerPage,
+      },
+    ],
+  },
   {
     key: "formatter",
     icon: FileIcon,

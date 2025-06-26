@@ -16,15 +16,15 @@
 import { useDebouncedValue } from "foxact/use-debounced-value";
 import { useCallback, useEffect, useState } from "react";
 import CodecModeRadio, { CodecMode } from "@/components/codec-mode";
-import InputOutputLayout, {
+import InputOutputLayout from "@/components/layout/input-output";
+import {
   ClearTool,
   ContinuousModeTool,
   CopyTool,
   LoadFileTool,
   PasteTool,
-} from "@/components/layout/input-output";
+} from "@/components/tools";
 import { Button } from "@/components/ui/button";
-import { copyToClipboard } from "@/lib/copyboard";
 import { useUtilityInvoke } from "../invoke";
 import { InvokeFunction } from "../types";
 

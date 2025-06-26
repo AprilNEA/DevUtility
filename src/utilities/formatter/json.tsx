@@ -14,41 +14,42 @@
  */
 
 import { useDebouncedValue } from "foxact/use-debounced-value";
-import { useState, useEffect, useCallback } from "react";
+import {
+  ChevronDown,
+  ChevronDownIcon,
+  HelpCircleIcon,
+  SettingsIcon,
+} from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
+import InputOutputLayout from "@/components/layout/input-output";
+import {
+  ClearTool,
+  ContinuousModeTool,
+  CopyTool,
+  LoadFileTool,
+  PasteTool,
+} from "@/components/tools";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
+  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuCheckboxItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import {
-  ChevronDown,
-  SettingsIcon,
-  HelpCircleIcon,
-  ChevronDownIcon,
-} from "lucide-react";
-import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
 import { useUtilityInvoke } from "@/utilities/invoke";
 import { type IndentStyle, IndentStyleEnum, InvokeFunction } from "../types";
-import InputOutputLayout, {
-  ClearTool,
-  PasteTool,
-  LoadFileTool,
-  CopyTool,
-  ContinuousModeTool,
-} from "@/components/layout/input-output";
 
 const jsonExampleInput = `{
   "store": {

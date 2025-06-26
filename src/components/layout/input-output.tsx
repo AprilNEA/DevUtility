@@ -15,28 +15,10 @@
 
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
-import { Trans, useLingui } from "@lingui/react/macro";
-import {
-  ClipboardIcon,
-  CopyIcon,
-  FileTextIcon,
-  Trash2Icon,
-  ZapIcon,
-} from "lucide-react";
-import { useCallback } from "react";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { copyToClipboard, readFromClipboard } from "@/lib/copyboard";
+import { useLingui } from "@lingui/react/macro";
 import { cn } from "@/lib/utils";
-
-declare const ORIENTATIONS: readonly ["horizontal", "vertical"];
-type Orientation = (typeof ORIENTATIONS)[number];
+import { Textarea } from "../ui/textarea";
+import TwoSectionLayout, { type Orientation } from "./two-section";
 
 export type InputOutputLayoutProps = {
   orientation?: Orientation;
@@ -66,21 +48,12 @@ const InputOutputLayout = ({
 }: InputOutputLayoutProps) => {
   const { t } = useLingui();
   return (
-    <div className="flex flex-col h-full gap-4">
-      <div
-        className={cn(
-          "grid grid-cols-1 gap-4 flex-grow",
-          orientation !== "horizontal" && "md:grid-cols-2",
-        )}
-      >
-        {/* Input Section */}
-        <div className="flex flex-col gap-2 bg-background/95 p-3 rounded-lg">
-          <div className="flex items-center justify-between gap-2 mb-2">
-            <Label className="text-sm font-medium text-foreground/80">
-              {t(inputLabel)}
-            </Label>
-            <div className="flex items-center gap-1">{inputToolbar}</div>
-          </div>
+    <TwoSectionLayout
+      orientation={orientation}
+      firstLabel={inputLabel}
+      firstToolbar={inputToolbar}
+      firstContent={
+        <div className="flex flex-col gap-2 flex-grow">
           <Textarea
             {...inputProps}
             className={cn(
@@ -91,15 +64,11 @@ const InputOutputLayout = ({
           />
           {inputBottombar}
         </div>
-
-        {/* Output Section */}
-        <div className="flex flex-col gap-2 bg-background/95 p-3 rounded-lg">
-          <div className="flex items-center justify-between gap-2 mb-2">
-            <Label className="text-sm font-medium text-foreground/80">
-              {t(outputLabel)}
-            </Label>
-            <div className="flex items-center gap-1">{outputToolbar}</div>
-          </div>
+      }
+      secondLabel={outputLabel}
+      secondToolbar={outputToolbar}
+      secondContent={
+        <div className="flex flex-col gap-2 flex-grow">
           <Textarea
             {...outputProps}
             className={cn(
@@ -110,160 +79,9 @@ const InputOutputLayout = ({
           />
           {outputBottomBar}
         </div>
-      </div>
-    </div>
+      }
+    />
   );
 };
 
-const ContinuousModeTool: React.FC<{
-  button?: React.ComponentProps<"button">;
-}> = ({ button }) => {
-  return (
-    <Tooltip>
-      <TooltipTrigger asChild>
-        <Button
-          variant="ghost"
-          size="icon"
-          {...button}
-          className={cn(
-            "text-muted-foreground hover:text-foreground h-8 w-8",
-            button?.className,
-          )}
-          // disabled={continuousMode}
-        >
-          <ZapIcon size={18} />
-        </Button>
-      </TooltipTrigger>
-      <TooltipContent
-        side="bottom"
-        className="bg-popover text-popover-foreground border"
-      >
-        <Trans>Continuous Mode</Trans>
-      </TooltipContent>
-    </Tooltip>
-  );
-};
-
-const PasteTool: React.FC<{
-  button?: React.ComponentProps<"button">;
-  onPaste?: (text: string) => void;
-}> = ({ button, onPaste }) => {
-  const handlePasteFromClipboard = useCallback(async () => {
-    const clipboardContent = await readFromClipboard();
-    onPaste?.(clipboardContent);
-  }, [onPaste]);
-
-  return (
-    <Tooltip>
-      <TooltipTrigger asChild>
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={handlePasteFromClipboard}
-          {...button}
-          className={cn(
-            "text-muted-foreground hover:text-foreground h-8 w-8",
-            button?.className,
-          )}
-        >
-          <ClipboardIcon size={18} />
-        </Button>
-      </TooltipTrigger>
-      <TooltipContent
-        side="bottom"
-        className="bg-popover text-popover-foreground border"
-      >
-        <Trans>Paste from Clipboard</Trans>
-      </TooltipContent>
-    </Tooltip>
-  );
-};
-
-const LoadFileTool: React.FC<{
-  button?: React.ComponentProps<"button">;
-}> = ({ button }) => {
-  return (
-    <Tooltip>
-      <TooltipTrigger asChild>
-        <Button
-          variant="ghost"
-          size="icon"
-          {...button}
-          className={cn(
-            "text-muted-foreground hover:text-foreground h-8 w-8",
-            button?.className,
-          )}
-        >
-          <FileTextIcon size={18} />
-        </Button>
-      </TooltipTrigger>
-      <TooltipContent
-        side="bottom"
-        className="bg-popover text-popover-foreground border"
-      >
-        <Trans>Load Sample JSON</Trans>
-      </TooltipContent>
-    </Tooltip>
-  );
-};
-
-const CopyTool: React.FC<{
-  content: string;
-  button?: React.ComponentProps<"button">;
-}> = ({ content, button }) => {
-  return (
-    <Tooltip>
-      <TooltipTrigger asChild>
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={() => copyToClipboard(content)}
-          {...button}
-          className={cn(
-            "text-muted-foreground hover:text-foreground h-8 w-8",
-            button?.className,
-          )}
-        >
-          <CopyIcon size={18} />
-        </Button>
-      </TooltipTrigger>
-      <TooltipContent
-        side="bottom"
-        className="bg-popover text-popover-foreground border"
-      >
-        <Trans>Copy Output</Trans>
-      </TooltipContent>
-    </Tooltip>
-  );
-};
-
-const ClearTool: React.FC<{
-  button?: React.ComponentProps<"button">;
-}> = ({ button }) => {
-  return (
-    <Tooltip>
-      <TooltipTrigger asChild>
-        <Button
-          variant="ghost"
-          size="icon"
-          {...button}
-          className={cn(
-            "text-muted-foreground hover:text-foreground h-8 w-8",
-            button?.className,
-          )}
-        >
-          <Trash2Icon size={18} />
-        </Button>
-      </TooltipTrigger>
-      <TooltipContent
-        side="bottom"
-        className="bg-popover text-popover-foreground border"
-      >
-        <Trans>Clear Input</Trans>
-      </TooltipContent>
-    </Tooltip>
-  );
-};
-
-export { ContinuousModeTool, CopyTool, PasteTool, LoadFileTool, ClearTool };
 export default InputOutputLayout;
