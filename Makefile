@@ -18,8 +18,11 @@ prebuild-desktop:
 build-desktop:
 	pnpm tauri build
 
+.PHONY: license
 license:
-	addlicense -f ./LICENSE . -i .github -i docs
+	addlicense -f ./LICENSE src-tauri
+	addlicense -f ./LICENSE src-utility
+	addlicense -f ./LICENSE src
 
 version:
 	pnpm run version

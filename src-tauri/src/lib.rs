@@ -17,30 +17,30 @@
 )]
 
 mod updates;
-
 use dev_utility_core;
 use std::sync::Mutex;
 use tauri::{
-    menu::{
-        AboutMetadata, MenuBuilder, MenuItem, MenuItemBuilder, MenuItemKind, PredefinedMenuItem,
-        SubmenuBuilder, HELP_SUBMENU_ID,
-    },
+    menu::{MenuItem, MenuItemKind, PredefinedMenuItem, SubmenuBuilder, HELP_SUBMENU_ID},
     Manager,
 };
+
+const SETTINGS_ID: &str = "settings";
+const UPDATE_ID: &str = "update";
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
-        // .plugin(tauri_plugin_shell::init())
-        // .plugin(tauri_plugin_os::init())
+        .plugin(tauri_plugin_os::init())
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_clipboard_manager::init())
         .setup(|app| {
             #[cfg(desktop)]
             {
-                let _ = app
-                    .handle()
-                    .plugin(tauri_plugin_updater::Builder::new().build());
+                app.handle()
+                    .plugin(tauri_plugin_updater::Builder::new().build())
+                    .unwrap();
+                app.handle().plugin(tauri_plugin_shell::init()).unwrap();
+
                 app.manage(updates::PendingUpdate(Mutex::new(None)));
 
                 let global_menu = app.menu().unwrap();
@@ -56,13 +56,21 @@ pub fn run() {
 
                             let preference_item = MenuItem::with_id(
                                 app,
-                                "settings",
+                                SETTINGS_ID,
                                 "Settings",
                                 true,
                                 Some("cmd+,"),
                             )?;
-
                             let _ = submenu.insert(&preference_item, about_position + 2);
+
+                            let update_item = MenuItem::with_id(
+                                app,
+                                UPDATE_ID,
+                                "Check for Updates",
+                                true,
+                                None::<&str>,
+                            )?;
+                            let _ = submenu.insert(&update_item, about_position + 3);
                         }
                     }
                 }
@@ -70,25 +78,24 @@ pub fn run() {
                 if let Some(item) = global_menu.get(HELP_SUBMENU_ID) {
                     let _ = global_menu.remove(&item);
                 }
-                let _ = global_menu.append(
-                    &SubmenuBuilder::new(app, "Help")
-                        .text("privacy_policy", "Privacy Policy")
-                        .separator()
-                        .text("report_issue", "Report An Issue...")
-                        .text("readest_help", "Readest Help")
-                        .build()?,
-                );
 
-                // // set the menu
-                // app.set_menu(menu)?;
+                global_menu
+                    .append(
+                        &SubmenuBuilder::new(app, "Help")
+                            .text("privacy_policy", "Privacy Policy")
+                            .separator()
+                            .text("report_issue", "Report An Issue...")
+                            .text("readest_help", "Readest Help")
+                            .build()?,
+                    )
+                    .unwrap();
 
                 // listen for menu item click events
-
                 app.on_menu_event(move |app, event| {
                     // emit a window event to the frontend
                     // let _event = app.emit("custom-event", "/settings");
 
-                    if event.id() == "settingss" {
+                    if event.id() == SETTINGS_ID {
                         let app_handle = app.app_handle().clone();
                         std::thread::spawn(move || {
                             let _ = tauri::WebviewWindowBuilder::new(
@@ -108,9 +115,9 @@ pub fn run() {
         })
         .invoke_handler(tauri::generate_handler![
             #[cfg(desktop)]
-            updates::fetch_update,
+            updates::app_fetch_update,
             #[cfg(desktop)]
-            updates::install_update,
+            updates::app_install_update,
             dev_utility_core::codec::decode_base64,
             dev_utility_core::codec::encode_base64,
             dev_utility_core::cryptography::generate_rsa_key,
