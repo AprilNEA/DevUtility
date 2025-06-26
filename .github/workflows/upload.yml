@@ -1,0 +1,71 @@
+name: Upload Release Assets
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag to upload assets for'
+        required: true
+        type: string
+
+jobs:
+  upload-assets-to-r2:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+    
+    env:
+      RELEASE_TAG: ${{ github.event.release.tag_name || inputs.tag }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Download all assets from release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+        run: |
+          mkdir assets
+          gh release view ${{ env.RELEASE_TAG }} --json assets -q '.assets[].name' | while read asset; do
+            gh release download ${{ env.RELEASE_TAG }} -p "$asset" -D assets/
+          done
+
+      - name: Build manifest file
+        env:
+          CDN_BASE_URL: ${{ secrets.CDN_BASE_URL }}
+          RELEASE_NOTES: ${{ github.event.release.body }}
+        run: |
+          mv assets/latest.json assets/manifest.json
+          # Replace GitHub release URLs with CDN URLs in manifest.json
+          sed -i "s|https://github.com/${{ github.repository }}/releases/download/${{ env.RELEASE_TAG }}|${CDN_BASE_URL}|g" assets/manifest.json
+          # Get release notes from GitHub API if triggered manually
+          if [ -z "$RELEASE_NOTES" ]; then
+            RELEASE_NOTES=$(gh release view ${{ env.RELEASE_TAG }} --json body -q '.body')
+          fi
+          # Update the notes field in manifest.json with the release content
+          jq --arg notes "$RELEASE_NOTES" '.notes = $notes' assets/manifest.json > assets/manifest.json.tmp && mv assets/manifest.json.tmp assets/manifest.json
+
+      - name: Upload assets to versioned directory
+        uses: ryand56/r2-upload-action@latest
+        with:
+          r2-account-id: ${{ secrets.R2_ACCOUNT_ID }}
+          r2-access-key-id: ${{ secrets.R2_ACCESS_KEY_ID }}
+          r2-secret-access-key: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          r2-bucket: ${{ secrets.R2_BUCKET }}
+          source-dir: assets
+          destination-dir: ./download/${{ env.RELEASE_TAG }}
+
+      - name: Upload assets to latest directory (only for release events)
+        if: github.event_name == 'release'
+        uses: ryand56/r2-upload-action@latest
+        with:
+          r2-account-id: ${{ secrets.R2_ACCOUNT_ID }}
+          r2-access-key-id: ${{ secrets.R2_ACCESS_KEY_ID }}
+          r2-secret-access-key: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          r2-bucket: ${{ secrets.R2_BUCKET }}
+          source-dir: assets
+          destination-dir: ./download/latest
