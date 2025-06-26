@@ -42,7 +42,7 @@ jobs:
         run: |
           mv assets/latest.json assets/manifest.json
           # Replace GitHub release URLs with CDN URLs in manifest.json
-          sed -i "s|https://github.com/${{ github.repository }}/releases/download/${{ env.RELEASE_TAG }}|${CDN_BASE_URL}|g" assets/manifest.json
+          sed -i "s|https://github.com/${{ github.repository }}/releases/download|${CDN_BASE_URL}|g" assets/manifest.json
           # Get release notes from GitHub API if triggered manually
           if [ -z "$RELEASE_NOTES" ]; then
             RELEASE_NOTES=$(gh release view ${{ env.RELEASE_TAG }} --json body -q '.body')
