@@ -13,8 +13,18 @@
  * See LICENSE file for details or contact admin@aprilnea.com
  */
 
-import type * as React from "react";
+import { Trans, useLingui } from "@lingui/react/macro";
+import { Separator } from "@radix-ui/react-separator";
 import { getCurrentWindow } from "@tauri-apps/api/window";
+import {
+  ChevronRightIcon,
+  PinIcon,
+  PinOffIcon,
+  SettingsIcon,
+} from "lucide-react";
+import type * as React from "react";
+import { useState } from "react";
+import { Link, useLocation } from "wouter";
 import {
   Sidebar,
   SidebarContent,
@@ -33,23 +43,18 @@ import {
   SidebarRail,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { Separator } from "@radix-ui/react-separator";
-import { Link, useLocation } from "wouter";
-import { PinIcon, PinOffIcon, ChevronRightIcon } from "lucide-react";
-import { SearchForm } from "./search-form";
-import { useState } from "react";
-import { Button } from "../ui/button";
-import { useSidebar } from "../ui/sidebar";
 import { cn } from "@/lib/utils";
+import utilities, { type UtilityMeta } from "@/utilities/meta";
+import { Button } from "../ui/button";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "../ui/collapsible";
-import { Trans, useLingui } from "@lingui/react/macro";
+import { useSidebar } from "../ui/sidebar";
 import { LocaleSwitcher } from "./locale-switcher";
+import { SearchForm } from "./search-form";
 import { ThemeSwitcher } from "./theme-switcher";
-import utilities, { type UtilityMeta } from "@/utilities/meta";
 
 const InsetHeader: React.FC<{ title: string }> = ({ title }) => {
   const { open } = useSidebar();
@@ -125,7 +130,7 @@ export default function AppSidebar({
       );
 
   return (
-    <SidebarProvider className="bg-transparent dark:bg-sidebar">
+    <SidebarProvider className="bg-sidebar overflow-hidden">
       <Sidebar {...props}>
         <SidebarHeader data-tauri-drag-region className="pt-12">
           <SearchForm
@@ -172,7 +177,9 @@ export default function AppSidebar({
                                           <Link
                                             href={`/${category.key}/${item.key}/${subItem.key}`}
                                           >
-                                            {subItem.icon && <subItem.icon className="h-4 w-4" />}
+                                            {subItem.icon && (
+                                              <subItem.icon className="h-4 w-4" />
+                                            )}
                                             <span>{t(subItem.title)}</span>
                                           </Link>
                                         </SidebarMenuSubButton>
@@ -216,13 +223,18 @@ export default function AppSidebar({
           <div className="flex justify-start px-2">
             <LocaleSwitcher />
             <ThemeSwitcher />
+            <Link to="/settings">
+              <Button variant="ghost" size="icon">
+                <SettingsIcon />
+              </Button>
+            </Link>
           </div>
         </SidebarContent>
         <SidebarRail />
       </Sidebar>
-      <SidebarInset className="bg-background rounded-lg m-2">
+      <SidebarInset className="bg-background rounded-lg m-2 overflow-hidden">
         <InsetHeader title={title} />
-        <main className="@container/main flex-1 max-h-[calc(100vh-3rem)] px-4 pb-2">
+        <main className="@container/main flex-1 max-h-[calc(100vh-3rem)] px-4 pb-2 overflow-hidden">
           {children}
         </main>
       </SidebarInset>

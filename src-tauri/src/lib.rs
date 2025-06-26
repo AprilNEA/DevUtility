@@ -16,7 +16,10 @@
     windows_subsystem = "windows"
 )]
 
+mod updates;
+
 use dev_utility_core;
+use std::sync::Mutex;
 use tauri::{
     menu::{
         AboutMetadata, MenuBuilder, MenuItem, MenuItemBuilder, MenuItemKind, PredefinedMenuItem,
@@ -24,77 +27,90 @@ use tauri::{
     },
     Manager,
 };
-use window_vibrancy::*;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
         // .plugin(tauri_plugin_shell::init())
         // .plugin(tauri_plugin_os::init())
-        .plugin(tauri_plugin_updater::Builder::new().build())
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_clipboard_manager::init())
         .setup(|app| {
-            let window = app.get_webview_window("main").unwrap();
+            #[cfg(desktop)]
+            {
+                let _ = app
+                    .handle()
+                    .plugin(tauri_plugin_updater::Builder::new().build());
+                app.manage(updates::PendingUpdate(Mutex::new(None)));
 
-            #[cfg(target_os = "macos")]
-            apply_vibrancy(
-                &window,
-                NSVisualEffectMaterial::HudWindow,
-                Some(NSVisualEffectState::Inactive),
-                None,
-            )
-            .expect("Unsupported platform! 'apply_vibrancy' is only supported on macOS");
+                let global_menu = app.menu().unwrap();
 
-            #[cfg(target_os = "windows")]
-            apply_blur(&window, Some((18, 18, 18, 125)))
-                .expect("Unsupported platform! 'apply_blur' is only supported on Windows");
+                #[cfg(target_os = "macos")]
+                if let Ok(items) = global_menu.items() {
+                    if let Some(app_submenu) = items.first() {
+                        if let MenuItemKind::Submenu(submenu) = app_submenu {
+                            let about_position = 0;
 
-            let global_menu = app.menu().unwrap();
+                            let separator = PredefinedMenuItem::separator(app)?;
+                            let _ = submenu.insert(&separator, about_position + 1);
 
-            #[cfg(target_os = "macos")]
-            if let Ok(items) = global_menu.items() {
-                if let Some(app_submenu) = items.first() {
-                    if let MenuItemKind::Submenu(submenu) = app_submenu {
-                        let about_position = 0;
+                            let preference_item = MenuItem::with_id(
+                                app,
+                                "settings",
+                                "Settings",
+                                true,
+                                Some("cmd+,"),
+                            )?;
 
-                        let separator = PredefinedMenuItem::separator(app)?;
-                        let _ = submenu.insert(&separator, about_position + 1);
-
-                        let preference_item =
-                            MenuItem::with_id(app, "settings", "Settings", true, Some("cmd+,"))?;
-
-                        let _ = submenu.insert(&preference_item, about_position + 2);
+                            let _ = submenu.insert(&preference_item, about_position + 2);
+                        }
                     }
                 }
+
+                if let Some(item) = global_menu.get(HELP_SUBMENU_ID) {
+                    let _ = global_menu.remove(&item);
+                }
+                let _ = global_menu.append(
+                    &SubmenuBuilder::new(app, "Help")
+                        .text("privacy_policy", "Privacy Policy")
+                        .separator()
+                        .text("report_issue", "Report An Issue...")
+                        .text("readest_help", "Readest Help")
+                        .build()?,
+                );
+
+                // // set the menu
+                // app.set_menu(menu)?;
+
+                // listen for menu item click events
+
+                app.on_menu_event(move |app, event| {
+                    // emit a window event to the frontend
+                    // let _event = app.emit("custom-event", "/settings");
+
+                    if event.id() == "settingss" {
+                        let app_handle = app.app_handle().clone();
+                        std::thread::spawn(move || {
+                            let _ = tauri::WebviewWindowBuilder::new(
+                                &app_handle,
+                                "settings",
+                                tauri::WebviewUrl::App("/settings".into()),
+                            )
+                            // .inner_size(800.0, 600.0)
+                            .build()
+                            .unwrap();
+                        });
+                    }
+                });
             }
-
-            if let Some(item) = global_menu.get(HELP_SUBMENU_ID) {
-                let _ = global_menu.remove(&item);
-            }
-            let _ = global_menu.append(
-                &SubmenuBuilder::new(app, "Help")
-                    .text("privacy_policy", "Privacy Policy")
-                    .separator()
-                    .text("report_issue", "Report An Issue...")
-                    .text("readest_help", "Readest Help")
-                    .build()?,
-            );
-
-            // // set the menu
-            // app.set_menu(menu)?;
-
-            // // listen for menu item click events
-            // app.on_menu_event(move |app, event| {
-            //     if event.id() == settings.id() {
-            //         // emit a window event to the frontend
-            //         // let _event = app.emit("custom-event", "/settings");
-            //     }
-            // });
 
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
+            #[cfg(desktop)]
+            updates::fetch_update,
+            #[cfg(desktop)]
+            updates::install_update,
             dev_utility_core::codec::decode_base64,
             dev_utility_core::codec::encode_base64,
             dev_utility_core::cryptography::generate_rsa_key,

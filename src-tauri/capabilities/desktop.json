@@ -9,8 +9,10 @@
     "main"
   ],
   "permissions": [
-    "updater:default",
+    "core:window:default",
+    "core:window:allow-start-dragging",
     "core:window:allow-set-always-on-top",
+    "updater:default",
     "clipboard-manager:allow-clear",
     "clipboard-manager:allow-read-image",
     "clipboard-manager:allow-read-text",
