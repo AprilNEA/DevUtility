@@ -15,30 +15,38 @@
 
 import "./index.css";
 
-import { Router, Route } from "wouter";
+import { lazy } from "react";
+import { Route, Router, Switch } from "wouter";
 import AppSidebar from "./components/sidebar";
 import utilities, { type UtilityMeta } from "./utilities/meta";
+
+const SettingsPage = lazy(() => import("./pages/settings"));
 
 const convertToRoute = (utility: UtilityMeta) => {
   if ("items" in utility) {
     // utility group
     return (
-      <Route path={utility.key} nest>
+      <Route key={utility.key} path={utility.key} nest>
         {utility.items.map((item) => convertToRoute(item))}
       </Route>
     );
   } else {
     // single utility
-    return <Route path={utility.key} component={utility.page} />;
+    return (
+      <Route key={utility.key} path={utility.key} component={utility.page} />
+    );
   }
 };
 
 function App() {
   return (
     <Router>
-      <AppSidebar>
-        {utilities.map((utility) => convertToRoute(utility))}
-      </AppSidebar>
+      <Switch>
+        <Route path="settings" component={SettingsPage} />
+        <AppSidebar>
+          {utilities.map((utility) => convertToRoute(utility))}
+        </AppSidebar>
+      </Switch>
     </Router>
   );
 }
