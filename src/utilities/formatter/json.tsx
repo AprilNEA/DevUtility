@@ -50,6 +50,7 @@ import {
 } from "@/components/ui/tooltip";
 import { useUtilityInvoke } from "@/utilities/invoke";
 import { type IndentStyle, IndentStyleEnum, InvokeFunction } from "../types";
+import { Callout } from "@/components/derived-ui/callout";
 
 const jsonExampleInput = `{
   "store": {
@@ -82,7 +83,7 @@ const jsonExampleInput = `{
 }`;
 
 export default function JsonFormatterPage() {
-  const { trigger } = useUtilityInvoke(InvokeFunction.FormatJson);
+  const { trigger, error } = useUtilityInvoke(InvokeFunction.FormatJson);
   const [input, setInput] = useState(jsonExampleInput);
   const [output, setOutput] = useState("");
 
@@ -381,6 +382,16 @@ export default function JsonFormatterPage() {
     </>
   );
 
+  const inputBottombar = (
+    <div className="flex items-center gap-2 mt-2">
+      {error && (
+        <Callout variant="error" className="w-full">
+          {String(error)}
+        </Callout>
+      )}
+    </div>
+  );
+
   const outputToolbar = (
     <>
       <DropdownMenu>
@@ -477,6 +488,7 @@ export default function JsonFormatterPage() {
   return (
     <InputOutputLayout
       inputToolbar={inputToolbar}
+      inputBottombar={inputBottombar}
       inputProps={{
         value: input,
         onChange: (e) => setInput(e.target.value),

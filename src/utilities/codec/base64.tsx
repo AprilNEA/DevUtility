@@ -27,6 +27,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { useUtilityInvoke } from "../invoke";
 import { InvokeFunction } from "../types";
+import { Callout } from "@/components/derived-ui/callout";
 
 export default function Base64CodecPage() {
   const [mode, setMode] = useState<CodecMode>(CodecMode.Encode);
@@ -95,9 +96,9 @@ export default function Base64CodecPage() {
     </>
   );
   const inputBottombar = error && (
-    <div className="px-3 py-2 text-sm text-red-600 bg-red-50 border border-red-200 rounded-md whitespace-pre-wrap">
+    <Callout variant="error" className="w-full">
       {error}
-    </div>
+    </Callout>
   );
 
   const outputToolbar = (

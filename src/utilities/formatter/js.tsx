@@ -13,8 +13,6 @@
  * See LICENSE file for details or contact admin@aprilnea.com
  */
 
-"use client"
-
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
