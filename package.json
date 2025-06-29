@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:mobile": "VITE_MOBILE=true vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "tauri": "tauri",

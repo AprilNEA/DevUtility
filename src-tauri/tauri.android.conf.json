@@ -1,0 +1,12 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "DevUtility",
+  "version": "0.1.4",
+  "identifier": "dev.utility.app",
+  "build": {
+    "beforeDevCommand": "pnpm dev:mobile",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "make prebuild-desktop",
+    "frontendDist": "../dist"
+  }
+}
