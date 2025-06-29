@@ -69,7 +69,7 @@ jobs:
       with:
         path: dist/
         key: build-${{ github.sha }}
-        
+
   deploy-github-pages:
     name: Deploy Website to GitHub Pages
     needs: build
@@ -102,3 +102,31 @@ jobs:
         if: github.ref == 'refs/heads/master'
         id: deployment
         uses: actions/deploy-pages@v4 
+
+
+
+  deploy-cloudflare-pages:
+    name: Deploy Website to Cloudflare Pages
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: cloudflare-pages
+      url: ${{ vars.CF_PAGES_URL }}
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    steps:
+      - name: Restore build cache
+        uses: actions/cache/restore@v3
+        with:
+          path: dist/
+          key: build-${{ github.sha }}
+          
+      - name: Deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CF_PAGES_API_TOKEN }}
+          accountId: ${{ secrets.CF_PAGES_ACCOUNT_ID }}
+          command: pages deploy dist --project-name=${{ secrets.CF_PAGES_PROJECT_NAME }}
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
