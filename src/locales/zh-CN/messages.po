@@ -1,30 +1,24 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2025-06-21 09:38+0800\n"
+"POT-Creation-Date: 2025-06-29 16:17+0800\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: @lingui/cli\n"
 "Language: zh\n"
-"Project-Id-Version: devutility\n"
-"Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-06-21 05:00\n"
-"Last-Translator: \n"
-"Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Crowdin-Project: devutility\n"
 "X-Crowdin-Project-ID: 801710\n"
 "X-Crowdin-Language: zh-CN\n"
 "X-Crowdin-File: /src/locales/en-US/messages.po\n"
 "X-Crowdin-File-ID: 34\n"
-
-#: src/components/sidebar/index.tsx:350
-#~ msgid "AES Debugger"
-#~ msgstr "AES 调试器"
+"Project-Id-Version: devutility\n"
+"Language-Team: Chinese Simplified\n"
+"PO-Revision-Date: 2025-06-29 08:23\n"
 
 #: src/utilities/meta.ts:68
 msgid "AI"
-msgstr ""
+msgstr "AI"
 
 #: src/utilities/meta.ts:199
 msgid "Base64 Encode/Decode"
@@ -32,15 +26,15 @@ msgstr "Base64 编码/解码"
 
 #: src/components/tools.tsx:164
 msgid "Clear Input"
-msgstr ""
+msgstr "清除输入"
 
 #: src/components/tools.tsx:43
 msgid "Continuous Mode"
-msgstr ""
+msgstr "连续模式"
 
 #: src/components/tools.tsx:136
 msgid "Copy Output"
-msgstr ""
+msgstr "复制输出"
 
 #: src/utilities/meta.ts:143
 msgid "Cryptography & Security"
@@ -50,17 +44,13 @@ msgstr "密码学"
 msgid "CSS Beautify/Minify"
 msgstr "CSS 美化/压缩"
 
-#: src/components/sidebar/index.tsx:157
-#~ msgid "Data Converter"
-#~ msgstr "数据转换器"
-
 #: src/components/codec-mode.tsx:48
 msgid "Decode"
-msgstr ""
+msgstr "解码"
 
 #: src/components/codec-mode.tsx:42
 msgid "Encode"
-msgstr ""
+msgstr "编码"
 
 #: src/utilities/meta.ts:194
 msgid "Encoder, Decoder"
@@ -76,7 +66,7 @@ msgstr "生成器"
 
 #: src/utilities/meta.ts:135
 msgid "Hash Generator"
-msgstr ""
+msgstr "哈希生成器"
 
 #: src/utilities/meta.ts:92
 msgid "HTML Beautify/Minify"
@@ -84,7 +74,7 @@ msgstr "HTML 美化/压缩"
 
 #: src/components/layout/input-output.tsx:40
 msgid "Input"
-msgstr ""
+msgstr "输入"
 
 #: src/utilities/meta.ts:104
 msgid "JS Beautify/Minify"
@@ -104,7 +94,7 @@ msgstr "密钥生成器"
 
 #: src/components/tools.tsx:106
 msgid "Load Sample JSON"
-msgstr ""
+msgstr "加载示例 JSON"
 
 #: src/components/sidebar/index.tsx:145
 msgid "No results found."
@@ -112,15 +102,15 @@ msgstr "未找到结果。"
 
 #: src/utilities/meta.ts:148
 msgid "OATH Debugger"
-msgstr ""
+msgstr "OATH 调试器"
 
 #: src/components/layout/input-output.tsx:44
 msgid "Output"
-msgstr ""
+msgstr "输出"
 
 #: src/components/tools.tsx:78
 msgid "Paste from Clipboard"
-msgstr ""
+msgstr "从剪贴板粘贴"
 
 #: src/utilities/meta.ts:167
 msgid "RSA Debugger"
@@ -128,16 +118,13 @@ msgstr "RSA 调试器"
 
 #: src/utilities/meta.ts:73
 msgid "Tokenizer"
-msgstr ""
+msgstr "Tokenizer"
 
 #: src/utilities/meta.ts:159
 msgid "TOTP Debugger"
-msgstr ""
-
-#: src/components/sidebar/index.tsx:161
-#~ msgid "URL Parser"
-#~ msgstr "URL解析器"
+msgstr "TOTP 调试器"
 
 #: src/utilities/meta.ts:129
 msgid "UUID/ULID Generate/Decode"
 msgstr "UUID/ULID 生成/解码"
+
