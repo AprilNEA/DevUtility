@@ -13,11 +13,13 @@
  * See LICENSE file for details or contact admin@aprilnea.com
  */
 
-import path from "path";
-import tailwindcss from "@tailwindcss/vite";
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react-swc";
 import { lingui } from "@lingui/vite-plugin";
+import tailwindcss from "@tailwindcss/vite";
+import react from "@vitejs/plugin-react-swc";
+import path from "path";
+import { defineConfig } from "vite";
+import topLevelAwait from "vite-plugin-top-level-await";
+import wasm from "vite-plugin-wasm";
 
 const host = process.env.TAURI_DEV_HOST;
 
@@ -39,7 +41,12 @@ export default defineConfig(async () => ({
     }),
     lingui(),
     tailwindcss(),
+    wasm(),
+    topLevelAwait(),
   ],
+  optimizeDeps: {
+    exclude: ["@dev-utility/core"],
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

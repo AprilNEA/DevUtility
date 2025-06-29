@@ -7,7 +7,7 @@ SHELL = /bin/bash
 build: pkg
 
 pkg: src-utility
-	wasm-pack build --target web --scope dev-utility --out-name core --out-dir ../pkg src-utility --features web
+	wasm-pack build --target bundler --scope dev-utility --out-name core --out-dir ../pkg src-utility --features web
 	sed -i '.bak' -e 's/@dev-utility\/dev-utility-core/@dev-utility\/core/g' pkg/package.json
 	rm pkg/package.json.bak
 

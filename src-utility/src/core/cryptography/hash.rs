@@ -16,6 +16,7 @@ use hex;
 use rayon::prelude::*;
 use serde::{Deserialize, Serialize};
 use std::sync::Arc;
+use universal_function_macro::universal_function;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct HashResult {
@@ -37,7 +38,7 @@ fn hash_with_algorithm<D: Digest>(data: &[u8]) -> String {
     hex::encode(hasher.finalize())
 }
 
-#[tauri::command]
+#[universal_function(desktop_only)]
 pub fn generate_hashes(input: &str) -> HashResult {
     let data = Arc::new(input.as_bytes().to_vec());
 

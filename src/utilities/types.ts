@@ -20,6 +20,7 @@ export enum InvokeFunction {
   GenerateUuidV7 = "generate_uuid_v7",
   GenerateHashes = "generate_hashes",
   FormatJson = "format_json",
+  FormatCss = "format_css",
   EncodeBase64 = "encode_base64",
   DecodeBase64 = "decode_base64",
   GenerateRsaKey = "generate_rsa_key",
@@ -27,7 +28,7 @@ export enum InvokeFunction {
   // TOTP Functions
   GenerateTotpSecret = "generate_totp_secret",
   GenerateTotpCode = "generate_totp_code",
-  ValidateTotpCode = "validate_totp_code",
+  ValidateTotpCode = "validate_totp_code"
 }
 
 export enum HashAlgorithm {

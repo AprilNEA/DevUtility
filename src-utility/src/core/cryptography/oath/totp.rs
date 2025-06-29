@@ -55,7 +55,7 @@ pub struct TotpSecret {
 }
 
 // Generate a new TOTP secret
-#[universal_function]
+#[universal_function(desktop_only)]
 pub async fn generate_totp_secret(
     issuer: String,
     account: String,
@@ -116,7 +116,7 @@ pub async fn generate_totp_secret(
 }
 
 // Generate TOTP code for current time
-#[universal_function]
+#[universal_function(desktop_only)]
 pub async fn generate_totp_code(
     secret: String,
     algorithm: HashAlgorithm,
@@ -134,7 +134,7 @@ pub async fn generate_totp_code(
 }
 
 // Generate TOTP code for specific time
-#[universal_function]
+#[universal_function(desktop_only)]
 pub async fn generate_totp_code_for_time(
     secret: String,
     algorithm: HashAlgorithm,
@@ -203,7 +203,7 @@ pub async fn generate_totp_code_for_time(
 }
 
 // Validate TOTP code
-#[universal_function]
+#[universal_function(desktop_only)]
 pub async fn validate_totp_code(
     secret: String,
     code: String,

@@ -13,6 +13,10 @@
 
 use serde::{Deserialize, Serialize};
 use sonic_rs;
+use universal_function_macro::universal_function;
+
+#[cfg(feature = "web")]
+use wasm_bindgen::prelude::*;
 
 use crate::error::UtilityError;
 
@@ -24,7 +28,39 @@ pub enum IndentStyle {
     Minified,
 }
 
-#[tauri::command]
+#[cfg(feature = "web")]
+impl From<IndentStyle> for wasm_bindgen::prelude::JsValue {
+    fn from(val: IndentStyle) -> Self {
+        serde_wasm_bindgen::to_value(&val).unwrap()
+    }
+}
+
+#[cfg(feature = "web")]
+impl wasm_bindgen::describe::WasmDescribe for IndentStyle {
+    fn describe() {
+        JsValue::describe()
+    }
+}
+
+#[cfg(feature = "web")]
+impl wasm_bindgen::convert::IntoWasmAbi for IndentStyle {
+    type Abi = <JsValue as wasm_bindgen::convert::IntoWasmAbi>::Abi;
+
+    fn into_abi(self) -> Self::Abi {
+        serde_wasm_bindgen::to_value(&self).unwrap().into_abi()
+    }
+}
+
+#[cfg(feature = "web")]
+impl wasm_bindgen::convert::FromWasmAbi for IndentStyle {
+    type Abi = <JsValue as wasm_bindgen::convert::FromWasmAbi>::Abi;
+
+    unsafe fn from_abi(js: Self::Abi) -> Self {
+        serde_wasm_bindgen::from_value(JsValue::from_abi(js)).unwrap()
+    }
+}
+
+#[universal_function(desktop_only)]
 pub fn format_json(input: &str, style: IndentStyle) -> Result<String, UtilityError> {
     let value: sonic_rs::Value =
         sonic_rs::from_str(input).map_err(|e| UtilityError::ParseError(e.to_string()))?;

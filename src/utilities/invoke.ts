@@ -13,23 +13,23 @@
  * See LICENSE file for details or contact admin@aprilnea.com
  */
 
-import { invoke as invokeCore, type InvokeOptions } from "@tauri-apps/api/core";
-import type {
-  InvokeFunction,
-  IndentStyle,
-  HashResult,
-  RsaKeyPair,
-  RsaKeyAnalysis,
-  TotpHashAlgorithm,
-  TotpSecret,
-  TotpResult,
-  TotpValidationResult,
-} from "./types";
+import init, * as wasm from "@dev-utility/core";
+import { type InvokeOptions, invoke as invokeCore } from "@tauri-apps/api/core";
 import useSWRMutation, {
   type SWRMutationConfiguration,
   type SWRMutationResponse,
 } from "swr/mutation";
-
+import {
+  type HashResult,
+  type IndentStyle,
+  InvokeFunction,
+  type RsaKeyAnalysis,
+  type RsaKeyPair,
+  type TotpHashAlgorithm,
+  type TotpResult,
+  type TotpSecret,
+  type TotpValidationResult,
+} from "./types";
 export const IS_TAURI = "__TAURI__" in window;
 
 interface UtilitiesArgs {
@@ -38,6 +38,7 @@ interface UtilitiesArgs {
   [InvokeFunction.GenerateUuidV4]: { count: number };
   [InvokeFunction.GenerateUuidV7]: { count: number; timestamp?: number };
   [InvokeFunction.FormatJson]: { input: string; style: IndentStyle };
+  [InvokeFunction.FormatCss]: { input: string };
   [InvokeFunction.GenerateHashes]: { input: string };
   [InvokeFunction.EncodeBase64]: { input: string };
   [InvokeFunction.DecodeBase64]: { input: string };
@@ -75,6 +76,7 @@ interface UtilitiesReturns {
   [InvokeFunction.GenerateUuidV4]: string;
   [InvokeFunction.GenerateUuidV7]: string;
   [InvokeFunction.FormatJson]: string;
+  [InvokeFunction.FormatCss]: string;
   [InvokeFunction.GenerateHashes]: HashResult;
   [InvokeFunction.EncodeBase64]: string;
   [InvokeFunction.DecodeBase64]: string;
@@ -85,12 +87,32 @@ interface UtilitiesReturns {
   [InvokeFunction.ValidateTotpCode]: TotpValidationResult;
 }
 
-export function utilityInvoke<T extends InvokeFunction>(
+type WasmFunctions = {
+  [K in keyof UtilitiesArgs]: (args: UtilitiesArgs[K]) => UtilitiesReturns[K];
+};
+const wasmFunctions: Partial<WasmFunctions> = {
+  [InvokeFunction.GenerateUlid]: (args) => wasm.generate_ulid(args.count),
+  // [InvokeFunction.GenerateNanoid]: (args) => wasm.generate_nanoid(args.count),
+  [InvokeFunction.GenerateUuidV4]: (args) => wasm.generate_uuid_v4(args.count),
+  [InvokeFunction.GenerateUuidV7]: (args) => wasm.generate_uuid_v7(args.count),
+  // [InvokeFunction.FormatJson]: (args) => wasm.format_json(args.input, args.style),
+  [InvokeFunction.FormatCss]: (args) => wasm.format_css(args.input),
+  // [InvokeFunction.GenerateHashes]: (args) => wasm.generate_hashes(args.input),
+  [InvokeFunction.EncodeBase64]: (args) => wasm.encode_base64(args.input),
+  [InvokeFunction.DecodeBase64]: (args) => wasm.decode_base64(args.input),
+};
+
+export async function utilityInvoke<T extends InvokeFunction>(
   cmd: T,
   args: UtilitiesArgs[T],
   options?: InvokeOptions
 ): Promise<UtilitiesReturns[T]> {
-  return invokeCore(cmd, args, options);
+  if (IS_TAURI) {
+    return invokeCore(cmd, args, options);
+  } else if (cmd in wasmFunctions) {
+    return wasmFunctions[cmd]!(args);
+  }
+  throw new Error(`Function ${cmd} not found`);
 }
 
 export function useUtilityInvoke<T extends InvokeFunction>(

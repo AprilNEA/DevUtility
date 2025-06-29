@@ -5,17 +5,15 @@ rustflags = ["-g"]
 
 # Apple Silicon Specific Configuration
 [target.aarch64-apple-darwin]
-rustflags = [
-    "-C", "target-cpu=native",
-    "-C", "target-feature=+aes,+sha2"
-]
+rustflags = ["-C", "target-cpu=native", "-C", "target-feature=+aes,+sha2"]
 
 # Intel Mac  Specific Configuration
 [target.x86_64-apple-darwin]
-rustflags = [
-    "-C", "target-cpu=haswell",
-    "-C", "target-feature=+aes,+ssse3"
-]
+rustflags = ["-C", "target-cpu=haswell", "-C", "target-feature=+aes,+ssse3"]
+
+# Web Assembly Specific Configuration
+[target.wasm32-unknown-unknown]
+rustflags = ["--cfg", "getrandom_backend=\"wasm_js\""]
 
 # Benchmark Configuration (Inherits platform-specific settings)
 [bench]

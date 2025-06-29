@@ -112,7 +112,7 @@ pub struct KeyFingerprint {
     pub sha512: String,
 }
 
-#[universal_function]
+#[universal_function(desktop_only)]
 pub async fn generate_rsa_key(bits: Option<usize>) -> Result<RsaKeyPair, UtilityError> {
     let mut rng = OsRng;
     let bits = bits.unwrap_or(2048);
@@ -246,7 +246,7 @@ fn calculate_key_fingerprint(public_key: &RsaPublicKey) -> Result<KeyFingerprint
     })
 }
 
-#[universal_function]
+#[universal_function(desktop_only)]
 pub async fn analyze_rsa_key(key: String) -> Result<RsaKeyAnalysis, UtilityError> {
     // Try to parse as private key first
     if let Ok(private_key) = RsaPrivateKey::from_pkcs8_pem(&key) {

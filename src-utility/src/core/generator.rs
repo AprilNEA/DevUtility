@@ -14,9 +14,10 @@
 use nanoid::nanoid;
 use std::time::{SystemTime, UNIX_EPOCH};
 use ulid::Ulid;
+use universal_function_macro::universal_function;
 use uuid::{Timestamp, Uuid};
 
-#[tauri::command]
+#[universal_function]
 pub fn generate_uuid_v4(count: u32) -> String {
     (0..count)
         .map(|_| Uuid::new_v4().to_string())
@@ -24,7 +25,7 @@ pub fn generate_uuid_v4(count: u32) -> String {
         .join("\n")
 }
 
-#[tauri::command]
+#[universal_function]
 pub fn generate_uuid_v7(count: u32, timestamp: Option<u64>) -> String {
     let context = uuid::Context::new_random();
 
@@ -42,7 +43,7 @@ pub fn generate_uuid_v7(count: u32, timestamp: Option<u64>) -> String {
         .join("7\n")
 }
 
-#[tauri::command]
+#[universal_function]
 pub fn generate_ulid(count: u32) -> String {
     (0..count)
         .map(|_| Ulid::new().to_string())
@@ -50,7 +51,7 @@ pub fn generate_ulid(count: u32) -> String {
         .join("\n")
 }
 
-#[tauri::command]
+#[universal_function(desktop_only)]
 pub fn generate_nanoid(count: u32) -> String {
     (0..count)
         .map(|_| nanoid!())

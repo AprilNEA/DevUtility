@@ -131,6 +131,7 @@ pub fn run() {
             dev_utility_core::generator::generate_ulid,
             dev_utility_core::generator::generate_nanoid,
             dev_utility_core::formatter::format_json,
+            dev_utility_core::formatter::format_css,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
