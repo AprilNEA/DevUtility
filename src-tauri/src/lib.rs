@@ -15,14 +15,10 @@
     all(not(debug_assertions), target_os = "windows"),
     windows_subsystem = "windows"
 )]
-
+#[cfg(desktop)]
 mod updates;
 use dev_utility_core;
 use std::sync::Mutex;
-use tauri::{
-    menu::{MenuItem, MenuItemKind, PredefinedMenuItem, SubmenuBuilder, HELP_SUBMENU_ID},
-    Manager,
-};
 
 const SETTINGS_ID: &str = "settings";
 const UPDATE_ID: &str = "update";
@@ -36,6 +32,12 @@ pub fn run() {
         .setup(|app| {
             #[cfg(desktop)]
             {
+                use tauri::{
+                    menu::{
+                        MenuItem, MenuItemKind, PredefinedMenuItem, SubmenuBuilder, HELP_SUBMENU_ID,
+                    },
+                    Manager,
+                };
                 app.handle()
                     .plugin(tauri_plugin_updater::Builder::new().build())
                     .unwrap();
