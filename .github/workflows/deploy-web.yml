@@ -68,8 +68,6 @@ jobs:
     
     - name: Build Rust/WASM package
       run: make pkg
-      env:
-        RUSTFLAGS: "-C target-feature=+simd128"
     
     - name: Build website
       run: pnpm build

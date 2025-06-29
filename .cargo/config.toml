@@ -13,7 +13,7 @@ rustflags = ["-C", "target-cpu=haswell", "-C", "target-feature=+aes,+ssse3"]
 
 # Web Assembly Specific Configuration
 [target.wasm32-unknown-unknown]
-rustflags = ["--cfg", "getrandom_backend=\"wasm_js\""]
+rustflags = ["--cfg", "getrandom_backend=\"wasm_js\"", "-C", "target-feature=+simd128"]
 
 # Benchmark Configuration (Inherits platform-specific settings)
 [bench]
