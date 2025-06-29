@@ -7,17 +7,8 @@ on:
     branches: [ master ]
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-    
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-    
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     
     steps:
     - name: Checkout code
@@ -71,18 +62,36 @@ jobs:
     
     - name: Build website
       run: pnpm build
-    
-    - name: Setup Pages
-      if: github.ref == 'refs/heads/master'
-      uses: actions/configure-pages@v4
-    
-    - name: Upload artifact
-      if: github.ref == 'refs/heads/master'
-      uses: actions/upload-pages-artifact@v3
-      with:
-        path: './dist'
-    
-    - name: Deploy to GitHub Pages
-      if: github.ref == 'refs/heads/master'
-      id: deployment
-      uses: actions/deploy-pages@v4 
+
+  deploy-github-pages:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    steps:
+
+      - name: Restore build cache
+        uses: actions/cache/restore@v3
+        with:
+          path: dist/
+          key: build-${{ github.sha }}
+          
+      - name: Setup Pages
+        if: github.ref == 'refs/heads/master'
+        uses: actions/configure-pages@v4
+      
+      - name: Upload artifact
+        if: github.ref == 'refs/heads/master'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './dist'
+      
+      - name: Deploy to GitHub Pages
+        if: github.ref == 'refs/heads/master'
+        id: deployment
+        uses: actions/deploy-pages@v4 
