@@ -62,7 +62,7 @@ jobs:
       run: make pkg
     
     - name: Build website
-      run: pnpm build
+      run: make build-web
 
     - name: Cache build
       uses: actions/cache/save@v3

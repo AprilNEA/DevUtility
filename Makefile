@@ -21,7 +21,7 @@ build-desktop:
 	pnpm tauri build
 
 build-web: pkg
-	pnpm build
+	WASM=true pnpm build
 
 .PHONY: license
 license:

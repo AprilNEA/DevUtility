@@ -11,9 +11,6 @@
 //
 // See LICENSE file for details or contact admin@aprilnea.com
 
-#[cfg(feature = "web")]
-use wasm_bindgen::prelude::*;
-
 #[derive(Debug, thiserror::Error)]
 pub enum UtilityError {
     #[error(transparent)]
@@ -37,9 +34,9 @@ impl serde::Serialize for UtilityError {
     }
 }
 
-#[cfg(feature = "web")]
-impl From<UtilityError> for JsValue {
-    fn from(err: UtilityError) -> JsValue {
-        JsValue::from_str(&err.to_string())
+#[cfg(target_arch = "wasm32")]
+impl From<UtilityError> for wasm_bindgen::prelude::JsValue {
+    fn from(err: UtilityError) -> wasm_bindgen::prelude::JsValue {
+        wasm_bindgen::prelude::JsValue::from_str(&err.to_string())
     }
 }

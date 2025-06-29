@@ -23,8 +23,8 @@ use universal_function_macro::universal_function;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "lowercase")]
-#[cfg_attr(feature = "web", derive(tsify::Tsify))]
-#[cfg_attr(feature = "web", tsify(into_wasm_abi, from_wasm_abi))]
+#[cfg_attr(target_arch = "wasm32", derive(tsify::Tsify))]
+#[cfg_attr(target_arch = "wasm32", tsify(into_wasm_abi, from_wasm_abi))]
 pub enum IndentStyle {
     Spaces(usize),
     Tabs,
