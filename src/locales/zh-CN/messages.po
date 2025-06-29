@@ -19,69 +19,125 @@ msgstr ""
 "X-Crowdin-File-ID: 34\n"
 
 #: src/components/sidebar/index.tsx:350
-msgid "AES Debugger"
-msgstr "AES 调试器"
+#~ msgid "AES Debugger"
+#~ msgstr "AES 调试器"
 
-#: src/components/sidebar/index.tsx:361
+#: src/utilities/meta.ts:68
+msgid "AI"
+msgstr ""
+
+#: src/utilities/meta.ts:199
 msgid "Base64 Encode/Decode"
 msgstr "Base64 编码/解码"
 
-#: src/components/sidebar/index.tsx:329
+#: src/components/tools.tsx:164
+msgid "Clear Input"
+msgstr ""
+
+#: src/components/tools.tsx:43
+msgid "Continuous Mode"
+msgstr ""
+
+#: src/components/tools.tsx:136
+msgid "Copy Output"
+msgstr ""
+
+#: src/utilities/meta.ts:143
 msgid "Cryptography & Security"
 msgstr "密码学"
 
-#: src/components/sidebar/index.tsx:115
+#: src/utilities/meta.ts:98
 msgid "CSS Beautify/Minify"
 msgstr "CSS 美化/压缩"
 
 #: src/components/sidebar/index.tsx:157
-msgid "Data Converter"
-msgstr "数据转换器"
+#~ msgid "Data Converter"
+#~ msgstr "数据转换器"
 
-#: src/components/sidebar/index.tsx:357
+#: src/components/codec-mode.tsx:48
+msgid "Decode"
+msgstr ""
+
+#: src/components/codec-mode.tsx:42
+msgid "Encode"
+msgstr ""
+
+#: src/utilities/meta.ts:194
 msgid "Encoder, Decoder"
 msgstr "编码器，解码器"
 
-#: src/components/sidebar/index.tsx:101
+#: src/utilities/meta.ts:81
 msgid "Format / Validate / Minify"
 msgstr "格式化 / 验证 / 压缩"
 
-#: src/components/sidebar/index.tsx:298
+#: src/utilities/meta.ts:124
 msgid "Generators"
 msgstr "生成器"
 
-#: src/components/sidebar/index.tsx:110
+#: src/utilities/meta.ts:135
+msgid "Hash Generator"
+msgstr ""
+
+#: src/utilities/meta.ts:92
 msgid "HTML Beautify/Minify"
 msgstr "HTML 美化/压缩"
 
-#: src/components/sidebar/index.tsx:120
+#: src/components/layout/input-output.tsx:40
+msgid "Input"
+msgstr ""
+
+#: src/utilities/meta.ts:104
 msgid "JS Beautify/Minify"
 msgstr "JS 美化/压缩"
 
-#: src/components/sidebar/index.tsx:105
+#: src/utilities/meta.ts:86
 msgid "JSON Format/Validate"
 msgstr "JSON 格式/验证"
 
-#: src/components/sidebar/index.tsx:343
+#: src/utilities/meta.ts:178
 msgid "Key Analyzer"
 msgstr "密钥分析器"
 
-#: src/components/sidebar/index.tsx:338
+#: src/utilities/meta.ts:172
 msgid "Key Generator"
 msgstr "密钥生成器"
 
-#: src/components/sidebar/index.tsx:469
+#: src/components/tools.tsx:106
+msgid "Load Sample JSON"
+msgstr ""
+
+#: src/components/sidebar/index.tsx:145
 msgid "No results found."
 msgstr "未找到结果。"
 
-#: src/components/sidebar/index.tsx:333
+#: src/utilities/meta.ts:148
+msgid "OATH Debugger"
+msgstr ""
+
+#: src/components/layout/input-output.tsx:44
+msgid "Output"
+msgstr ""
+
+#: src/components/tools.tsx:78
+msgid "Paste from Clipboard"
+msgstr ""
+
+#: src/utilities/meta.ts:167
 msgid "RSA Debugger"
 msgstr "RSA 调试器"
 
-#: src/components/sidebar/index.tsx:161
-msgid "URL Parser"
-msgstr "URL解析器"
+#: src/utilities/meta.ts:73
+msgid "Tokenizer"
+msgstr ""
 
-#: src/components/sidebar/index.tsx:302
+#: src/utilities/meta.ts:159
+msgid "TOTP Debugger"
+msgstr ""
+
+#: src/components/sidebar/index.tsx:161
+#~ msgid "URL Parser"
+#~ msgstr "URL解析器"
+
+#: src/utilities/meta.ts:129
 msgid "UUID/ULID Generate/Decode"
 msgstr "UUID/ULID 生成/解码"
