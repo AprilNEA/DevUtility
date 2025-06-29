@@ -13,7 +13,10 @@
  * See LICENSE file for details or contact admin@aprilnea.com
  */
 
-import init, * as wasm from "@dev-utility/core";
+// #v-ifdef WASM
+import wasmFunctions from "./invoke.wasm";
+// #v-endif
+
 import { type InvokeOptions, invoke as invokeCore } from "@tauri-apps/api/core";
 import useSWRMutation, {
   type SWRMutationConfiguration,
@@ -30,9 +33,10 @@ import {
   type TotpSecret,
   type TotpValidationResult,
 } from "./types";
+
 export const IS_TAURI = "__TAURI__" in window;
 
-interface UtilitiesArgs {
+export interface UtilitiesArgs {
   [InvokeFunction.GenerateUlid]: { count: number };
   [InvokeFunction.GenerateNanoid]: { count: number };
   [InvokeFunction.GenerateUuidV4]: { count: number };
@@ -70,7 +74,7 @@ interface UtilitiesArgs {
   };
 }
 
-interface UtilitiesReturns {
+export interface UtilitiesReturns {
   [InvokeFunction.GenerateUlid]: string;
   [InvokeFunction.GenerateNanoid]: string;
   [InvokeFunction.GenerateUuidV4]: string;
@@ -87,21 +91,6 @@ interface UtilitiesReturns {
   [InvokeFunction.ValidateTotpCode]: TotpValidationResult;
 }
 
-type WasmFunctions = {
-  [K in keyof UtilitiesArgs]: (args: UtilitiesArgs[K]) => UtilitiesReturns[K];
-};
-const wasmFunctions: Partial<WasmFunctions> = {
-  [InvokeFunction.GenerateUlid]: (args) => wasm.generate_ulid(args.count),
-  // [InvokeFunction.GenerateNanoid]: (args) => wasm.generate_nanoid(args.count),
-  [InvokeFunction.GenerateUuidV4]: (args) => wasm.generate_uuid_v4(args.count),
-  [InvokeFunction.GenerateUuidV7]: (args) => wasm.generate_uuid_v7(args.count),
-  [InvokeFunction.FormatJson]: (args) => wasm.format_json(args.input, args.style),
-  [InvokeFunction.FormatCss]: (args) => wasm.format_css(args.input),
-  // [InvokeFunction.GenerateHashes]: (args) => wasm.generate_hashes(args.input),
-  [InvokeFunction.EncodeBase64]: (args) => wasm.encode_base64(args.input),
-  [InvokeFunction.DecodeBase64]: (args) => wasm.decode_base64(args.input),
-};
-
 export async function utilityInvoke<T extends InvokeFunction>(
   cmd: T,
   args: UtilitiesArgs[T],
@@ -109,9 +98,12 @@ export async function utilityInvoke<T extends InvokeFunction>(
 ): Promise<UtilitiesReturns[T]> {
   if (IS_TAURI) {
     return invokeCore(cmd, args, options);
-  } else if (cmd in wasmFunctions) {
+  }
+  // #v-ifdef WASM
+  else if (cmd in wasmFunctions) {
     return wasmFunctions[cmd]!(args);
   }
+  // #v-endif
   throw new Error(`Function ${cmd} not found`);
 }
 
