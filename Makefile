@@ -18,6 +18,9 @@ prebuild-desktop:
 build-desktop:
 	pnpm tauri build
 
+build-web: pkg
+	pnpm build
+	
 .PHONY: license
 license:
 	addlicense -f ./LICENSE src-tauri
