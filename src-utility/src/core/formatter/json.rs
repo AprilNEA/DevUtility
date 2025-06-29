@@ -100,3 +100,4 @@ pub fn format_json(input: &str, style: IndentStyle) -> Result<String, UtilityErr
         }
     }
 }
+
