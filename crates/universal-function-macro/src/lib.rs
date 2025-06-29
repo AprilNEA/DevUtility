@@ -67,22 +67,22 @@ pub fn universal_function(args: TokenStream, input: TokenStream) -> TokenStream 
         (true, false) => {
             quote! {
                 #(#attrs)*
-                #[cfg_attr(feature = "web", wasm_bindgen::prelude::wasm_bindgen)]
+                #[cfg_attr(target_arch = "wasm32", wasm_bindgen::prelude::wasm_bindgen)]
                 #vis #sig #block
             }
         }
         (false, true) => {
             quote! {
                 #(#attrs)*
-                #[cfg_attr(feature = "desktop", tauri::command)]
+                #[cfg_attr(not(target_arch = "wasm32"), tauri::command)]
                 #vis #sig #block
             }
         }
         _ => {
             quote! {
                 #(#attrs)*
-                #[cfg_attr(feature = "web", wasm_bindgen::prelude::wasm_bindgen)]
-                #[cfg_attr(feature = "desktop", tauri::command)]
+                #[cfg_attr(target_arch = "wasm32", wasm_bindgen::prelude::wasm_bindgen)]
+                #[cfg_attr(not(target_arch = "wasm32"), tauri::command)]
                 #vis #sig #block
             }
         }

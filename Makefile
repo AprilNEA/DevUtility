@@ -9,7 +9,7 @@ build: pkg
 .PHONY: setup-rust
 
 pkg: src-utility
-	wasm-pack build --target bundler --scope dev-utility --out-name core --out-dir ../pkg src-utility --features web
+	wasm-pack build --target bundler --scope dev-utility --out-name core --out-dir ../pkg src-utility
 	sed 's/@dev-utility\/dev-utility-core/@dev-utility\/core/g' pkg/package.json > pkg/package.json.tmp
 	mv pkg/package.json.tmp pkg/package.json
 

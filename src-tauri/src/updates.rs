@@ -60,7 +60,7 @@ pub struct UpdateMetadata {
     pub version: String,
 }
 
-#[cfg_attr(feature = "desktop", tauri::command)]
+#[cfg_attr(desktop, tauri::command)]
 pub async fn app_fetch_update(
     app: AppHandle,
     pending_update: State<'_, PendingUpdate>,
@@ -89,7 +89,7 @@ pub async fn app_fetch_update(
     Ok(update_metadata)
 }
 
-#[cfg_attr(feature = "desktop", tauri::command)]
+#[cfg_attr(desktop, tauri::command)]
 pub async fn app_install_update(
     pending_update: State<'_, PendingUpdate>,
     on_event: Channel<DownloadEvent>,
