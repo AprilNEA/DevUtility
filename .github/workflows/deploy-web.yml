@@ -8,6 +8,7 @@ on:
 
 jobs:
   build:
+    name: Build Website
     runs-on: ubuntu-latest
     
     steps:
@@ -63,7 +64,14 @@ jobs:
     - name: Build website
       run: pnpm build
 
+    - name: Cache build
+      uses: actions/cache/save@v3
+      with:
+        path: dist/
+        key: build-${{ github.sha }}
+        
   deploy-github-pages:
+    name: Deploy Website to GitHub Pages
     needs: build
     runs-on: ubuntu-latest
     environment:
@@ -74,7 +82,6 @@ jobs:
       pages: write
       id-token: write
     steps:
-
       - name: Restore build cache
         uses: actions/cache/restore@v3
         with:
