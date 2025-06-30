@@ -30,6 +30,7 @@ import {
 } from "lucide-react";
 import { lazy } from "react";
 import type { RouteComponentProps } from "wouter";
+import IpPage from "./network/ip";
 
 const GptTokenizerPage = lazy(() => import("./ai/tokenizer"));
 const JsonFormatterPage = lazy(() => import("./formatter/json"));
@@ -198,6 +199,18 @@ const utilities: UtilityMeta[] = [
         icon: FileTextIcon,
         title: msg`Base64 Encode/Decode`,
         page: Base64EncoderDecoderPage,
+      },
+    ],
+  },
+  {
+    key:"network",
+    title: msg`Network`,
+    items: [
+      {
+        key: "ip",
+        icon: LinkIcon,
+        title: msg`IP Address`,
+        page: IpPage,
       },
     ],
   },
