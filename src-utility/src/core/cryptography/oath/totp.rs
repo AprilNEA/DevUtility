@@ -11,25 +11,36 @@
 //
 // See LICENSE file for details or contact admin@aprilnea.com
 
+#[cfg(not(target_arch = "wasm32"))]
+use std::time::{SystemTime, UNIX_EPOCH};
+#[cfg(target_arch = "wasm32")]
+use web_time::{SystemTime, UNIX_EPOCH};
+
 use super::{HashAlgorithm, SyncStatus};
 use crate::error::UtilityError;
+use base32::Alphabet;
+use hmac::{Hmac, Mac};
+
 use serde::{Deserialize, Serialize};
+use sha1::Sha1;
+use sha2::{Sha256, Sha512};
 use universal_function_macro::universal_function;
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
-pub struct TotpConfig {
+#[serde(rename_all = "camelCase")]
+#[cfg_attr(target_arch = "wasm32", derive(tsify::Tsify))]
+#[cfg_attr(target_arch = "wasm32", tsify(into_wasm_abi, from_wasm_abi))]
+pub struct TotpSecretResult {
     pub secret: String,           // Base32 encoded secret
-    pub issuer: String,           // Service name
-    pub account: String,          // Account identifier (e.g., email)
-    pub algorithm: HashAlgorithm, // HMAC algorithm
-    pub digits: u32,              // Code length (usually 6)
-    pub period: u32,              // Time step in seconds (usually 30)
-    pub label: Option<String>,    // Custom label for UI
-    pub image: Option<String>,    // Image URL for compatibility
+    pub qr_code_url: String,      // QR code URL for provisioning
+    pub provisioning_uri: String, // Full provisioning URI
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
-pub struct TotpResult {
+#[serde(rename_all = "camelCase")]
+#[cfg_attr(target_arch = "wasm32", derive(tsify::Tsify))]
+#[cfg_attr(target_arch = "wasm32", tsify(into_wasm_abi, from_wasm_abi))]
+pub struct TotpCodeResult {
     pub code: String,             // Generated TOTP code
     pub time_remaining: u64,      // Seconds remaining until next code
     pub time_used: u64,           // Time window used for generation
@@ -39,6 +50,9 @@ pub struct TotpResult {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
+#[cfg_attr(target_arch = "wasm32", derive(tsify::Tsify))]
+#[cfg_attr(target_arch = "wasm32", tsify(into_wasm_abi, from_wasm_abi))]
 pub struct TotpValidationResult {
     pub is_valid: bool,           // Whether code is valid
     pub time_offset: i32,         // Time offset from current window
@@ -47,32 +61,30 @@ pub struct TotpValidationResult {
     pub message: String,          // Validation message
 }
 
-#[derive(Debug, Serialize, Deserialize, Clone)]
-#[serde(rename_all = "camelCase")]
-pub struct TotpSecret {
-    pub secret: String,           // Base32 encoded secret
-    pub qr_code_url: String,      // QR code URL for provisioning
-    pub provisioning_uri: String, // Full provisioning URI
-}
-
-// Generate a new TOTP secret
-#[universal_function(desktop_only)]
+#[universal_function]
 pub async fn generate_totp_secret(
     issuer: String,
     account: String,
     algorithm: HashAlgorithm,
     digits: u32,
     period: u32,
-    label: Option<String>,
     image: Option<String>,
     add_issuer_prefix: bool,
-) -> Result<TotpSecret, UtilityError> {
-    use base32::Alphabet;
-
+) -> Result<TotpSecretResult, UtilityError> {
     // Generate 32 bytes of random data for the secret
     let mut secret_bytes = [0u8; 32];
-    use rand::RngCore;
-    rand::rngs::OsRng.fill_bytes(&mut secret_bytes);
+    #[cfg(target_arch = "wasm32")]
+    {
+        use fastrand::Rng;
+
+        let mut rng = Rng::new();
+        rng.fill(&mut secret_bytes);
+    }
+    #[cfg(not(target_arch = "wasm32"))]
+    {
+        use rand::RngCore;
+        rand::rngs::OsRng.fill_bytes(&mut secret_bytes);
+    }
 
     // Encode to base32
     let secret = base32::encode(Alphabet::Rfc4648 { padding: false }, &secret_bytes);
@@ -109,7 +121,7 @@ pub async fn generate_totp_secret(
         urlencoding::encode(&uri)
     );
 
-    Ok(TotpSecret {
+    Ok(TotpSecretResult {
         secret,
         qr_code_url,
         provisioning_uri: uri,
@@ -117,15 +129,13 @@ pub async fn generate_totp_secret(
 }
 
 // Generate TOTP code for current time
-#[universal_function(desktop_only)]
+#[universal_function]
 pub async fn generate_totp_code(
     secret: String,
     algorithm: HashAlgorithm,
     digits: u32,
     period: u32,
-) -> Result<TotpResult, UtilityError> {
-    use std::time::{SystemTime, UNIX_EPOCH};
-
+) -> Result<TotpCodeResult, UtilityError> {
     let now = SystemTime::now()
         .duration_since(UNIX_EPOCH)
         .map_err(|e| UtilityError::Runtime(format!("Time error: {}", e)))?
@@ -135,19 +145,14 @@ pub async fn generate_totp_code(
 }
 
 // Generate TOTP code for specific time
-#[universal_function(desktop_only)]
+#[universal_function]
 pub async fn generate_totp_code_for_time(
     secret: String,
     algorithm: HashAlgorithm,
     digits: u32,
     period: u32,
     timestamp: u64,
-) -> Result<TotpResult, UtilityError> {
-    use base32::Alphabet;
-    use hmac::{Hmac, Mac};
-    use sha1::Sha1;
-    use sha2::{Sha256, Sha512};
-
+) -> Result<TotpCodeResult, UtilityError> {
     // Decode base32 secret
     let secret_bytes = base32::decode(Alphabet::Rfc4648 { padding: false }, &secret)
         .ok_or_else(|| UtilityError::InvalidInput("Invalid base32 secret".to_string()))?;
@@ -193,7 +198,7 @@ pub async fn generate_totp_code_for_time(
     let code = binary % modulo;
     let code_str = format!("{:0width$}", code, width = digits as usize);
 
-    Ok(TotpResult {
+    Ok(TotpCodeResult {
         code: code_str,
         time_remaining,
         time_used: time_counter,
@@ -204,7 +209,7 @@ pub async fn generate_totp_code_for_time(
 }
 
 // Validate TOTP code
-#[universal_function(desktop_only)]
+#[universal_function]
 pub async fn validate_totp_code(
     secret: String,
     code: String,
@@ -213,8 +218,6 @@ pub async fn validate_totp_code(
     period: u32,
     window: u32, // Number of time windows to check (before and after current)
 ) -> Result<TotpValidationResult, UtilityError> {
-    use std::time::{SystemTime, UNIX_EPOCH};
-
     let now = SystemTime::now()
         .duration_since(UNIX_EPOCH)
         .map_err(|e| UtilityError::Runtime(format!("Time error: {}", e)))?

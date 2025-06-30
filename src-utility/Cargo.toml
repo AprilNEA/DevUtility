@@ -84,9 +84,12 @@ jsonwebtoken = { version = "9.3.1" }
 # Web-specific dependencies
 [target.'cfg(target_arch = "wasm32")'.dependencies]
 wasm-bindgen = { version = "0.2.84", features = ["serde"] }
+wasm-bindgen-futures = "0.4.50"
 serde-wasm-bindgen = "0.6.5"
 nanoid-wasm = "0.1.3"
 tsify = { version = "0.5", features = ["js"] }
+web-time = "1.1.0"
+fastrand = { version = "2.3", features = ["js"] }
 
 [dev-dependencies]
 wasm-bindgen-test = { version = "0.3.34" }
