@@ -1,6 +1,6 @@
 [package]
 name = "dev-utility-core"
-version = "0.1.4"
+version = "0.1.6"
 authors = ["AprilNEA  <github@sku.moe>"]
 description = "⚡ Universal developer toolkit for software, hardware, and security professionals."
 license-file = "../LICENSE"
