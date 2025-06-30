@@ -66,7 +66,7 @@ sonic-rs = "0.5.1"
 serde_yml = "0.0.12"
 basic-toml = "0.1.10"
 
-html5ever = "0.32"
+html5ever = "0.33"
 lightningcss = { version = "1.0.0-alpha.67", default-features = false, features = [
   "dashmap",
   "rayon",
