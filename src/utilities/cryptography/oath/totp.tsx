@@ -45,13 +45,8 @@ import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { copyToClipboard } from "@/lib/copyboard";
 import { useUtilityInvoke } from "@/utilities/invoke";
-import {
-  InvokeFunction,
-  TotpHashAlgorithm,
-  type TotpResult,
-  type TotpSecret,
-  type TotpValidationResult,
-} from "@/utilities/types";
+import { InvokeFunction } from "@/utilities/types";
+import { TotpHashAlgorithm } from "./types";
 
 enum TotpDebuggerTab {
   Create = "create",
@@ -130,7 +125,6 @@ const CreateSecret = () => {
       algorithm,
       digits,
       period,
-      label: undefined,
       image: image || undefined,
       addIssuerPrefix,
     });

@@ -134,43 +134,4 @@ export type RsaKeyAnalysis = {
   // fingerprint?: KeyFingerprint;
 };
 
-// TOTP Types
-export enum TotpHashAlgorithm {
-  SHA1 = "SHA1",
-  SHA256 = "SHA256", 
-  SHA512 = "SHA512",
-}
 
-export type TotpConfig = {
-  secret: string;
-  issuer: string;
-  account: string;
-  algorithm: TotpHashAlgorithm;
-  digits: number;
-  period: number;
-  label?: string;
-  image?: string;
-};
-
-export type TotpSecret = {
-  secret: string;
-  qrCodeUrl: string;
-  provisioningUri: string;
-};
-
-export type TotpResult = {
-  code: string;
-  timeRemaining: number;
-  timeUsed: number;
-  algorithm: TotpHashAlgorithm;
-  digits: number;
-  period: number;
-};
-
-export type TotpValidationResult = {
-  isValid: boolean;
-  timeOffset: number;
-  usedTimeWindow: number;
-  currentTimeWindow: number;
-  message: string;
-};

@@ -22,16 +22,20 @@ import useSWRMutation, {
   type SWRMutationConfiguration,
   type SWRMutationResponse,
 } from "swr/mutation";
+import type {
+  TotpCodeResult,
+  TotpGenerateCodeParams,
+  TotpGenerateSecretParams,
+  TotpSecretResult,
+  TotpValidateCodeParams,
+  TotpValidationResult,
+} from "./cryptography/oath/types";
 import {
   type HashResult,
   type IndentStyle,
   InvokeFunction,
   type RsaKeyAnalysis,
   type RsaKeyPair,
-  type TotpHashAlgorithm,
-  type TotpResult,
-  type TotpSecret,
-  type TotpValidationResult,
 } from "./types";
 
 export const IS_TAURI = "__TAURI__" in window;
@@ -48,30 +52,9 @@ export interface UtilitiesArgs {
   [InvokeFunction.DecodeBase64]: { input: string };
   [InvokeFunction.GenerateRsaKey]: { bits: number };
   [InvokeFunction.AnalyzeRsaKey]: { key: string };
-  [InvokeFunction.GenerateTotpSecret]: {
-    issuer: string;
-    account: string;
-    algorithm: TotpHashAlgorithm;
-    digits: number;
-    period: number;
-    label?: string;
-    image?: string;
-    addIssuerPrefix: boolean;
-  };
-  [InvokeFunction.GenerateTotpCode]: {
-    secret: string;
-    algorithm: TotpHashAlgorithm;
-    digits: number;
-    period: number;
-  };
-  [InvokeFunction.ValidateTotpCode]: {
-    secret: string;
-    code: string;
-    algorithm: TotpHashAlgorithm;
-    digits: number;
-    period: number;
-    window: number;
-  };
+  [InvokeFunction.GenerateTotpSecret]: TotpGenerateSecretParams;
+  [InvokeFunction.GenerateTotpCode]: TotpGenerateCodeParams;
+  [InvokeFunction.ValidateTotpCode]: TotpValidateCodeParams;
 }
 
 export interface UtilitiesReturns {
@@ -86,8 +69,8 @@ export interface UtilitiesReturns {
   [InvokeFunction.DecodeBase64]: string;
   [InvokeFunction.GenerateRsaKey]: RsaKeyPair;
   [InvokeFunction.AnalyzeRsaKey]: RsaKeyAnalysis;
-  [InvokeFunction.GenerateTotpSecret]: TotpSecret;
-  [InvokeFunction.GenerateTotpCode]: TotpResult;
+  [InvokeFunction.GenerateTotpSecret]: TotpSecretResult;
+  [InvokeFunction.GenerateTotpCode]: TotpCodeResult;
   [InvokeFunction.ValidateTotpCode]: TotpValidationResult;
 }
 
