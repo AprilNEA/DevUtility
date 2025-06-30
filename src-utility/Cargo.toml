@@ -86,7 +86,7 @@ jsonwebtoken = { version = "9.3.1" }
 wasm-bindgen = { version = "0.2.84", features = ["serde"] }
 serde-wasm-bindgen = "0.6.5"
 nanoid-wasm = "0.1.3"
-tsify = { version = "0.4", features = ["js"] }
+tsify = { version = "0.5", features = ["js"] }
 
 [dev-dependencies]
 wasm-bindgen-test = { version = "0.3.34" }
