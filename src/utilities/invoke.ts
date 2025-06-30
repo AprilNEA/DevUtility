@@ -14,7 +14,7 @@
  */
 
 // #v-ifdef WASM
-import wasmFunctions from "./invoke.wasm";
+import wasmFunctions from "./invoke-wasm";
 // #v-endif
 
 import { type InvokeOptions, invoke as invokeCore } from "@tauri-apps/api/core";
@@ -22,6 +22,7 @@ import useSWRMutation, {
   type SWRMutationConfiguration,
   type SWRMutationResponse,
 } from "swr/mutation";
+import { IS_TAURI } from "@/contants";
 import {
   type HashResult,
   type IndentStyle,
@@ -33,8 +34,6 @@ import {
   type TotpSecret,
   type TotpValidationResult,
 } from "./types";
-
-export const IS_TAURI = "__TAURI__" in window;
 
 export interface UtilitiesArgs {
   [InvokeFunction.GenerateUlid]: { count: number };

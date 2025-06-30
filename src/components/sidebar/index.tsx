@@ -43,6 +43,7 @@ import {
   SidebarRail,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import { IS_MOBILE } from "@/contants";
 import { cn } from "@/lib/utils";
 import utilities, { type UtilityMeta } from "@/utilities/meta";
 import { Button } from "../ui/button";
@@ -232,9 +233,19 @@ export default function AppSidebar({
         </SidebarContent>
         <SidebarRail />
       </Sidebar>
-      <SidebarInset className="bg-background rounded-lg m-2 overflow-hidden">
+      <SidebarInset
+        className={cn(
+          "bg-background overflow-hidden",
+          !IS_MOBILE && "rounded-lg m-2",
+        )}
+      >
         <InsetHeader title={title} />
-        <main className="@container/main flex-1 max-h-[calc(100vh-3rem)] px-4 pb-2 overflow-hidden">
+        <main
+          className={cn(
+            "@container/main flex-1 max-h-[calc(100vh-3rem)] overflow-hidden",
+            IS_MOBILE ? "overflow-y-auto" : "px-4 pb-2",
+          )}
+        >
           {children}
         </main>
       </SidebarInset>
