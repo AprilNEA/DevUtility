@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:wasm": "WASM=true vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "tauri": "tauri",
