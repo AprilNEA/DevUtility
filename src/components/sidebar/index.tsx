@@ -171,20 +171,28 @@ export default function AppSidebar({
                                 </CollapsibleTrigger>
                                 <CollapsibleContent>
                                   <SidebarMenuSub>
-                                    {item.items.map((subItem) => (
-                                      <SidebarMenuSubItem key={subItem.key}>
-                                        <SidebarMenuSubButton asChild>
-                                          <Link
-                                            href={`/${category.key}/${item.key}/${subItem.key}`}
-                                          >
-                                            {subItem.icon && (
-                                              <subItem.icon className="h-4 w-4" />
-                                            )}
-                                            <span>{t(subItem.title)}</span>
-                                          </Link>
-                                        </SidebarMenuSubButton>
-                                      </SidebarMenuSubItem>
-                                    ))}
+                                    {item.items.map((subItem) => {
+                                      const href = `/${category.key}/${item.key}/${subItem.key}`;
+                                      return (
+                                        <SidebarMenuSubItem key={subItem.key}>
+                                          <SidebarMenuSubButton asChild>
+                                            <Link
+                                              href={href}
+                                              onClick={() => {
+                                                if (item.title.message) {
+                                                  setTitle(item.title.message);
+                                                }
+                                              }}
+                                            >
+                                              {subItem.icon && (
+                                                <subItem.icon className="h-4 w-4" />
+                                              )}
+                                              <span>{t(subItem.title)}</span>
+                                            </Link>
+                                          </SidebarMenuSubButton>
+                                        </SidebarMenuSubItem>
+                                      );
+                                    })}
                                   </SidebarMenuSub>
                                 </CollapsibleContent>
                               </SidebarMenuItem>
