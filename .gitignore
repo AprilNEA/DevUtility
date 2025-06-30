@@ -34,3 +34,6 @@ Cargo.lock
 bin/
 pkg/
 wasm-pack.log
+
+# Sentry Config File
+.env.sentry-build-plugin

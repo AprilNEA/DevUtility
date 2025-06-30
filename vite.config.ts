@@ -14,6 +14,7 @@
  */
 
 import { lingui } from "@lingui/vite-plugin";
+import { sentryVitePlugin } from "@sentry/vite-plugin";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
@@ -26,6 +27,9 @@ const host = process.env.TAURI_DEV_HOST;
 
 // https://vitejs.dev/config/
 export default defineConfig(async () => ({
+  build: {
+    sourcemap: true,
+  },
   plugins: [
     ConditionalCompile(),
     react({
@@ -45,6 +49,11 @@ export default defineConfig(async () => ({
     tailwindcss(),
     wasm(),
     topLevelAwait(),
+    sentryVitePlugin({
+      authToken: process.env.SENTRY_AUTH_TOKEN,
+      org: process.env.SENTRY_ORG,
+      project: process.env.SENTRY_PROJECT,
+    }),
   ],
   optimizeDeps: {
     exclude: ["@dev-utility/core"],

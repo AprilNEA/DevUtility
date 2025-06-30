@@ -13,19 +13,45 @@
  * See LICENSE file for details or contact admin@aprilnea.com
  */
 
+import { TooltipProvider } from "@radix-ui/react-tooltip";
+import * as Sentry from "@sentry/react";
+import { NuqsAdapter } from "nuqs/adapters/react";
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { ErrorBoundary } from "react-error-boundary";
+import fallbackRender from "./components/error-render";
+import { I18nProvider } from "./i18n";
 import App from "./router";
 
-import { TooltipProvider } from "@radix-ui/react-tooltip";
-import { I18nProvider } from "./i18n";
+if (import.meta.env.VITE_SENTRY_DSN) {
+  Sentry.init({
+    dsn: import.meta.env.VITE_SENTRY_DSN,
+    sendDefaultPii: true,
+  });
+}
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <I18nProvider>
-      <TooltipProvider>
-        <App />
-      </TooltipProvider>
-    </I18nProvider>
-  </React.StrictMode>
+    <ErrorBoundary
+      fallbackRender={fallbackRender}
+      onError={(error, componentStack) => {
+        if (import.meta.env.VITE_SENTRY_DSN) {
+          Sentry.captureException(error, {
+            extra: { componentStack },
+          });
+        }
+      }}
+      // onReset={(details) => {
+      //   // Reset the state of your app so the error doesn't happen again
+      // }}
+    >
+      <NuqsAdapter>
+        <I18nProvider>
+          <TooltipProvider>
+            <App />
+          </TooltipProvider>
+        </I18nProvider>
+      </NuqsAdapter>
+    </ErrorBoundary>
+  </React.StrictMode>,
 );
