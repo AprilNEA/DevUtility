@@ -28,6 +28,7 @@ import { Link, useLocation } from "wouter";
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -228,16 +229,16 @@ export default function AppSidebar({
               ))
             )}
           </div>
-          <div className="flex justify-start px-2">
-            <LocaleSwitcher />
-            <ThemeSwitcher />
-            <Link to="/settings">
-              <Button variant="ghost" size="icon">
-                <SettingsIcon />
-              </Button>
-            </Link>
-          </div>
         </SidebarContent>
+        <SidebarFooter className="flex-row justify-start">
+          <LocaleSwitcher />
+          <ThemeSwitcher />
+          <Link to="/settings">
+            <Button variant="ghost" size="icon">
+              <SettingsIcon />
+            </Button>
+          </Link>
+        </SidebarFooter>
         <SidebarRail />
       </Sidebar>
       <SidebarInset className="bg-background rounded-lg m-2 overflow-hidden">
