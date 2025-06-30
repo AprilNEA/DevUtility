@@ -15,92 +15,279 @@ msgstr ""
 "Project-Id-Version: devutility\n"
 "Language-Team: Chinese Simplified\n"
 "PO-Revision-Date: 2025-06-29 08:23\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
 
-#: src/utilities/meta.ts:68
+#: src/utilities/cryptography/oath/totp.tsx:216
+msgid "💡 The most common parameters used by services is a <0>period of 30 seconds</0>, <1>sha1 algorithm</1> and <2>6 Digits</2> for your OTP code. If you are not sure what parameters are used by your service, always use this as default."
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:208
+msgid "Additionally add issuer as query parameter?"
+msgstr ""
+
+#: src/utilities/meta.ts:69
 msgid "AI"
 msgstr "AI"
 
-#: src/utilities/meta.ts:199
+#: src/utilities/cryptography/oath/totp.tsx:233
+#: src/utilities/cryptography/oath/totp.tsx:442
+#: src/utilities/cryptography/oath/totp.tsx:659
+msgid "Algorithm"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:527
+msgid "Algorithm:"
+msgstr ""
+
+#: src/utilities/meta.ts:200
 msgid "Base64 Encode/Decode"
 msgstr "Base64 编码/解码"
+
+#: src/utilities/cryptography/oath/totp.tsx:415
+msgid "Based on a TOTP Secret ..."
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:626
+msgid "Based on your secret"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:171
+msgid "By default and to be compatible with Google Authenticator, the issuer is set in the query parameters and as the label prefix."
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:889
+msgid "Check Code"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:601
+msgid "Check TOTP Code"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:720
+msgid "CHECK TOTP CODE"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:720
+msgid "Checking..."
+msgstr ""
 
 #: src/components/tools.tsx:164
 msgid "Clear Input"
 msgstr "清除输入"
 
+#: src/utilities/cryptography/oath/totp.tsx:632
+msgid "Code ..."
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:767
+msgid "Code is Invalid!"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:760
+msgid "Code is Valid!"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:553
+msgid "Continue to Validate Code"
+msgstr ""
+
 #: src/components/tools.tsx:43
 msgid "Continuous Mode"
 msgstr "连续模式"
+
+#: src/utilities/cryptography/oath/totp.tsx:518
+msgid "Copy Code"
+msgstr ""
 
 #: src/components/tools.tsx:136
 msgid "Copy Output"
 msgstr "复制输出"
 
-#: src/utilities/meta.ts:143
+#: src/utilities/cryptography/oath/totp.tsx:867
+msgid "Create Secret"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:146
+msgid "Create TOTP Secret"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:295
+msgid "CREATE TOTP SECRET"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:294
+msgid "Creating..."
+msgstr ""
+
+#: src/utilities/meta.ts:144
 msgid "Cryptography & Security"
 msgstr "密码学"
 
-#: src/utilities/meta.ts:98
+#: src/utilities/meta.ts:99
 msgid "CSS Beautify/Minify"
 msgstr "CSS 美化/压缩"
+
+#: src/utilities/cryptography/oath/totp.tsx:497
+msgid "Current TOTP Code"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:813
+msgid "Current Window:"
+msgstr ""
 
 #: src/components/codec-mode.tsx:48
 msgid "Decode"
 msgstr "解码"
 
+#: src/utilities/cryptography/oath/totp.tsx:276
+#: src/utilities/cryptography/oath/totp.tsx:469
+#: src/utilities/cryptography/oath/totp.tsx:686
+msgid "Digits"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:532
+msgid "Digits:"
+msgstr ""
+
 #: src/components/codec-mode.tsx:42
 msgid "Encode"
 msgstr "编码"
 
-#: src/utilities/meta.ts:194
+#: src/utilities/meta.ts:195
 msgid "Encoder, Decoder"
 msgstr "编码器，解码器"
 
-#: src/utilities/meta.ts:81
+#: src/utilities/cryptography/oath/totp.tsx:411
+msgid "Enter a generated TOTP (Time based) secret"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:408
+msgid "Enter the base32-encoded secret that was generated in step 1"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:154
+msgid "For e.g the users email address. You must set label before to generate ProvisioningURI/QR code"
+msgstr ""
+
+#: src/utilities/meta.ts:82
 msgid "Format / Validate / Minify"
 msgstr "格式化 / 验证 / 压缩"
 
-#: src/utilities/meta.ts:124
+#: src/utilities/cryptography/oath/totp.tsx:878
+msgid "Generate Code"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:400
+msgid "Generate TOTP Code"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:486
+msgid "GENERATE TOTP CODE"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:305
+msgid "Generated Secret"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:628
+msgid "Generated TOTP Code to auth"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:486
+msgid "Generating..."
+msgstr ""
+
+#: src/utilities/meta.ts:125
 msgid "Generators"
 msgstr "生成器"
 
-#: src/utilities/meta.ts:135
+#: src/utilities/meta.ts:136
 msgid "Hash Generator"
 msgstr "哈希生成器"
 
-#: src/utilities/meta.ts:92
+#: src/utilities/cryptography/oath/totp.tsx:467
+#: src/utilities/cryptography/oath/totp.tsx:684
+msgid "How much digits set for your created secret"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:274
+msgid "How much digits should the OTP have"
+msgstr ""
+
+#: src/utilities/meta.ts:93
 msgid "HTML Beautify/Minify"
 msgstr "HTML 美化/压缩"
+
+#: src/utilities/cryptography/oath/totp.tsx:191
+msgid "Image"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:195
+msgid "Image URL, e.g 'https://foo.bar/otp.png ..."
+msgstr ""
 
 #: src/components/layout/input-output.tsx:40
 msgid "Input"
 msgstr "输入"
 
-#: src/utilities/meta.ts:104
+#: src/utilities/cryptography/oath/totp.tsx:792
+msgid "Invalid"
+msgstr ""
+
+#: src/utilities/meta.ts:212
+msgid "IP Address"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:178
+msgid "Issuer, e.g your service name ..."
+msgstr ""
+
+#: src/utilities/meta.ts:105
 msgid "JS Beautify/Minify"
 msgstr "JS 美化/压缩"
 
-#: src/utilities/meta.ts:86
+#: src/utilities/meta.ts:87
 msgid "JSON Format/Validate"
 msgstr "JSON 格式/验证"
 
-#: src/utilities/meta.ts:178
+#: src/utilities/meta.ts:179
 msgid "Key Analyzer"
 msgstr "密钥分析器"
 
-#: src/utilities/meta.ts:172
+#: src/utilities/meta.ts:173
 msgid "Key Generator"
 msgstr "密钥生成器"
+
+#: src/utilities/cryptography/oath/totp.tsx:161
+msgid "Label, e.g email address of user ..."
+msgstr ""
 
 #: src/components/tools.tsx:106
 msgid "Load Sample JSON"
 msgstr "加载示例 JSON"
 
-#: src/components/sidebar/index.tsx:145
+#: src/utilities/cryptography/oath/totp.tsx:831
+msgid "Message:"
+msgstr ""
+
+#: src/utilities/meta.ts:207
+msgid "Network"
+msgstr ""
+
+#: src/components/sidebar/index.tsx:146
 msgid "No results found."
 msgstr "未找到结果。"
 
-#: src/utilities/meta.ts:148
+#: src/utilities/cryptography/oath/totp.tsx:609
+msgid "Normally the secret is securely saved on server-side DB, however on test you have to enter manually"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:701
+msgid "Number of time windows to check before and after current time (0 = only current window)"
+msgstr ""
+
+#: src/utilities/meta.ts:149
 msgid "OATH Debugger"
 msgstr "OATH 调试器"
 
@@ -112,19 +299,133 @@ msgstr "输出"
 msgid "Paste from Clipboard"
 msgstr "从剪贴板粘贴"
 
-#: src/utilities/meta.ts:167
+#: src/utilities/cryptography/oath/totp.tsx:259
+msgid "Period"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:427
+#: src/utilities/cryptography/oath/totp.tsx:644
+msgid "Period in seconds"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:536
+msgid "Period:"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:328
+msgid "Provisioning URI"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:348
+msgid "QR Code"
+msgstr ""
+
+#: src/utilities/meta.ts:168
 msgid "RSA Debugger"
 msgstr "RSA 调试器"
 
-#: src/utilities/meta.ts:73
+#: src/utilities/cryptography/oath/totp.tsx:357
+msgid "Scan this QR code with your authenticator app"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:612
+msgid "Secret"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:616
+msgid "Secret ..."
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:310
+msgid "Secret (Base32)"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:157
+msgid "Set a label"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:174
+msgid "Set an issuer"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:256
+msgid "Set the period how long the OTP is valid, recommend is 30 seconds"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:188
+msgid "Some applications such as FreeOTP can load images from an URI (image parameter). It need to be a valid URL to an image."
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:753
+msgid "Status Unknown"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:778
+msgid "Status:"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:798
+msgid "Time Offset:"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:541
+msgid "Time Window:"
+msgstr ""
+
+#: src/utilities/meta.ts:74
 msgid "Tokenizer"
 msgstr "Tokenizer"
 
-#: src/utilities/meta.ts:159
+#: src/utilities/meta.ts:160
+#: src/utilities/cryptography/oath/totp.tsx:856
 msgid "TOTP Debugger"
 msgstr "TOTP 调试器"
 
-#: src/utilities/meta.ts:129
+#: src/utilities/cryptography/oath/totp.tsx:352
+msgid "TOTP QR Code"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:789
+msgid "Unknown"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:821
+msgid "Used Window:"
+msgstr ""
+
+#: src/utilities/meta.ts:130
 msgid "UUID/ULID Generate/Decode"
 msgstr "UUID/ULID 生成/解码"
 
+#: src/utilities/cryptography/oath/totp.tsx:791
+msgid "Valid"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:735
+msgid "Validation Result"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:704
+msgid "Validation Window"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:657
+msgid "What algorithm used for the secret"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:440
+msgid "What algorithm was used for the secret"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:425
+#: src/utilities/cryptography/oath/totp.tsx:642
+msgid "What period used for the secret"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:806
+msgid "windows"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:230
+msgid "You must verify that the algorithm you want to use is supported by the application your clients might be using."
+msgstr ""

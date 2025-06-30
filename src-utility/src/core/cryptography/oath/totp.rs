@@ -48,6 +48,7 @@ pub struct TotpValidationResult {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct TotpSecret {
     pub secret: String,           // Base32 encoded secret
     pub qr_code_url: String,      // QR code URL for provisioning
