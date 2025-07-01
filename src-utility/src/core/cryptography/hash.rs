@@ -13,12 +13,13 @@
 
 use digest::Digest;
 use hex;
-use rayon::prelude::*;
 use serde::{Deserialize, Serialize};
 use std::sync::Arc;
 use universal_function_macro::universal_function;
 
 #[derive(Debug, Serialize, Deserialize)]
+#[cfg_attr(target_arch = "wasm32", derive(tsify::Tsify))]
+#[cfg_attr(target_arch = "wasm32", tsify(into_wasm_abi, from_wasm_abi))]
 pub struct HashResult {
     pub md2: String,
     pub md4: String,
@@ -38,8 +39,11 @@ fn hash_with_algorithm<D: Digest>(data: &[u8]) -> String {
     hex::encode(hasher.finalize())
 }
 
-#[universal_function(desktop_only)]
+#[universal_function]
 pub fn generate_hashes(input: &str) -> HashResult {
+    #[cfg(not(target_arch = "wasm32"))]
+    use rayon::prelude::*;
+    
     let data = Arc::new(input.as_bytes().to_vec());
 
     let tasks: Vec<(&str, Box<dyn Fn(&[u8]) -> String + Send + Sync>)> = vec![
@@ -85,8 +89,18 @@ pub fn generate_hashes(input: &str) -> HashResult {
         ),
     ];
 
+    #[cfg(not(target_arch = "wasm32"))]
     let results: Vec<(String, String)> = tasks
         .into_par_iter()
+        .map(|(name, hasher)| {
+            let hash = hasher(&data);
+            (name.to_string(), hash)
+        })
+        .collect();
+
+    #[cfg(target_arch = "wasm32")]
+    let results: Vec<(String, String)> = tasks
+        .into_iter()
         .map(|(name, hasher)| {
             let hash = hasher(&data);
             (name.to_string(), hash)
