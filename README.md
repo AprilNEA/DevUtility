@@ -22,6 +22,9 @@
   <img src="https://hits.aprilnea.com/hits?url=https://github.com/AprilNEA/DevUtility" />
 </p>
 
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FAprilNEA%2FDevUtility.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FAprilNEA%2FDevUtility?ref=badge_large)
+
 ### 💫 Key Capabilities
 
 - 💻 **Software Development**: Advanced tools for code analysis, debugging, and optimization
@@ -46,6 +49,7 @@
 ## 📊 Project Status
 
 ![Project Status](https://repobeats.axiom.co/api/embed/731fc03bff4e8b722fa66c9f2b25242f54cf7a50.svg "Repobeats analytics image")
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FAprilNEA%2FDevUtility.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FAprilNEA%2FDevUtility?ref=badge_shield)
 
 ## 📄 Licensing
 
