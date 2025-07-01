@@ -13,11 +13,11 @@
  * See LICENSE file for details or contact admin@aprilnea.com
  */
 
+import path from "node:path";
 import { lingui } from "@lingui/vite-plugin";
 import { sentryVitePlugin } from "@sentry/vite-plugin";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react-swc";
-import path from "path";
 import { defineConfig } from "vite";
 import ConditionalCompile from "vite-plugin-conditional-compiler";
 import topLevelAwait from "vite-plugin-top-level-await";
@@ -53,6 +53,7 @@ export default defineConfig(async () => ({
       authToken: process.env.SENTRY_AUTH_TOKEN,
       org: process.env.SENTRY_ORG,
       project: process.env.SENTRY_PROJECT,
+      telemetry: false,
     }),
   ],
   optimizeDeps: {
