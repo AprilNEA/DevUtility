@@ -14,7 +14,7 @@
  */
 
 // #v-ifdef WASM
-import wasmFunctions from "./invoke.wasm";
+import wasmFunctions from "./invoke-wasm";
 // #v-endif
 
 import { type InvokeOptions, invoke as invokeCore } from "@tauri-apps/api/core";
