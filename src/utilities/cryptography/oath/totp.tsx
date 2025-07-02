@@ -28,6 +28,7 @@ import {
 import { parseAsInteger, parseAsStringEnum, useQueryState } from "nuqs";
 import { useState } from "react";
 import LabelWithTooltip from "@/components/derived-ui/label-with-tooltip";
+import Metadata from "@/components/meta";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
