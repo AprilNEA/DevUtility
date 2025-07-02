@@ -18,6 +18,8 @@ crate-type = ["cdylib"]
 worker = { version = "0.6.0", features = ["http", "axum"] }
 worker-macros = { version = "0.6.0", features = ["http"] }
 axum = { version = "0.8", default-features = false, features = [
+  "macros",
+  "matched-path",
   "json",
   "query",
 ] }
@@ -25,3 +27,7 @@ tower-service = "0.3.3"
 console_error_panic_hook = { version = "0.1.7" }
 dev-utility-core = { path = "../src-utility" }
 serde = { workspace = true, features = ["derive"] }
+serde_json = { workspace = true }
+thiserror = "2.0.10"
+async-trait = "0.1.88"
+serde_urlencoded = "0.7.1"

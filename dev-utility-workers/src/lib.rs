@@ -1,12 +1,14 @@
 mod routes;
+mod response;
+mod extactor;
 
 use axum::Router;
-use routes::hash;
 use tower_service::Service;
 use worker::*;
+use routes::hash;
 
 fn router() -> Router {
-    Router::new().nest("/hash", hash::routes())
+    Router::new().nest("/", hash::routes())
 }
 
 #[event(fetch)]
