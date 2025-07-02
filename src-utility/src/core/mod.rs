@@ -15,3 +15,4 @@ pub mod codec;
 pub mod cryptography;
 pub mod formatter;
 pub mod generator;
+pub mod network;

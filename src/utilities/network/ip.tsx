@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { AlertCircle } from "lucide-react"
+import { Trans } from "@lingui/react/macro"
 
 // Helper functions for IP calculations
 const ipToLong = (ip: string): number => {
@@ -84,7 +85,7 @@ export default function IpPage() {
 
   const calculateSubnet = (): CalculationResult | { error: string } => {
     if (!validateIp(subnetIp) || !validateIp(subnetMask)) {
-      return { error: "请输入有效的 IP 地址和子网掩码。" }
+      return { error: "Please enter valid IP address and subnet mask." }
     }
 
     try {
@@ -93,7 +94,7 @@ export default function IpPage() {
       const cidr = maskToCidr(subnetMask)
 
       if (cidr === 0 && subnetMask !== "0.0.0.0") {
-        return { error: "无效的子网掩码。" }
+        return { error: "Invalid subnet mask." }
       }
 
       const networkLong = (ipLong & maskLong) >>> 0
@@ -116,21 +117,21 @@ export default function IpPage() {
         cidr: cidr,
       }
     } catch (e) {
-      return { error: "计算时发生错误。请检查输入值。" }
+      return { error: "An error occurred during calculation. Please check your input values." }
     }
   }
 
   const calculateCidr = (): CalculationResult | { error: string } => {
     const parts = cidrIp.split("/")
     if (parts.length !== 2 || !validateIp(parts[0])) {
-      return { error: "请输入有效的 CIDR 地址 (例如 192.168.1.1/24)。" }
+      return { error: "Please enter a valid CIDR address (e.g., 192.168.1.1/24)." }
     }
 
     const ip = parts[0]
     const cidr = Number.parseInt(parts[1], 10)
 
     if (isNaN(cidr) || cidr < 0 || cidr > 32) {
-      return { error: "CIDR 前缀必须在 0 到 32 之间。" }
+      return { error: "CIDR prefix must be between 0 and 32." }
     }
 
     try {
@@ -158,15 +159,15 @@ export default function IpPage() {
         cidr: cidr,
       }
     } catch (e) {
-      return { error: "计算时发生错误。请检查输入值。" }
+      return { error: "An error occurred during calculation. Please check your input values." }
     }
   }
 
   return (
     <Card className="w-full max-w-4xl">
       <CardHeader>
-        <CardTitle>IP 地址计算器</CardTitle>
-        <CardDescription>用于子网划分和 CIDR 转换。在左侧输入数据，在右侧查看结果。</CardDescription>
+        <CardTitle><Trans>IP Address Calculator</Trans></CardTitle>
+        <CardDescription><Trans>For subnetting and CIDR conversion. Enter data on the left, view results on the right.</Trans></CardDescription>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -174,32 +175,32 @@ export default function IpPage() {
           <div className="flex flex-col">
             <Tabs defaultValue="subnet" className="flex-grow flex flex-col">
               <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="subnet">子网计算器</TabsTrigger>
-                <TabsTrigger value="cidr">CIDR 计算器</TabsTrigger>
+                <TabsTrigger value="subnet"><Trans>Subnet Calculator</Trans></TabsTrigger>
+                <TabsTrigger value="cidr"><Trans>CIDR Calculator</Trans></TabsTrigger>
               </TabsList>
               <TabsContent value="subnet" className="pt-4 flex-grow flex flex-col">
                 <div className="space-y-4 flex-grow">
                   <div className="space-y-2">
-                    <Label htmlFor="subnet-ip">IP 地址</Label>
+                    <Label htmlFor="subnet-ip"><Trans>IP Address</Trans></Label>
                     <Input
                       id="subnet-ip"
                       value={subnetIp}
                       onChange={(e) => setSubnetIp(e.target.value)}
-                      placeholder="例如: 192.168.1.10"
+                      placeholder="e.g., 192.168.1.10"
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="subnet-mask">子网掩码</Label>
+                    <Label htmlFor="subnet-mask"><Trans>Subnet Mask</Trans></Label>
                     <Input
                       id="subnet-mask"
                       value={subnetMask}
                       onChange={(e) => setSubnetMask(e.target.value)}
-                      placeholder="例如: 255.255.255.0"
+                      placeholder="e.g., 255.255.255.0"
                     />
                   </div>
                 </div>
                 <Button onClick={() => handleCalculation(calculateSubnet)} className="w-full mt-4">
-                  计算
+                  <Trans>Calculate</Trans>
                 </Button>
                 {subnetError && (
                   <Alert variant="destructive" className="mt-4">
@@ -211,17 +212,17 @@ export default function IpPage() {
               <TabsContent value="cidr" className="pt-4 flex-grow flex flex-col">
                 <div className="space-y-4 flex-grow">
                   <div className="space-y-2">
-                    <Label htmlFor="cidr-ip">IP 地址及 CIDR</Label>
+                    <Label htmlFor="cidr-ip"><Trans>IP Address with CIDR</Trans></Label>
                     <Input
                       id="cidr-ip"
                       value={cidrIp}
                       onChange={(e) => setCidrIp(e.target.value)}
-                      placeholder="例如: 10.0.5.20/24"
+                      placeholder="e.g., 10.0.5.20/24"
                     />
                   </div>
                 </div>
                 <Button onClick={() => handleCalculation(calculateCidr)} className="w-full mt-4">
-                  计算
+                  <Trans>Calculate</Trans>
                 </Button>
                 {cidrError && (
                   <Alert variant="destructive" className="mt-4">
@@ -235,15 +236,15 @@ export default function IpPage() {
 
           {/* Right Column: Results */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">计算结果</h3>
+            <h3 className="text-lg font-semibold mb-4"><Trans>Calculation Results</Trans></h3>
             <div className="flex flex-col gap-3">
-              <ResultRow label="网络地址" value={result.networkAddress} />
-              <ResultRow label="广播地址" value={result.broadcastAddress} />
-              <ResultRow label="可用主机范围" value={typeof result.usableHosts === 'number' && result.usableHosts > 0 ? `${result.firstUsableHost} - ${result.lastUsableHost}` : 'N/A'} />
-              <ResultRow label="总主机数" value={typeof result.totalHosts === 'number' ? result.totalHosts.toLocaleString() : result.totalHosts} />
-              <ResultRow label="可用主机数" value={typeof result.usableHosts === 'number' ? result.usableHosts.toLocaleString() : result.usableHosts} />
-              <ResultRow label="子网掩码" value={result.subnetMask} />
-              <ResultRow label="CIDR 表示法" value={result.cidr === '—' ? '—' : `/${result.cidr}`} />
+              <ResultRow label={<Trans>Network Address</Trans>} value={result.networkAddress} />
+              <ResultRow label={<Trans>Broadcast Address</Trans>} value={result.broadcastAddress} />
+              <ResultRow label={<Trans>Usable Host Range</Trans>} value={typeof result.usableHosts === 'number' && result.usableHosts > 0 ? `${result.firstUsableHost} - ${result.lastUsableHost}` : 'N/A'} />
+              <ResultRow label={<Trans>Total Hosts</Trans>} value={typeof result.totalHosts === 'number' ? result.totalHosts.toLocaleString() : result.totalHosts} />
+              <ResultRow label={<Trans>Usable Hosts</Trans>} value={typeof result.usableHosts === 'number' ? result.usableHosts.toLocaleString() : result.usableHosts} />
+              <ResultRow label={<Trans>Subnet Mask</Trans>} value={result.subnetMask} />
+              <ResultRow label={<Trans>CIDR Notation</Trans>} value={result.cidr === '—' ? '—' : `/${result.cidr}`} />
             </div>
           </div>
         </div>
@@ -252,7 +253,7 @@ export default function IpPage() {
   )
 }
 
-function ResultRow({ label, value }: { label: string; value: string }) {
+function ResultRow({ label, value }: { label: React.ReactNode; value: string }) {
   const [copied, setCopied] = useState(false)
   return (
     <div className="flex items-center gap-3">
@@ -272,7 +273,7 @@ function ResultRow({ label, value }: { label: string; value: string }) {
           setCopied(true)
           setTimeout(() => setCopied(false), 1000)
         }}
-        title={copied ? '已复制' : '复制'}
+        title={copied ? 'Copied' : 'Copy'}
       >
         {copied ? (
           <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>

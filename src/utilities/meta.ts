@@ -31,6 +31,7 @@ import {
 import { lazy } from "react";
 import type { RouteComponentProps } from "wouter";
 import IpPage from "./network/ip";
+import Fido2Page from "./cryptography/fido/fido2";
 
 const GptTokenizerPage = lazy(() => import("./ai/tokenizer"));
 const JsonFormatterPage = lazy(() => import("./formatter/json"));
@@ -143,6 +144,19 @@ const utilities: UtilityMeta[] = [
     icon: KeyIcon,
     title: msg`Cryptography & Security`,
     items: [
+      {
+        key: "fido",
+        icon: KeyIcon,
+        title: msg`FIDO Debugger`,
+        items: [
+          {
+            key: "fido2",
+            icon: KeyIcon,
+            title: msg`FIDO2 Authenticator`,
+            page: Fido2Page,
+          },
+        ],
+      },
       {
         key: "oath",
         icon: KeyIcon,
