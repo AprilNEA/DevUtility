@@ -47,6 +47,10 @@
 
 ![Project Status](https://repobeats.axiom.co/api/embed/731fc03bff4e8b722fa66c9f2b25242f54cf7a50.svg "Repobeats analytics image")
 
+## 🤝 Contributing
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for details.
+
 ## 📄 Licensing
 
 This project is dual-licensed:
