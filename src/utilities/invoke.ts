@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2023-2025, ApriilNEA LLC.
+ * Copyright (c) 2023-2025, AprilNEA LLC.
  *
  * Dual licensed under:
  * - GPL-3.0 (open source)
@@ -32,6 +32,7 @@ import type {
 } from "./cryptography/oath/types";
 import {
   type HashResult,
+  type HidDeviceInfo,
   type IndentStyle,
   InvokeFunction,
   type RsaKeyAnalysis,
@@ -55,6 +56,7 @@ export interface UtilitiesArgs {
   [InvokeFunction.GenerateTotpSecret]: TotpGenerateSecretParams;
   [InvokeFunction.GenerateTotpCode]: TotpGenerateCodeParams;
   [InvokeFunction.ValidateTotpCode]: TotpValidateCodeParams;
+  [InvokeFunction.ListHidDevices]: void;
 }
 
 export interface UtilitiesReturns {
@@ -72,12 +74,13 @@ export interface UtilitiesReturns {
   [InvokeFunction.GenerateTotpSecret]: TotpSecretResult;
   [InvokeFunction.GenerateTotpCode]: TotpCodeResult;
   [InvokeFunction.ValidateTotpCode]: TotpValidationResult;
+  [InvokeFunction.ListHidDevices]: HidDeviceInfo[];
 }
 
 export async function utilityInvoke<T extends InvokeFunction>(
   cmd: T,
   args: UtilitiesArgs[T],
-  options?: InvokeOptions
+  options?: InvokeOptions,
 ): Promise<UtilitiesReturns[T]> {
   if (IS_TAURI) {
     return invokeCore(cmd, args, options);
@@ -98,12 +101,12 @@ export function useUtilityInvoke<T extends InvokeFunction>(
     T,
     UtilitiesArgs[T],
     UtilitiesReturns[T]
-  >
+  >,
 ): SWRMutationResponse<UtilitiesReturns[T], Error, T, UtilitiesArgs[T]> {
   return useSWRMutation<UtilitiesReturns[T], Error, T, UtilitiesArgs[T]>(
     cmd,
     // @ts-expect-error
     (_, { arg }) => utilityInvoke(cmd, arg),
-    options
+    options,
   );
 }

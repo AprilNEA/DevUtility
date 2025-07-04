@@ -1,4 +1,4 @@
-// Copyright (c) 2023-2025, ApriilNEA LLC.
+// Copyright (c) 2023-2025, AprilNEA LLC.
 //
 // Dual licensed under:
 // - GPL-3.0 (open source)
@@ -19,3 +19,6 @@ pub use hash::*;
 
 pub mod oath;
 pub use oath::*;
+
+// pub mod fido2;
+// pub use fido2::*;

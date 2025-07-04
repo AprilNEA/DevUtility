@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2023-2025, ApriilNEA LLC.
+ * Copyright (c) 2023-2025, AprilNEA LLC.
  *
  * Dual licensed under:
  * - GPL-3.0 (open source)
@@ -13,10 +13,10 @@
  * See LICENSE file for details or contact admin@aprilnea.com
  */
 
-import * as React from "react"
-import * as SeparatorPrimitive from "@radix-ui/react-separator"
+import * as SeparatorPrimitive from "@radix-ui/react-separator";
+import type * as React from "react";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 function Separator({
   className,
@@ -31,11 +31,11 @@ function Separator({
       orientation={orientation}
       className={cn(
         "bg-border shrink-0 data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-px",
-        className
+        className,
       )}
       {...props}
     />
-  )
+  );
 }
 
-export { Separator }
+export { Separator };

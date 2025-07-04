@@ -1,4 +1,4 @@
-// Copyright (c) 2023-2025, ApriilNEA LLC.
+// Copyright (c) 2023-2025, AprilNEA LLC.
 //
 // Dual licensed under:
 // - GPL-3.0 (open source)
@@ -118,6 +118,8 @@ pub fn run() {
             updates::app_fetch_update,
             #[cfg(desktop)]
             updates::app_install_update,
+            #[cfg(desktop)]
+            dev_utility_core::hardware::list_hid_devices,
             dev_utility_core::codec::decode_base64,
             dev_utility_core::codec::encode_base64,
             dev_utility_core::cryptography::generate_rsa_key,

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2023-2025, ApriilNEA LLC.
+ * Copyright (c) 2023-2025, AprilNEA LLC.
  *
  * Dual licensed under:
  * - GPL-3.0 (open source)
@@ -12,7 +12,10 @@
  *
  * See LICENSE file for details or contact admin@aprilnea.com
  */
+
+import { KeySquare, Puzzle, Shuffle } from "lucide-react";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -28,10 +31,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { KeySquare, Puzzle, Shuffle } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
 import { useUtilityInvoke } from "@/utilities/invoke";
 import { InvokeFunction } from "@/utilities/types";
 

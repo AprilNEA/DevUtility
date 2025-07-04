@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2023-2025, ApriilNEA LLC.
+ * Copyright (c) 2023-2025, AprilNEA LLC.
  *
  * Dual licensed under:
  * - GPL-3.0 (open source)
@@ -13,7 +13,23 @@
  * See LICENSE file for details or contact admin@aprilnea.com
  */
 
+import {
+  AlertTriangle,
+  Calculator,
+  CheckCircle,
+  Copy,
+  FileTextIcon,
+  Hash,
+  Info,
+  Key,
+  Loader2Icon,
+  Lock,
+  Shield,
+} from "lucide-react";
 import { createContext, useContext, useState } from "react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -21,28 +37,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Switch } from "@/components/ui/switch";
-import {
-  Copy,
-  Shield,
-  AlertTriangle,
-  CheckCircle,
-  Info,
-  Calculator,
-  Key,
-  Lock,
-  Hash,
-  FileTextIcon,
-  Loader2Icon,
-} from "lucide-react";
-import { useUtilityInvoke } from "@/utilities/invoke";
-import { InvokeFunction, RsaKeyAnalysis } from "@/utilities/types";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { copyToClipboard } from "@/lib/copyboard";
+import { useUtilityInvoke } from "@/utilities/invoke";
+import { InvokeFunction, type RsaKeyAnalysis } from "@/utilities/types";
 
 const RSAKeyAnalyzerContext = createContext<{
   data: RsaKeyAnalysis;
@@ -56,7 +56,7 @@ const useRSAKeyAnalyzer = () => {
   const context = useContext(RSAKeyAnalyzerContext);
   if (!context) {
     throw new Error(
-      "useRSAKeyAnalyzer must be used within a RSAKeyAnalyzerProvider"
+      "useRSAKeyAnalyzer must be used within a RSAKeyAnalyzerProvider",
     );
   }
   return context;
@@ -189,7 +189,7 @@ const PublicKeyParams: React.FC<{ data: RsaKeyAnalysis }> = ({ data }) => {
               size="sm"
               onClick={() =>
                 copyToClipboard(
-                  formatNumber(data.publicParams?.n, data.publicParams?.nHex)
+                  formatNumber(data.publicParams?.n, data.publicParams?.nHex),
                 )
               }
             >
@@ -213,7 +213,7 @@ const PublicKeyParams: React.FC<{ data: RsaKeyAnalysis }> = ({ data }) => {
               size="sm"
               onClick={() =>
                 copyToClipboard(
-                  formatNumber(data.publicParams?.e, data.publicParams?.eHex)
+                  formatNumber(data.publicParams?.e, data.publicParams?.eHex),
                 )
               }
             >
@@ -272,8 +272,8 @@ const PrivateKeyParams: React.FC<{ data: RsaKeyAnalysis }> = ({ data }) => {
                     copyToClipboard(
                       formatNumber(
                         data.privateParams?.d,
-                        data.privateParams?.dHex
-                      )
+                        data.privateParams?.dHex,
+                      ),
                     )
                   }
                 >
@@ -300,8 +300,8 @@ const PrivateKeyParams: React.FC<{ data: RsaKeyAnalysis }> = ({ data }) => {
                       copyToClipboard(
                         formatNumber(
                           data.privateParams?.p,
-                          data.privateParams?.pHex
-                        )
+                          data.privateParams?.pHex,
+                        ),
                       )
                     }
                   >
@@ -311,7 +311,7 @@ const PrivateKeyParams: React.FC<{ data: RsaKeyAnalysis }> = ({ data }) => {
                 <div className="bg-red-50 border border-red-200 p-3 rounded-lg font-mono text-xs break-all leading-relaxed">
                   {formatNumber(
                     data.privateParams?.p,
-                    data.privateParams?.pHex
+                    data.privateParams?.pHex,
                   )}
                 </div>
                 <p className="text-xs text-muted-foreground">
@@ -329,8 +329,8 @@ const PrivateKeyParams: React.FC<{ data: RsaKeyAnalysis }> = ({ data }) => {
                       copyToClipboard(
                         formatNumber(
                           data?.privateParams?.q,
-                          data.privateParams?.qHex
-                        )
+                          data.privateParams?.qHex,
+                        ),
                       )
                     }
                   >
@@ -340,7 +340,7 @@ const PrivateKeyParams: React.FC<{ data: RsaKeyAnalysis }> = ({ data }) => {
                 <div className="bg-red-50 border border-red-200 p-3 rounded-lg font-mono text-xs break-all leading-relaxed">
                   {formatNumber(
                     data.privateParams?.q,
-                    data.privateParams?.qHex
+                    data.privateParams?.qHex,
                   )}
                 </div>
                 <p className="text-xs text-muted-foreground">
@@ -366,8 +366,8 @@ const PrivateKeyParams: React.FC<{ data: RsaKeyAnalysis }> = ({ data }) => {
                         copyToClipboard(
                           formatNumber(
                             data.privateParams?.dp,
-                            data.privateParams?.dpHex
-                          )
+                            data.privateParams?.dpHex,
+                          ),
                         )
                       }
                     >
@@ -377,7 +377,7 @@ const PrivateKeyParams: React.FC<{ data: RsaKeyAnalysis }> = ({ data }) => {
                   <div className="bg-yellow-50 border border-yellow-200 p-3 rounded-lg font-mono text-xs break-all leading-relaxed">
                     {formatNumber(
                       data.privateParams?.dp,
-                      data.privateParams?.dpHex
+                      data.privateParams?.dpHex,
                     )}
                   </div>
                   <p className="text-xs text-muted-foreground">
@@ -395,8 +395,8 @@ const PrivateKeyParams: React.FC<{ data: RsaKeyAnalysis }> = ({ data }) => {
                         copyToClipboard(
                           formatNumber(
                             data.privateParams?.dq,
-                            data.privateParams?.dqHex
-                          )
+                            data.privateParams?.dqHex,
+                          ),
                         )
                       }
                     >
@@ -406,7 +406,7 @@ const PrivateKeyParams: React.FC<{ data: RsaKeyAnalysis }> = ({ data }) => {
                   <div className="bg-yellow-50 border border-yellow-200 p-3 rounded-lg font-mono text-xs break-all leading-relaxed">
                     {formatNumber(
                       data.privateParams?.dq,
-                      data.privateParams?.dqHex
+                      data.privateParams?.dqHex,
                     )}
                   </div>
                   <p className="text-xs text-muted-foreground">
@@ -425,8 +425,8 @@ const PrivateKeyParams: React.FC<{ data: RsaKeyAnalysis }> = ({ data }) => {
                       copyToClipboard(
                         formatNumber(
                           data.privateParams?.qinv,
-                          data.privateParams?.qinvHex
-                        )
+                          data.privateParams?.qinvHex,
+                        ),
                       )
                     }
                   >
@@ -436,7 +436,7 @@ const PrivateKeyParams: React.FC<{ data: RsaKeyAnalysis }> = ({ data }) => {
                 <div className="bg-yellow-50 border border-yellow-200 p-4 rounded-lg font-mono text-xs break-all leading-relaxed">
                   {formatNumber(
                     data.privateParams?.qinv,
-                    data.privateParams?.qinvHex
+                    data.privateParams?.qinvHex,
                   )}
                 </div>
                 <p className="text-xs text-muted-foreground">
@@ -453,7 +453,7 @@ const PrivateKeyParams: React.FC<{ data: RsaKeyAnalysis }> = ({ data }) => {
 
 export default function RSAKeyAnalyzer() {
   const { data, trigger, isMutating } = useUtilityInvoke(
-    InvokeFunction.AnalyzeRsaKey
+    InvokeFunction.AnalyzeRsaKey,
   );
   const [inputKey, setInputKey] = useState<string>("");
   const [inputKeyType, setInputKeyType] = useState("public");

@@ -35,7 +35,7 @@
     "createUpdaterArtifacts": true,
     "targets": "all",
     "homepage": "https://utility.dev",
-    "copyright": "Copyright (c) 2023-2025, ApriilNEA LLC.",
+    "copyright": "Copyright (c) 2023-2025, AprilNEA LLC.",
     "publisher": "AprilNEA LLC",
     "icon": [
       "icons/32x32.png",

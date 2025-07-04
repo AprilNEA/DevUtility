@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2023-2025, ApriilNEA LLC.
+ * Copyright (c) 2023-2025, AprilNEA LLC.
  *
  * Dual licensed under:
  * - GPL-3.0 (open source)
@@ -13,6 +13,9 @@
  * See LICENSE file for details or contact admin@aprilnea.com
  */
 
+import { i18n } from "@lingui/core";
+import { Globe } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -20,10 +23,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Globe } from "lucide-react";
-import { locales, dynamicActivate } from "@/i18n";
-import { i18n } from "@lingui/core";
-import { useState, useEffect } from "react";
+import { dynamicActivate, locales } from "@/i18n";
 
 export function LocaleSwitcher() {
   const [currentLocale, setCurrentLocale] = useState(i18n.locale);

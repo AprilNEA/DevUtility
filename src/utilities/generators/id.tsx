@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2023-2025, ApriilNEA LLC.
+ * Copyright (c) 2023-2025, AprilNEA LLC.
  *
  * Dual licensed under:
  * - GPL-3.0 (open source)
@@ -13,7 +13,25 @@
  * See LICENSE file for details or contact admin@aprilnea.com
  */
 
+import { useFastClick } from "foxact/use-fast-click";
+import {
+  ClipboardIcon,
+  Copy,
+  FileText,
+  RefreshCw,
+  Settings,
+  Trash2,
+  X,
+} from "lucide-react";
+import { useCallback, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
@@ -31,23 +49,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { utilityInvoke } from "@/utilities/invoke";
-import { useFastClick } from "foxact/use-fast-click";
-import {
-  ClipboardIcon,
-  Copy,
-  FileText,
-  RefreshCw,
-  Settings,
-  Trash2,
-  X,
-} from "lucide-react";
-import { useCallback, useState } from "react";
 import { InvokeFunction } from "../types";
 
 const sampleUuid = "f469e069-221e-401e-b495-646a773b055f";
@@ -236,83 +244,89 @@ export default function IdGeneratorPage() {
         </div>
       </div>
 
-      {/* Right Panel: Generate New IDs */}
-      <div className="flex flex-col gap-3 bg-card p-3 rounded-lg">
-        <h2 className="text-md font-semibold text-card-foreground">
-          Generate new IDs
-        </h2>
-        <div className="flex items-center gap-2">
-          <Button size="sm" onClick={() => generateIds(idType, generateCount)}>
-            <RefreshCw size={16} className="mr-2" />
-            Generate
-          </Button>
-          <Button variant="outline" size="sm">
-            <Copy size={16} className="mr-2" />
-            Copy
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            {...useFastClick(
-              useCallback(() => {
-                setGeneratedIds("");
-              }, []),
-            )}
-          >
-            <X size={16} className="mr-2" />
-            Clear
-          </Button>
-        </div>
-        <div className="flex items-center gap-2">
-          <Select
-            value={idType}
-            onValueChange={(value: string) => setIdType(value as IdType)}
-          >
-            <SelectTrigger className="w-[180px] h-9">
-              <SelectValue placeholder="Select ID type" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value={IdType.NANOID}>Nano ID</SelectItem>
-              <SelectItem value={IdType.ULID}>ULID</SelectItem>
-              <SelectItem value={IdType.UUID_V4}>UUID v4</SelectItem>
-              <SelectItem value={IdType.UUID_V1}>UUID v1</SelectItem>
-              <SelectItem value={IdType.UUID_V3}>UUID v3</SelectItem>
-              <SelectItem value={IdType.UUID_V5}>UUID v5</SelectItem>
-              <SelectItem value={IdType.UUID_V6}>UUID v6</SelectItem>
-              <SelectItem value={IdType.UUID_V7}>UUID v7</SelectItem>
-              <SelectItem value={IdType.UUID_V8}>UUID v8</SelectItem>
-            </SelectContent>
-          </Select>
-          <span className="text-sm text-muted-foreground">x</span>
-          <Input
-            type="number"
-            value={generateCount}
-            onChange={(e) => {
-              setGenerateCount(Number.parseInt(e.target.value, 10) || 1);
-            }}
-            className="w-20 h-9 bg-input border-border"
-            min="1"
-          />
-          <div className="flex items-center space-x-2 ml-auto">
-            <Checkbox
-              id="lowercase"
-              checked={isLowercase}
-              onCheckedChange={(checked) => setIsLowercase(checked as boolean)}
-            />
-            <Label htmlFor="lowercase" className="text-sm font-medium">
-              lowercased
-            </Label>
+        {/* Right Panel: Generate New IDs */}
+        <div className="flex flex-col gap-3 bg-card p-3 rounded-lg">
+          <h2 className="text-md font-semibold text-card-foreground">
+            Generate new IDs
+          </h2>
+          <div className="flex items-center gap-2">
+            <Button
+              size="sm"
+              onClick={() => generateIds(idType, generateCount)}
+            >
+              <RefreshCw size={16} className="mr-2" />
+              Generate
+            </Button>
+            <Button variant="outline" size="sm">
+              <Copy size={16} className="mr-2" />
+              Copy
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              {...useFastClick(
+                useCallback(() => {
+                  setGeneratedIds("");
+                }, []),
+              )}
+            >
+              <X size={16} className="mr-2" />
+              Clear
+            </Button>
           </div>
+          <div className="flex items-center gap-2">
+            <Select
+              value={idType}
+              onValueChange={(value: string) => setIdType(value as IdType)}
+            >
+              <SelectTrigger className="w-[180px] h-9">
+                <SelectValue placeholder="Select ID type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value={IdType.NANOID}>Nano ID</SelectItem>
+                <SelectItem value={IdType.ULID}>ULID</SelectItem>
+                <SelectItem value={IdType.UUID_V4}>UUID v4</SelectItem>
+                <SelectItem value={IdType.UUID_V1}>UUID v1</SelectItem>
+                <SelectItem value={IdType.UUID_V3}>UUID v3</SelectItem>
+                <SelectItem value={IdType.UUID_V5}>UUID v5</SelectItem>
+                <SelectItem value={IdType.UUID_V6}>UUID v6</SelectItem>
+                <SelectItem value={IdType.UUID_V7}>UUID v7</SelectItem>
+                <SelectItem value={IdType.UUID_V8}>UUID v8</SelectItem>
+              </SelectContent>
+            </Select>
+            <span className="text-sm text-muted-foreground">x</span>
+            <Input
+              type="number"
+              value={generateCount}
+              onChange={(e) => {
+                setGenerateCount(Number.parseInt(e.target.value, 10) || 1);
+              }}
+              className="w-20 h-9 bg-input border-border"
+              min="1"
+            />
+            <div className="flex items-center space-x-2 ml-auto">
+              <Checkbox
+                id="lowercase"
+                checked={isLowercase}
+                onCheckedChange={(checked) =>
+                  setIsLowercase(checked as boolean)
+                }
+              />
+              <Label htmlFor="lowercase" className="text-sm font-medium">
+                lowercased
+              </Label>
+            </div>
+          </div>
+          <Textarea
+            value={generatedIds}
+            readOnly
+            placeholder="Generated IDs will appear here"
+            className="flex-grow bg-background border-input text-foreground font-mono text-sm resize-none"
+            spellCheck="false"
+          />
         </div>
-        <Textarea
-          value={generatedIds}
-          readOnly
-          placeholder="Generated IDs will appear here"
-          className="flex-grow bg-background border-input text-foreground font-mono text-sm resize-none"
-          spellCheck="false"
-        />
       </div>
-    </div>
+    </TooltipProvider>
   );
 }
 

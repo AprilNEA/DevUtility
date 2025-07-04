@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2023-2025, ApriilNEA LLC.
+ * Copyright (c) 2023-2025, AprilNEA LLC.
  *
  * Dual licensed under:
  * - GPL-3.0 (open source)
@@ -28,7 +28,9 @@ export enum InvokeFunction {
   // TOTP Functions
   GenerateTotpSecret = "generate_totp_secret",
   GenerateTotpCode = "generate_totp_code",
-  ValidateTotpCode = "validate_totp_code"
+  ValidateTotpCode = "validate_totp_code",
+  // Hardware Functions
+  ListHidDevices = "list_hid_devices",
 }
 
 export enum HashAlgorithm {
@@ -74,21 +76,21 @@ export enum KeyType {
 }
 
 export type PublicKeyParams = {
-  n: string;     // Modulus
-  e: string;     // Public exponent
-  nHex: string;  // Modulus in hex
-  eHex: string;  // Public exponent in hex
+  n: string; // Modulus
+  e: string; // Public exponent
+  nHex: string; // Modulus in hex
+  eHex: string; // Public exponent in hex
   nBits: number; // Modulus bit length
 };
 
 export type PrivateKeyParams = {
-  n: string;    // Modulus
-  e: string;    // Public exponent
-  d: string;    // Private exponent
-  p: string;    // First prime
-  q: string;    // Second prime
-  dp: string;   // d mod (p-1)
-  dq: string;   // d mod (q-1)
+  n: string; // Modulus
+  e: string; // Public exponent
+  d: string; // Private exponent
+  p: string; // First prime
+  q: string; // Second prime
+  dp: string; // d mod (p-1)
+  dq: string; // d mod (q-1)
   qinv: string; // q^-1 mod p
   // Hex representations
   nHex: string;
@@ -102,11 +104,11 @@ export type PrivateKeyParams = {
 };
 
 export type DerivedParams = {
-  phiN: string;       // Euler's totient φ(n) = (p-1)(q-1)
-  lambdaN: string;    // Carmichael function λ(n)
-  pMinus1: string;    // p - 1
-  qMinus1: string;    // q - 1
-  keySizeBits: number;  // Actual key size in bits
+  phiN: string; // Euler's totient φ(n) = (p-1)(q-1)
+  lambdaN: string; // Carmichael function λ(n)
+  pMinus1: string; // p - 1
+  qMinus1: string; // q - 1
+  keySizeBits: number; // Actual key size in bits
   keySizeBytes: number; // Key size in bytes
 };
 
@@ -134,4 +136,14 @@ export type RsaKeyAnalysis = {
   // fingerprint?: KeyFingerprint;
 };
 
-
+export type HidDeviceInfo = {
+  vendorId: number;
+  productId: number;
+  manufacturerString: string | null;
+  productString: string | null;
+  serialNumber: string | null;
+  path: string;
+  interfaceNumber: number;
+  usagePage: number;
+  usage: number;
+};

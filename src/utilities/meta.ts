@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2023-2025, ApriilNEA LLC.
+ * Copyright (c) 2023-2025, AprilNEA LLC.
  *
  * Dual licensed under:
  * - GPL-3.0 (open source)
@@ -27,11 +27,12 @@ import {
   LinkIcon,
   RadarIcon,
   RotateCcwKeyIcon,
+  UsbIcon,
 } from "lucide-react";
 import { lazy } from "react";
 import type { RouteComponentProps } from "wouter";
-import IpPage from "./network/ip";
 import Fido2Page from "./cryptography/fido/fido2";
+import IpPage from "./network/ip";
 
 const GptTokenizerPage = lazy(() => import("./ai/tokenizer"));
 const JsonFormatterPage = lazy(() => import("./formatter/json"));
@@ -45,6 +46,7 @@ const RSAKeyAnalyzerPage = lazy(() => import("./cryptography/rsa/analyzer"));
 // const RSAKeyConverterPage = lazy(() => import("./cryptography/rsa/converter"));
 // const HotpDebuggerPage = lazy(() => import("./cryptography/oath/hotp"));
 const TotpDebuggerPage = lazy(() => import("./cryptography/oath/totp"));
+const HidDevicesPage = lazy(() => import("./hardware/hid"));
 
 export type Utility = {
   key: string;
@@ -217,7 +219,7 @@ const utilities: UtilityMeta[] = [
     ],
   },
   {
-    key:"network",
+    key: "network",
     title: msg`Network`,
     items: [
       {
@@ -225,6 +227,18 @@ const utilities: UtilityMeta[] = [
         icon: LinkIcon,
         title: msg`IP Address`,
         page: IpPage,
+      },
+    ],
+  },
+  {
+    key: "hardware",
+    title: msg`Hardware`,
+    items: [
+      {
+        key: "hid",
+        icon: UsbIcon,
+        title: msg`HID Devices`,
+        page: HidDevicesPage,
       },
     ],
   },

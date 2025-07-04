@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2023-2025, ApriilNEA LLC.
+ * Copyright (c) 2023-2025, AprilNEA LLC.
  *
  * Dual licensed under:
  * - GPL-3.0 (open source)
@@ -13,7 +13,7 @@
  * See LICENSE file for details or contact admin@aprilnea.com
  */
 
-import { writeText, readText } from "@tauri-apps/plugin-clipboard-manager";
+import { readText, writeText } from "@tauri-apps/plugin-clipboard-manager";
 
 export async function copyToClipboard(text: string): Promise<void> {
   try {

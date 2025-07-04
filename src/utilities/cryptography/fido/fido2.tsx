@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2023-2025, ApriilNEA LLC.
+ * Copyright (c) 2023-2025, AprilNEA LLC.
  *
  * Dual licensed under:
  * - GPL-3.0 (open source)
@@ -13,39 +13,51 @@
  * See LICENSE file for details or contact admin@aprilnea.com
  */
 
-import { useState } from "react";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import {
-  Shield,
-  Key,
-  Smartphone,
-  Fingerprint,
+  AlertCircle,
+  CheckCircle,
+  Copy,
+  Download,
   Eye,
   EyeOff,
-  Copy,
-  CheckCircle,
-  AlertCircle,
+  FingerprintIcon,
   Info,
+  Key,
   Lock,
-  Unlock,
   QrCode,
-  Settings as SettingsIcon,
   RefreshCw,
-  Download,
+  Settings as SettingsIcon,
+  ShieldIcon,
+  SmartphoneIcon,
+  Unlock,
   Upload,
 } from "lucide-react";
+import { useState } from "react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Switch } from "@/components/ui/switch";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Textarea } from "@/components/ui/textarea";
 import { copyToClipboard } from "@/lib/copyboard";
 import { useUtilityInvoke } from "@/utilities/invoke";
 import { InvokeFunction } from "@/utilities/types";
@@ -64,13 +76,15 @@ function AuthenticatorSimulator() {
   const [isAuthenticatorActive, setIsAuthenticatorActive] = useState(false);
   const [pin, setPin] = useState("");
   const [showPin, setShowPin] = useState(false);
-  const [authenticatorStatus, setAuthenticatorStatus] = useState<"idle" | "busy" | "error">("idle");
+  const [authenticatorStatus, setAuthenticatorStatus] = useState<
+    "idle" | "busy" | "error"
+  >("idle");
 
   const handleToggleAuthenticator = async () => {
     setAuthenticatorStatus("busy");
     // TODO: Implement FIDO2 authenticator toggle
     // await invoke(InvokeFunction.ToggleFido2Authenticator, { enabled: !isAuthenticatorActive });
-    
+
     setTimeout(() => {
       setIsAuthenticatorActive(!isAuthenticatorActive);
       setAuthenticatorStatus("idle");
@@ -82,7 +96,7 @@ function AuthenticatorSimulator() {
     setAuthenticatorStatus("busy");
     // TODO: Implement PIN setting
     // await invoke(InvokeFunction.SetFido2Pin, { pin });
-    
+
     setTimeout(() => {
       setAuthenticatorStatus("idle");
       setPin("");
@@ -95,7 +109,7 @@ function AuthenticatorSimulator() {
       <Card className="h-fit">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Smartphone className="w-5 h-5 text-blue-600" />
+            <SmartphoneIcon className="w-5 h-5 text-blue-600" />
             {t(msg`Authenticator Status`)}
           </CardTitle>
           <CardDescription>
@@ -105,7 +119,9 @@ function AuthenticatorSimulator() {
         <CardContent className="space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className={`w-3 h-3 rounded-full ${isAuthenticatorActive ? 'bg-green-500' : 'bg-gray-300'}`} />
+              <div
+                className={`w-3 h-3 rounded-full ${isAuthenticatorActive ? "bg-green-500" : "bg-gray-300"}`}
+              />
               <span className="text-sm font-medium">
                 {isAuthenticatorActive ? t(msg`Active`) : t(msg`Inactive`)}
               </span>
@@ -148,12 +164,18 @@ function AuthenticatorSimulator() {
                   className="absolute right-1 top-1 h-6 w-6 p-0"
                   onClick={() => setShowPin(!showPin)}
                 >
-                  {showPin ? <EyeOff className="w-3 h-3" /> : <Eye className="w-3 h-3" />}
+                  {showPin ? (
+                    <EyeOff className="w-3 h-3" />
+                  ) : (
+                    <Eye className="w-3 h-3" />
+                  )}
                 </Button>
               </div>
               <Button
                 onClick={handleSetPin}
-                disabled={!pin || pin.length < 4 || authenticatorStatus === "busy"}
+                disabled={
+                  !pin || pin.length < 4 || authenticatorStatus === "busy"
+                }
                 size="sm"
               >
                 {t(msg`Set`)}
@@ -164,7 +186,9 @@ function AuthenticatorSimulator() {
           <Alert>
             <Info className="w-4 h-4" />
             <AlertDescription>
-              {t(msg`PIN is required for resident keys and user verification. Minimum 4 digits, maximum 8 digits.`)}
+              {t(
+                msg`PIN is required for resident keys and user verification. Minimum 4 digits, maximum 8 digits.`,
+              )}
             </AlertDescription>
           </Alert>
         </CardContent>
@@ -173,27 +197,35 @@ function AuthenticatorSimulator() {
       {/* Device Information */}
       <Card className="h-fit">
         <CardHeader>
-                     <CardTitle className="flex items-center gap-2">
-             <SettingsIcon className="w-5 h-5 text-green-600" />
-             {t(msg`Device Information`)}
-           </CardTitle>
+          <CardTitle className="flex items-center gap-2">
+            <SettingsIcon className="w-5 h-5 text-green-600" />
+            {t(msg`Device Information`)}
+          </CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
           <div className="grid grid-cols-2 gap-4 text-sm">
             <div>
               <span className="text-muted-foreground">{t(msg`AAGUID`)}</span>
-              <p className="font-mono text-xs mt-1">550e8400-e29b-41d4-a716-446655440000</p>
+              <p className="font-mono text-xs mt-1">
+                550e8400-e29b-41d4-a716-446655440000
+              </p>
             </div>
             <div>
-              <span className="text-muted-foreground">{t(msg`Protocol Version`)}</span>
+              <span className="text-muted-foreground">
+                {t(msg`Protocol Version`)}
+              </span>
               <p className="font-mono text-xs mt-1">FIDO_2_0</p>
             </div>
             <div>
-              <span className="text-muted-foreground">{t(msg`User Verification`)}</span>
+              <span className="text-muted-foreground">
+                {t(msg`User Verification`)}
+              </span>
               <Badge variant="secondary">Supported</Badge>
             </div>
             <div>
-              <span className="text-muted-foreground">{t(msg`Resident Keys`)}</span>
+              <span className="text-muted-foreground">
+                {t(msg`Resident Keys`)}
+              </span>
               <Badge variant="secondary">Supported</Badge>
             </div>
           </div>
@@ -201,7 +233,9 @@ function AuthenticatorSimulator() {
           <Separator />
 
           <div className="space-y-2">
-            <Label className="text-sm font-medium">{t(msg`Supported Algorithms`)}</Label>
+            <Label className="text-sm font-medium">
+              {t(msg`Supported Algorithms`)}
+            </Label>
             <div className="flex flex-wrap gap-1">
               <Badge variant="outline">ES256</Badge>
               <Badge variant="outline">RS256</Badge>
@@ -319,8 +353,13 @@ function Registration() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="userVerification">{t(msg`User Verification`)}</Label>
-            <Select value={userVerification} onValueChange={setUserVerification}>
+            <Label htmlFor="userVerification">
+              {t(msg`User Verification`)}
+            </Label>
+            <Select
+              value={userVerification}
+              onValueChange={setUserVerification}
+            >
               <SelectTrigger id="userVerification">
                 <SelectValue />
               </SelectTrigger>
@@ -356,7 +395,7 @@ function Registration() {
           </div>
 
           <Button onClick={handleRegistration} className="w-full">
-            <Shield className="mr-2 h-4 w-4" />
+            <ShieldIcon className="mr-2 h-4 w-4" />
             {t(msg`Start Registration`)}
           </Button>
         </CardContent>
@@ -375,7 +414,9 @@ function Registration() {
             <Label>{t(msg`Credential ID`)}</Label>
             <div className="flex gap-2">
               <Textarea
-                placeholder={t(msg`Credential ID will appear here after registration`)}
+                placeholder={t(
+                  msg`Credential ID will appear here after registration`,
+                )}
                 rows={3}
                 readOnly
                 className="font-mono text-xs"
@@ -390,7 +431,9 @@ function Registration() {
             <Label>{t(msg`Public Key`)}</Label>
             <div className="flex gap-2">
               <Textarea
-                placeholder={t(msg`Public key will appear here after registration`)}
+                placeholder={t(
+                  msg`Public key will appear here after registration`,
+                )}
                 rows={6}
                 readOnly
                 className="font-mono text-xs"
@@ -405,7 +448,9 @@ function Registration() {
             <Label>{t(msg`Attestation Object`)}</Label>
             <div className="flex gap-2">
               <Textarea
-                placeholder={t(msg`Attestation object will appear here after registration`)}
+                placeholder={t(
+                  msg`Attestation object will appear here after registration`,
+                )}
                 rows={8}
                 readOnly
                 className="font-mono text-xs"
@@ -446,9 +491,11 @@ function Authentication() {
   };
 
   const generateChallenge = () => {
-    const randomChallenge = Array.from(crypto.getRandomValues(new Uint8Array(32)))
-      .map(b => b.toString(16).padStart(2, '0'))
-      .join('');
+    const randomChallenge = Array.from(
+      crypto.getRandomValues(new Uint8Array(32)),
+    )
+      .map((b) => b.toString(16).padStart(2, "0"))
+      .join("");
     setChallenge(randomChallenge);
   };
 
@@ -458,7 +505,7 @@ function Authentication() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Fingerprint className="w-5 h-5 text-orange-600" />
+            <FingerprintIcon className="w-5 h-5 text-orange-600" />
             {t(msg`Authentication Parameters`)}
           </CardTitle>
           <CardDescription>
@@ -467,7 +514,9 @@ function Authentication() {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="authRelyingPartyId">{t(msg`Relying Party ID`)}</Label>
+            <Label htmlFor="authRelyingPartyId">
+              {t(msg`Relying Party ID`)}
+            </Label>
             <Input
               id="authRelyingPartyId"
               placeholder="example.com"
@@ -489,8 +538,13 @@ function Authentication() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="authUserVerification">{t(msg`User Verification`)}</Label>
-            <Select value={userVerification} onValueChange={setUserVerification}>
+            <Label htmlFor="authUserVerification">
+              {t(msg`User Verification`)}
+            </Label>
+            <Select
+              value={userVerification}
+              onValueChange={setUserVerification}
+            >
               <SelectTrigger id="authUserVerification">
                 <SelectValue />
               </SelectTrigger>
@@ -538,7 +592,9 @@ function Authentication() {
             <Label>{t(msg`Authenticator Data`)}</Label>
             <div className="flex gap-2">
               <Textarea
-                placeholder={t(msg`Authenticator data will appear here after authentication`)}
+                placeholder={t(
+                  msg`Authenticator data will appear here after authentication`,
+                )}
                 rows={4}
                 readOnly
                 className="font-mono text-xs"
@@ -553,7 +609,9 @@ function Authentication() {
             <Label>{t(msg`Signature`)}</Label>
             <div className="flex gap-2">
               <Textarea
-                placeholder={t(msg`Signature will appear here after authentication`)}
+                placeholder={t(
+                  msg`Signature will appear here after authentication`,
+                )}
                 rows={4}
                 readOnly
                 className="font-mono text-xs"
@@ -568,7 +626,9 @@ function Authentication() {
             <Label>{t(msg`User Handle`)}</Label>
             <div className="flex gap-2">
               <Textarea
-                placeholder={t(msg`User handle will appear here after authentication`)}
+                placeholder={t(
+                  msg`User handle will appear here after authentication`,
+                )}
                 rows={2}
                 readOnly
                 className="font-mono text-xs"
@@ -582,7 +642,9 @@ function Authentication() {
           <Alert>
             <CheckCircle className="w-4 h-4" />
             <AlertDescription>
-              {t(msg`Authentication successful! The signature can be verified using the public key from registration.`)}
+              {t(
+                msg`Authentication successful! The signature can be verified using the public key from registration.`,
+              )}
             </AlertDescription>
           </Alert>
         </CardContent>
@@ -618,7 +680,7 @@ function CredentialsManagement() {
   const handleDeleteCredential = async (credentialId: string) => {
     // TODO: Implement credential deletion
     // await invoke(InvokeFunction.DeleteFido2Credential, { credentialId });
-    setCredentials(creds => creds.filter(c => c.id !== credentialId));
+    setCredentials((creds) => creds.filter((c) => c.id !== credentialId));
   };
 
   const handleExportCredentials = async () => {
@@ -655,14 +717,25 @@ function CredentialsManagement() {
               <div className="flex justify-between items-start">
                 <div className="space-y-2 flex-1">
                   <div className="flex items-center gap-2">
-                    <Shield className="w-4 h-4 text-blue-600" />
-                    <span className="font-medium">{credential.relyingPartyId}</span>
+                    <ShieldIcon className="w-4 h-4 text-blue-600" />
+                    <span className="font-medium">
+                      {credential.relyingPartyId}
+                    </span>
                     <Badge variant="outline">{credential.algorithm}</Badge>
                   </div>
                   <div className="text-sm text-muted-foreground">
-                    <p>{t(msg`User`)}: {credential.userDisplayName} ({credential.userName})</p>
-                    <p>{t(msg`Created`)}: {new Date(credential.createdAt).toLocaleDateString()}</p>
-                    <p>{t(msg`Last Used`)}: {new Date(credential.lastUsed).toLocaleDateString()}</p>
+                    <p>
+                      {t(msg`User`)}: {credential.userDisplayName} (
+                      {credential.userName})
+                    </p>
+                    <p>
+                      {t(msg`Created`)}:{" "}
+                      {new Date(credential.createdAt).toLocaleDateString()}
+                    </p>
+                    <p>
+                      {t(msg`Last Used`)}:{" "}
+                      {new Date(credential.lastUsed).toLocaleDateString()}
+                    </p>
                   </div>
                 </div>
                 <Button
@@ -679,9 +752,11 @@ function CredentialsManagement() {
 
         {credentials.length === 0 && (
           <div className="text-center py-8 text-muted-foreground">
-            <Shield className="w-12 h-12 mx-auto mb-4 opacity-50" />
+            <ShieldIcon className="w-12 h-12 mx-auto mb-4 opacity-50" />
             <p>{t(msg`No credentials stored`)}</p>
-            <p className="text-sm">{t(msg`Register with a service to see credentials here`)}</p>
+            <p className="text-sm">
+              {t(msg`Register with a service to see credentials here`)}
+            </p>
           </div>
         )}
       </CardContent>
@@ -712,10 +787,10 @@ function Settings() {
     <div className="grid lg:grid-cols-2 gap-6">
       <Card>
         <CardHeader>
-                   <CardTitle className="flex items-center gap-2">
-           <SettingsIcon className="w-5 h-5 text-gray-600" />
-           {t(msg`Authenticator Settings`)}
-         </CardTitle>
+          <CardTitle className="flex items-center gap-2">
+            <SettingsIcon className="w-5 h-5 text-gray-600" />
+            {t(msg`Authenticator Settings`)}
+          </CardTitle>
           <CardDescription>
             {t(msg`Configure FIDO2 authenticator behavior`)}
           </CardDescription>
@@ -761,7 +836,9 @@ function Settings() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="maxCredentials">{t(msg`Maximum Credentials`)}</Label>
+            <Label htmlFor="maxCredentials">
+              {t(msg`Maximum Credentials`)}
+            </Label>
             <Select value={maxCredentials} onValueChange={setMaxCredentials}>
               <SelectTrigger id="maxCredentials">
                 <SelectValue />
@@ -791,9 +868,11 @@ function Settings() {
         </CardHeader>
         <CardContent className="space-y-4">
           <Alert>
-            <Shield className="w-4 h-4" />
+            <ShieldIcon className="w-4 h-4" />
             <AlertDescription>
-              {t(msg`FIDO2 is a standard for passwordless authentication using public-key cryptography.`)}
+              {t(
+                msg`FIDO2 is a standard for passwordless authentication using public-key cryptography.`,
+              )}
             </AlertDescription>
           </Alert>
 
@@ -834,14 +913,16 @@ export default function Fido2Page() {
           {t(msg`FIDO2 Authenticator`)}
         </h1>
         <p className="text-muted-foreground max-w-2xl mx-auto">
-          {t(msg`Test and manage FIDO2 WebAuthn operations with a beautiful, Apple-inspired interface.`)}
+          {t(
+            msg`Test and manage FIDO2 WebAuthn operations with a beautiful, Apple-inspired interface.`,
+          )}
         </p>
       </div>
 
       <Tabs defaultValue={Fido2Tab.Authenticator} className="w-full">
         <TabsList className="grid w-full grid-cols-5 mb-6">
           <TabsTrigger value={Fido2Tab.Authenticator}>
-            <Smartphone className="mr-2 h-4 w-4" />
+            <SmartphoneIcon className="mr-2 h-4 w-4" />
             {t(msg`Authenticator`)}
           </TabsTrigger>
           <TabsTrigger value={Fido2Tab.Registration}>
@@ -849,17 +930,17 @@ export default function Fido2Page() {
             {t(msg`Registration`)}
           </TabsTrigger>
           <TabsTrigger value={Fido2Tab.Authentication}>
-            <Fingerprint className="mr-2 h-4 w-4" />
+            <FingerprintIcon className="mr-2 h-4 w-4" />
             {t(msg`Authentication`)}
           </TabsTrigger>
           <TabsTrigger value={Fido2Tab.Credentials}>
-            <Shield className="mr-2 h-4 w-4" />
+            <ShieldIcon className="mr-2 h-4 w-4" />
             {t(msg`Credentials`)}
           </TabsTrigger>
-                     <TabsTrigger value={Fido2Tab.Settings}>
-             <SettingsIcon className="mr-2 h-4 w-4" />
-             {t(msg`Settings`)}
-           </TabsTrigger>
+          <TabsTrigger value={Fido2Tab.Settings}>
+            <SettingsIcon className="mr-2 h-4 w-4" />
+            {t(msg`Settings`)}
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value={Fido2Tab.Authenticator}>

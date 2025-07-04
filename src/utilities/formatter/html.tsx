@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2023-2025, ApriilNEA LLC.
+ * Copyright (c) 2023-2025, AprilNEA LLC.
  *
  * Dual licensed under:
  * - GPL-3.0 (open source)
@@ -13,34 +13,34 @@
  * See LICENSE file for details or contact admin@aprilnea.com
  */
 
-import { useState, useEffect } from "react";
+import {
+  ArrowUpFromLine,
+  Clipboard,
+  Copy,
+  FileText,
+  Settings,
+  Trash2,
+  Zap,
+} from "lucide-react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuCheckboxItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
-  Zap,
-  Clipboard,
-  FileText,
-  Trash2,
-  Settings,
-  Copy,
-  ArrowUpFromLine,
-} from "lucide-react";
 
 // Basic HTML entity maps
 const encodeMap: { [key: string]: string } = {

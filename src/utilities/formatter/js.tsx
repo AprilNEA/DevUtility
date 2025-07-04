@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2023-2025, ApriilNEA LLC.
+ * Copyright (c) 2023-2025, AprilNEA LLC.
  *
  * Dual licensed under:
  * - GPL-3.0 (open source)
@@ -13,30 +13,43 @@
  * See LICENSE file for details or contact admin@aprilnea.com
  */
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Textarea } from "@/components/ui/textarea"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Label } from "@/components/ui/label"
+import {
+  ArrowUpFromLine,
+  Clipboard,
+  Copy,
+  FileText,
+  Settings,
+  Trash2,
+  Zap,
+} from "lucide-react";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
+  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuCheckboxItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-import { Zap, Clipboard, FileText, Trash2, Settings, Copy, ArrowUpFromLine } from "lucide-react"
+} from "@/components/ui/dropdown-menu";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export default function HtmlToolPage() {
-  const [inputHtml, setInputHtml] = useState("<h1>Hello</h1>")
-  const [outputHtml, setOutputHtml] = useState("&lt;h1&gt;Hello&lt;/h1&gt;")
-  const [mode, setMode] = useState("encode") // "encode" or "decode"
+  const [inputHtml, setInputHtml] = useState("<h1>Hello</h1>");
+  const [outputHtml, setOutputHtml] = useState("&lt;h1&gt;Hello&lt;/h1&gt;");
+  const [mode, setMode] = useState("encode"); // "encode" or "decode"
 
   // Placeholder states for settings - adapt as needed
-  const [indentSize, setIndentSize] = useState(2)
-  const [wrapLines, setWrapLines] = useState(true)
+  const [indentSize, setIndentSize] = useState(2);
+  const [wrapLines, setWrapLines] = useState(true);
 
   return (
     <TooltipProvider>
@@ -45,10 +58,16 @@ export default function HtmlToolPage() {
         <div className="flex flex-col gap-2 bg-card p-3 rounded-lg flex-1">
           <div className="flex items-center justify-between gap-2 mb-2">
             <div className="flex items-center gap-1">
-              <span className="text-sm font-medium text-card-foreground mr-2">Input</span>
+              <span className="text-sm font-medium text-card-foreground mr-2">
+                Input
+              </span>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground h-8 w-8">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="text-muted-foreground hover:text-foreground h-8 w-8"
+                  >
                     <Zap size={18} />
                   </Button>
                 </TooltipTrigger>
@@ -58,7 +77,11 @@ export default function HtmlToolPage() {
               </Tooltip>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground h-8 w-8">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="text-muted-foreground hover:text-foreground h-8 w-8"
+                  >
                     <Clipboard size={18} />
                   </Button>
                 </TooltipTrigger>
@@ -68,7 +91,11 @@ export default function HtmlToolPage() {
               </Tooltip>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground h-8 w-8">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="text-muted-foreground hover:text-foreground h-8 w-8"
+                  >
                     <FileText size={18} />
                   </Button>
                 </TooltipTrigger>
@@ -78,7 +105,11 @@ export default function HtmlToolPage() {
               </Tooltip>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground h-8 w-8">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="text-muted-foreground hover:text-foreground h-8 w-8"
+                  >
                     <Trash2 size={18} />
                   </Button>
                 </TooltipTrigger>
@@ -104,7 +135,10 @@ export default function HtmlToolPage() {
                   </TooltipContent>
                 </Tooltip>
                 <DropdownMenuContent align="start" className="w-56">
-                  <DropdownMenuCheckboxItem checked={wrapLines} onCheckedChange={setWrapLines}>
+                  <DropdownMenuCheckboxItem
+                    checked={wrapLines}
+                    onCheckedChange={setWrapLines}
+                  >
                     Wrap lines
                   </DropdownMenuCheckboxItem>
                   <DropdownMenuSeparator />
@@ -114,7 +148,11 @@ export default function HtmlToolPage() {
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
-            <RadioGroup value={mode} onValueChange={setMode} className="flex items-center gap-4">
+            <RadioGroup
+              value={mode}
+              onValueChange={setMode}
+              className="flex items-center gap-4"
+            >
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="encode" id="encode" />
                 <Label htmlFor="encode" className="text-sm font-medium">
@@ -141,7 +179,9 @@ export default function HtmlToolPage() {
         {/* Output Section */}
         <div className="flex flex-col gap-2 bg-card p-3 rounded-lg flex-1">
           <div className="flex items-center justify-between gap-2 mb-2">
-            <span className="text-sm font-medium text-card-foreground">Output</span>
+            <span className="text-sm font-medium text-card-foreground">
+              Output
+            </span>
             <div className="flex items-center gap-2">
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -177,5 +217,5 @@ export default function HtmlToolPage() {
         </div>
       </div>
     </TooltipProvider>
-  )
+  );
 }

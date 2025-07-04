@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2023-2025, ApriilNEA LLC.
+ * Copyright (c) 2023-2025, AprilNEA LLC.
  *
  * Dual licensed under:
  * - GPL-3.0 (open source)
@@ -16,6 +16,7 @@
 import { useDebouncedValue } from "foxact/use-debounced-value";
 import { useCallback, useEffect, useState } from "react";
 import CodecModeRadio, { CodecMode } from "@/components/codec-mode";
+import { Callout } from "@/components/derived-ui/callout";
 import InputOutputLayout from "@/components/layout/input-output";
 import {
   ClearTool,
@@ -27,7 +28,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { useUtilityInvoke } from "../invoke";
 import { InvokeFunction } from "../types";
-import { Callout } from "@/components/derived-ui/callout";
 
 export default function Base64CodecPage() {
   const [mode, setMode] = useState<CodecMode>(CodecMode.Encode);
