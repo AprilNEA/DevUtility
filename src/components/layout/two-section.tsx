@@ -13,9 +13,9 @@
  * See LICENSE file for details or contact admin@aprilnea.com
  */
 
+import { Label } from "@/components/ui/label";
 import type { MessageDescriptor } from "@lingui/core";
 import { useLingui } from "@lingui/react/macro";
-import { Label } from "@/components/ui/label";
 
 import { cn } from "@/lib/utils";
 
@@ -32,6 +32,14 @@ export type TwoSectionLayoutProps = {
   secondLabel?: MessageDescriptor;
   secondToolbar?: React.ReactNode;
   secondContent?: React.ReactNode;
+
+  classNames?: {
+    container?: string;
+    firstSection?: string;
+    firstSectionToolbar?: string;
+    secondSection?: string;
+    secondSectionToolbar?: string;
+  };
 };
 
 const TwoSectionLayout = ({
@@ -42,10 +50,11 @@ const TwoSectionLayout = ({
   secondLabel,
   secondToolbar,
   secondContent,
+  classNames,
 }: TwoSectionLayoutProps) => {
   const { t } = useLingui();
   return (
-    <div className="flex flex-col h-full gap-4">
+    <div className={cn("flex flex-col h-full gap-4", classNames?.container)}>
       <div
         className={cn(
           "grid grid-cols-1 gap-4 flex-grow",
@@ -53,8 +62,18 @@ const TwoSectionLayout = ({
         )}
       >
         {/* Input Section */}
-        <div className="flex flex-col gap-2 bg-background/95 p-3 rounded-lg">
-          <div className="flex items-center justify-between gap-2 mb-2">
+        <div
+          className={cn(
+            "flex flex-col gap-2 bg-background/95 p-3 rounded-lg",
+            classNames?.firstSection,
+          )}
+        >
+          <div
+            className={cn(
+              "flex items-center justify-between gap-2 mb-2",
+              classNames?.firstSectionToolbar,
+            )}
+          >
             {firstLabel && (
               <Label className="text-sm font-medium text-foreground/80">
                 {t(firstLabel)}
@@ -66,8 +85,18 @@ const TwoSectionLayout = ({
         </div>
 
         {/* Output Section */}
-        <div className="flex flex-col gap-2 bg-background/95 p-3 rounded-lg">
-          <div className="flex items-center justify-between gap-2 mb-2">
+        <div
+          className={cn(
+            "flex flex-col gap-2 bg-background/95 p-3 rounded-lg",
+            classNames?.secondSection,
+          )}
+        >
+          <div
+            className={cn(
+              "flex items-center justify-between gap-2 mb-2",
+              classNames?.secondSectionToolbar,
+            )}
+          >
             {secondLabel && (
               <Label className="text-sm font-medium text-foreground/80">
                 {t(secondLabel)}
