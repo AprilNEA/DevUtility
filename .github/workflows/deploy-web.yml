@@ -57,17 +57,14 @@ jobs:
     
     - name: Install dependencies
       run: pnpm install --frozen-lockfile
-    
-    - name: Build Rust/WASM package
-      run: make pkg
-    
+        
     - name: Build website
       run: make build-web
 
     - name: Cache build
       uses: actions/cache/save@v3
       with:
-        path: dist/
+        path: packages/frontend/dist/
         key: build-${{ github.sha }}
 
   deploy-github-pages:

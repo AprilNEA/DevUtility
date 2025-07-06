@@ -34,14 +34,16 @@ importers:
         specifier: ^4.20.3
         version: 4.20.3
       typescript:
-        specifier: ~5.6.2
-        version: 5.6.3
+        specifier: ^5.8.3
+        version: 5.8.3
+
+  packages/core: {}
 
   packages/frontend:
     dependencies:
       '@dev-utility/core':
-        specifier: link:pkg
-        version: link:pkg
+        specifier: link:../core
+        version: link:../core
       '@lingui/core':
         specifier: ^5.3.2
         version: 5.3.2(@lingui/babel-plugin-lingui-macro@5.3.2(babel-plugin-macros@3.1.0)(typescript@5.6.3))(babel-plugin-macros@3.1.0)
@@ -3667,6 +3669,11 @@ packages:
 
   typescript@5.6.3:
     resolution: {integrity: sha512-hjcS1mhfuyi4WW8IWtjP7brDrG2cuDZukyrYrSauoXGNgx0S7zceP07adYkJycEr56BOUTNPzbInooiN3fn1qw==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
+  typescript@5.8.3:
+    resolution: {integrity: sha512-p1diW6TqL9L07nNxvRMM7hMMw4c5XOo/1ibL4aAIGmSAt9slTE1Xgw5KWuof2uTOvCg9BY7ZRi+GaF+7sfgPeQ==}
     engines: {node: '>=14.17'}
     hasBin: true
 
@@ -7537,6 +7544,8 @@ snapshots:
       mime-types: 3.0.1
 
   typescript@5.6.3: {}
+
+  typescript@5.8.3: {}
 
   undici-types@6.21.0: {}
 
