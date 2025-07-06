@@ -87,7 +87,11 @@ export async function utilityInvoke<T extends InvokeFunction>(
   }
   // #v-ifdef WASM
   else if (cmd in wasmFunctions) {
-    return wasmFunctions[cmd]?.(args);
+    const result = wasmFunctions[cmd]?.(args);
+    if (!result) {
+      throw new Error(`Function ${cmd} not found in wasm`);
+    }
+    return result;
   }
   // #v-endif
   throw new Error(`Function ${cmd} not found`);
