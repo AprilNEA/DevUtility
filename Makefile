@@ -8,29 +8,30 @@ build: pkg
 
 .PHONY: setup-rust
 
-pkg: src-utility
-	wasm-pack build --target bundler --scope dev-utility --out-name core --out-dir ../pkg src-utility
+pkg: dev-utility
+	wasm-pack build --target bundler --scope dev-utility --out-name core --out-dir ../pkg dev-utility
 	sed 's/@dev-utility\/dev-utility-core/@dev-utility\/core/g' pkg/package.json > pkg/package.json.tmp
 	mv pkg/package.json.tmp pkg/package.json
 
 prebuild-desktop:
 	pnpm merge-license
-	pnpm build
+	pnpm --filter @dev-utility/frontend build
 
 build-desktop:
 	pnpm tauri build
 
 build-web: pkg
-	WASM=true pnpm build
+	WASM=true pnpm --filter @dev-utility/frontend build
 
 .PHONY: license
 license:
-	addlicense -f ./LICENSE src-tauri
-	addlicense -f ./LICENSE src-utility
-	addlicense -f ./LICENSE src
+	addlicense -f ./LICENSE dev-utility-workers
+	addlicense -f ./LICENSE dev-utility-tauri
+	addlicense -f ./LICENSE dev-utility
 
+.PHONY: version
 version:
-	pnpm run version
+	pnpm tsx version
 
-merge-license:
-	pnpm run merge-license
+merge-license: LICENSE.FULL
+	pnpm tsx merge-license

@@ -119,7 +119,7 @@ pub fn run() {
             #[cfg(desktop)]
             updates::app_install_update,
             #[cfg(desktop)]
-            dev_utility_core::hardware::list_hid_devices,
+            // dev_utility_core::hardware::list_hid_devices,
             dev_utility_core::codec::decode_base64,
             dev_utility_core::codec::encode_base64,
             dev_utility_core::cryptography::generate_rsa_key,

@@ -4,10 +4,10 @@
   "version": "0.1.6",
   "identifier": "dev.utility.app",
   "build": {
-    "beforeDevCommand": "pnpm dev",
+    "beforeDevCommand": "pnpm --filter @dev-utility/frontend dev",
     "devUrl": "http://localhost:1420",
     "beforeBuildCommand": "make prebuild-desktop",
-    "frontendDist": "../dist"
+    "frontendDist": "../packages/frontend/dist"
   },
   "app": {
     "withGlobalTauri": true,
