@@ -164,6 +164,6 @@ pub fn analyze_ipv4_cidr(ip: Ipv4Addr, cidr: u8) -> Option<IpAnalysisResult> {
 }
 
 
-pub fn analyze_ipv4(ip: Ipv4Addr) -> Option<IpAnalysisResult> {
+// pub fn analyze_ipv4(ip: Ipv4Addr) -> Option<IpAnalysisResult> {
     
-}
+// }
