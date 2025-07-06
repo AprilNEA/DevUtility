@@ -16,3 +16,4 @@ pub mod cryptography;
 pub mod formatter;
 pub mod generator;
 pub mod network;
+pub mod hardware;
