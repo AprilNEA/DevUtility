@@ -5,30 +5,27 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Moon, Sun, Monitor } from "lucide-react";
-import { useEffect } from "react";
 import { useLocalStorage } from "foxact/use-local-storage";
+import { Monitor, Moon, Sun } from "lucide-react";
 
 type Theme = "light" | "dark" | "system";
 
-export function ThemeSwitcher() {
+export const useTheme = () => {
   const [theme, setTheme] = useLocalStorage<Theme>("theme", "system", {
     raw: true,
   });
 
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("theme") as Theme;
-    if (savedTheme) {
-      setTheme(savedTheme);
-      applyTheme(savedTheme);
-    } else {
-      applyTheme("system");
-    }
-  }, []);
+  return {
+    theme,
+    setTheme,
+  };
+};
+
+export function ThemeSwitcher() {
+  const { theme, setTheme } = useTheme();
 
   const applyTheme = (newTheme: Theme) => {
     const root = window.document.documentElement;
-
     if (newTheme === "system") {
       const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
         .matches

@@ -25,12 +25,14 @@ import { Textarea } from "@/components/ui/textarea";
 import { copyToClipboard } from "@/lib/copyboard";
 import { useUtilityInvoke } from "@/utilities/invoke";
 import { msg } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 import { useDebouncedValue } from "foxact/use-debounced-value";
 import { CopyIcon } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { HashAlgorithm, type HashResult, InvokeFunction } from "../types";
 
 export default function HashGeneratorPage() {
+  const { t } = useLingui();
   const { data: hashResult, trigger } = useUtilityInvoke(
     InvokeFunction.GenerateHashes,
   );
@@ -68,7 +70,11 @@ export default function HashGeneratorPage() {
     <ScrollArea className="flex-1 min-h-[300px]">
       <Textarea
         className="h-[300px] resize-none font-mono text-xs rounded-md"
-        placeholder={`- Enter Your Text\n- Drag/Drop Files\n- Right Click • Load from File...\n- ⌘ + F to Search\n- ⌘ + ⌥ + F to Replace`}
+        placeholder={t(msg`- Enter Your Text
+- Drag/Drop Files
+- Right Click • Load from File...
+- ⌘ + F to Search
+- ⌘ + ⌥ + F to Replace`)}
         value={input}
         onChange={(e) => setInput(e.target.value)}
       />
@@ -78,7 +84,7 @@ export default function HashGeneratorPage() {
   const outputToolbar = (
     <div className="flex items-center gap-4 h-8">
       <span className="text-xs text-muted-foreground">
-        Length: {input.length}
+        {t(msg`Length: ${input.length}`)}
       </span>
       <div className="flex items-center gap-1">
         <Checkbox
@@ -87,7 +93,7 @@ export default function HashGeneratorPage() {
           onCheckedChange={(v) => setLowercased(!!v)}
         />
         <Label htmlFor="lowercased" className="text-xs">
-          lowercased
+          {t(msg`lowercased`)}
         </Label>
       </div>
     </div>
