@@ -23,6 +23,8 @@ pub enum UtilityError {
     ParseError(String),
     #[error("Invalid input: {0}")]
     InvalidInput(String),
+    #[error("API error: {0}")]
+    ApiError(String),
 }
 
 impl serde::Serialize for UtilityError {
