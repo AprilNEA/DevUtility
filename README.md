@@ -3,7 +3,7 @@
 
 <h4 align="right"><strong>English</strong> | <a href="./README_CN.md">简体中文</a></h4>
 <p align="center">
-    <img src=./src-tauri/icons/icon.png width=128/>
+    <img src=./dev-utility-tauri/icons/icon.png width=128/>
 </p>
 <h1 align="center">DevUtility</h1>
 <p align="center"><strong>⚡ Universal developer toolkit for software, hardware, and security professionals.</strong></p>
