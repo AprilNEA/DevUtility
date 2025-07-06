@@ -19,7 +19,6 @@ import "./index.css";
 import { Route, Router, Switch } from "wouter";
 import Metadata from "./components/meta";
 import AppSidebar from "./components/sidebar";
-import TotpDebugger from "./utilities/cryptography/oath/totp";
 import utilities, { type UtilityMeta } from "./utilities/meta";
 
 // const SettingsPage = lazy(() => import("./pages/settings"));
@@ -34,13 +33,18 @@ const convertToRoute = (utility: UtilityMeta) => {
     );
   } else {
     // single utility
-    const component = () => (
-      <>
-        <Metadata title={utility.title.message} />
-        {utility.page}
-      </>
+    return (
+      <Route
+        key={utility.key}
+        path={utility.key}
+        component={({ params }) => (
+          <>
+            <Metadata title={utility.title.message} />
+            <utility.page params={params} />
+          </>
+        )}
+      />
     );
-    return <Route key={utility.key} path={utility.key} component={component} />;
   }
 };
 
@@ -49,7 +53,7 @@ function App() {
     <Router>
       <Switch>
         {/*  <Route path="settings" component={SettingsPage} /> */}
-        <Route path="totp" component={TotpDebugger} />
+        {/* <Route path="totp" component={TotpDebugger} /> */}
         <AppSidebar>
           {utilities.map((utility) => convertToRoute(utility))}
         </AppSidebar>
