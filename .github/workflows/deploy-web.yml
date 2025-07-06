@@ -3,8 +3,8 @@ name: Deploy Website
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
+  # pull_request:
+  #   branches: [ master ]
 
 jobs:
   build:
@@ -59,12 +59,14 @@ jobs:
       run: pnpm install --frozen-lockfile
         
     - name: Build website
-      run: make build-web
+      run: |
+        make build-web
+        mv packages/frontend/dist/ dist/
 
     - name: Cache build
       uses: actions/cache/save@v3
       with:
-        path: packages/frontend/dist/
+        path: dist/
         key: build-${{ github.sha }}
 
   deploy-github-pages:
@@ -94,7 +96,7 @@ jobs:
         if: github.ref == 'refs/heads/master'
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist'
+          path: dist/
       
       - name: Deploy to GitHub Pages
         if: github.ref == 'refs/heads/master'
