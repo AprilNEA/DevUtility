@@ -13,6 +13,11 @@
  * See LICENSE file for details or contact admin@aprilnea.com
  */
 
+import { msg } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
+import { useDebouncedValue } from "foxact/use-debounced-value";
+import { CopyIcon } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
 import TwoSectionLayout from "@/components/layout/two-section";
 import { ClearTool, LoadFileTool, PasteTool } from "@/components/tools";
 import { Button } from "@/components/ui/button";
@@ -24,11 +29,6 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Textarea } from "@/components/ui/textarea";
 import { copyToClipboard } from "@/lib/copyboard";
 import { useUtilityInvoke } from "@/utilities/invoke";
-import { msg } from "@lingui/core/macro";
-import { useLingui } from "@lingui/react/macro";
-import { useDebouncedValue } from "foxact/use-debounced-value";
-import { CopyIcon } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
 import { HashAlgorithm, type HashResult, InvokeFunction } from "../types";
 
 export default function HashGeneratorPage() {

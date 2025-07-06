@@ -27,7 +27,6 @@ import {
   LinkIcon,
   RadarIcon,
   RotateCcwKeyIcon,
-  UsbIcon,
 } from "lucide-react";
 import { lazy } from "react";
 import type { RouteComponentProps } from "wouter";
@@ -46,7 +45,7 @@ const RSAKeyAnalyzerPage = lazy(() => import("./cryptography/rsa/analyzer"));
 // const RSAKeyConverterPage = lazy(() => import("./cryptography/rsa/converter"));
 // const HotpDebuggerPage = lazy(() => import("./cryptography/oath/hotp"));
 const TotpDebuggerPage = lazy(() => import("./cryptography/oath/totp"));
-const HidDevicesPage = lazy(() => import("./hardware/hid"));
+// const HidDevicesPage = lazy(() => import("./hardware/hid"));
 
 export type Utility = {
   key: string;
@@ -230,18 +229,18 @@ const utilities: UtilityMeta[] = [
       },
     ],
   },
-  {
-    key: "hardware",
-    title: msg`Hardware`,
-    items: [
-      {
-        key: "hid",
-        icon: UsbIcon,
-        title: msg`HID Devices`,
-        page: HidDevicesPage,
-      },
-    ],
-  },
+  // {
+  //   key: "hardware",
+  //   title: msg`Hardware`,
+  //   items: [
+  //     {
+  //       key: "hid",
+  //       icon: UsbIcon,
+  //       title: msg`HID Devices`,
+  //       page: HidDevicesPage,
+  //     },
+  //   ],
+  // },
 ];
 
 export default utilities;

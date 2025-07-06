@@ -13,6 +13,14 @@
  * See LICENSE file for details or contact admin@aprilnea.com
  */
 
+import { useDebouncedValue } from "foxact/use-debounced-value";
+import {
+  ChevronDown,
+  ChevronDownIcon,
+  HelpCircleIcon,
+  SettingsIcon,
+} from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
 import { Callout } from "@/components/derived-ui/callout";
 import InputOutputLayout from "@/components/layout/input-output";
 import {
@@ -42,14 +50,6 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useUtilityInvoke } from "@/utilities/invoke";
-import { useDebouncedValue } from "foxact/use-debounced-value";
-import {
-  ChevronDown,
-  ChevronDownIcon,
-  HelpCircleIcon,
-  SettingsIcon,
-} from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
 import { type IndentStyle, IndentStyleEnum, InvokeFunction } from "../types";
 
 const jsonExampleInput = `{

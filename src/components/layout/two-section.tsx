@@ -13,9 +13,9 @@
  * See LICENSE file for details or contact admin@aprilnea.com
  */
 
-import { Label } from "@/components/ui/label";
 import type { MessageDescriptor } from "@lingui/core";
 import { useLingui } from "@lingui/react/macro";
+import { Label } from "@/components/ui/label";
 
 import { cn } from "@/lib/utils";
 

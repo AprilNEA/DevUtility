@@ -21,11 +21,31 @@ const wasmFunctions: Partial<WasmFunctions> = {
   [InvokeFunction.EncodeBase64]: (args) => wasm.encode_base64(args.input),
   [InvokeFunction.DecodeBase64]: (args) => wasm.decode_base64(args.input),
   [InvokeFunction.GenerateTotpSecret]: (args) =>
-    wasm.generate_totp_secret(args.issuer, args.account, args.algorithm, args.digits, args.period, args.image, args.add_issuer_prefix),
+    wasm.generate_totp_secret(
+      args.issuer,
+      args.account,
+      args.algorithm,
+      args.digits,
+      args.period,
+      args.image,
+      args.add_issuer_prefix,
+    ),
   [InvokeFunction.GenerateTotpCode]: (args) =>
-    wasm.generate_totp_code(args.secret, args.algorithm, args.digits, args.period),
+    wasm.generate_totp_code(
+      args.secret,
+      args.algorithm,
+      args.digits,
+      args.period,
+    ),
   [InvokeFunction.ValidateTotpCode]: (args) =>
-    wasm.validate_totp_code(args.secret, args.code, args.algorithm, args.digits, args.period, args.window),
+    wasm.validate_totp_code(
+      args.secret,
+      args.code,
+      args.algorithm,
+      args.digits,
+      args.period,
+      args.window,
+    ),
 };
 
 export default wasmFunctions;

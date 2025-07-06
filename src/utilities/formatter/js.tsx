@@ -44,11 +44,11 @@ import {
 
 export default function HtmlToolPage() {
   const [inputHtml, setInputHtml] = useState("<h1>Hello</h1>");
-  const [outputHtml, setOutputHtml] = useState("&lt;h1&gt;Hello&lt;/h1&gt;");
+  const [outputHtml, _setOutputHtml] = useState("&lt;h1&gt;Hello&lt;/h1&gt;");
   const [mode, setMode] = useState("encode"); // "encode" or "decode"
 
   // Placeholder states for settings - adapt as needed
-  const [indentSize, setIndentSize] = useState(2);
+  const [_indentSize, _setIndentSize] = useState(2);
   const [wrapLines, setWrapLines] = useState(true);
 
   return (

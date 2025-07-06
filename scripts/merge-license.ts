@@ -13,13 +13,16 @@
  * See LICENSE file for details or contact admin@aprilnea.com
  */
 
-import { readFileSync, writeFileSync } from 'fs';
-import { join } from 'path';
+import { readFileSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
 
 // Read the license files
-const licenseMain = readFileSync(join(process.cwd(), 'LICENSE'), 'utf8');
-const licenseGPL = readFileSync(join(process.cwd(), 'LICENSE.GPL'), 'utf8');
-const licenseCommercial = readFileSync(join(process.cwd(), 'LICENSE.COMMERCIAL'), 'utf8');
+const licenseMain = readFileSync(join(process.cwd(), "LICENSE"), "utf8");
+const licenseGPL = readFileSync(join(process.cwd(), "LICENSE.GPL"), "utf8");
+const licenseCommercial = readFileSync(
+  join(process.cwd(), "LICENSE.COMMERCIAL"),
+  "utf8",
+);
 
 // Merge licenses into a full license file
 const fullLicense = `${licenseMain}
@@ -38,6 +41,6 @@ ${licenseCommercial}
 `;
 
 // Write the merged license to LICENSE.FULL
-writeFileSync(join(process.cwd(), 'LICENSE.FULL'), fullLicense);
+writeFileSync(join(process.cwd(), "LICENSE.FULL"), fullLicense);
 
-console.log('Successfully merged licenses into LICENSE.FULL');
+console.log("Successfully merged licenses into LICENSE.FULL");

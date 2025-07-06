@@ -14,9 +14,8 @@
  */
 
 import { msg } from "@lingui/core/macro";
-import { Trans, useLingui } from "@lingui/react/macro";
+import { useLingui } from "@lingui/react/macro";
 import {
-  AlertCircle,
   CheckCircle,
   Copy,
   Download,
@@ -26,13 +25,11 @@ import {
   Info,
   Key,
   Lock,
-  QrCode,
   RefreshCw,
   Settings as SettingsIcon,
   ShieldIcon,
   SmartphoneIcon,
   Unlock,
-  Upload,
 } from "lucide-react";
 import { useState } from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -58,9 +55,6 @@ import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
-import { copyToClipboard } from "@/lib/copyboard";
-import { useUtilityInvoke } from "@/utilities/invoke";
-import { InvokeFunction } from "@/utilities/types";
 
 enum Fido2Tab {
   Authenticator = "authenticator",

@@ -113,7 +113,7 @@ const SelectModel: React.FC<{
           <div key={category}>
             <SelectGroup>
               <SelectLabel>{category}</SelectLabel>
-              {Object.entries(items).map(([model, value]) => (
+              {Object.entries(items).map(([model, _value]) => (
                 <SelectItem key={model} value={model}>
                   {model}
                 </SelectItem>

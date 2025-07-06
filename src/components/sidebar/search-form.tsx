@@ -13,26 +13,26 @@
  * See LICENSE file for details or contact admin@aprilnea.com
  */
 
-import { Search } from "lucide-react"
+import { Search } from "lucide-react";
 
-import { Label } from "@/components/ui/label"
+import { Label } from "@/components/ui/label";
 import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarInput,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
 
 export interface SearchFormProps {
-  value: string
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-  className?: string
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  className?: string;
 }
 
 export function SearchForm({ value, onChange, className }: SearchFormProps) {
   // Prevent form submission from refreshing the page
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-  }
+    e.preventDefault();
+  };
   return (
     <form className={className} onSubmit={handleSubmit} autoComplete="off">
       <SidebarGroup className="py-0">
@@ -51,5 +51,5 @@ export function SearchForm({ value, onChange, className }: SearchFormProps) {
         </SidebarGroupContent>
       </SidebarGroup>
     </form>
-  )
+  );
 }

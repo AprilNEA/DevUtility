@@ -56,7 +56,7 @@ export interface UtilitiesArgs {
   [InvokeFunction.GenerateTotpSecret]: TotpGenerateSecretParams;
   [InvokeFunction.GenerateTotpCode]: TotpGenerateCodeParams;
   [InvokeFunction.ValidateTotpCode]: TotpValidateCodeParams;
-  [InvokeFunction.ListHidDevices]: void;
+  [InvokeFunction.ListHidDevices]: undefined;
 }
 
 export interface UtilitiesReturns {
@@ -87,7 +87,7 @@ export async function utilityInvoke<T extends InvokeFunction>(
   }
   // #v-ifdef WASM
   else if (cmd in wasmFunctions) {
-    return wasmFunctions[cmd]!(args);
+    return wasmFunctions[cmd]?.(args);
   }
   // #v-endif
   throw new Error(`Function ${cmd} not found`);

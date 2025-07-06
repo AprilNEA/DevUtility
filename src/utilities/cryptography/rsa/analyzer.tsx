@@ -62,8 +62,8 @@ const useRSAKeyAnalyzer = () => {
   return context;
 };
 
-const Overview: React.FC<{ data: RsaKeyAnalysis }> = ({ data }) => {
-  const { formatNumber } = useRSAKeyAnalyzer();
+const _Overview: React.FC<{ data: RsaKeyAnalysis }> = ({ data }) => {
+  // const { formatNumber } = useRSAKeyAnalyzer();
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -166,7 +166,7 @@ const Overview: React.FC<{ data: RsaKeyAnalysis }> = ({ data }) => {
   );
 };
 
-const PublicKeyParams: React.FC<{ data: RsaKeyAnalysis }> = ({ data }) => {
+const _PublicKeyParams: React.FC<{ data: RsaKeyAnalysis }> = ({ data }) => {
   const { formatNumber } = useRSAKeyAnalyzer();
   return (
     <Card>
@@ -181,7 +181,7 @@ const PublicKeyParams: React.FC<{ data: RsaKeyAnalysis }> = ({ data }) => {
         {/* 模数 n */}
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <label className="text-sm font-medium">
+            <label htmlFor="n" className="text-sm font-medium">
               模数 (n) - {data.publicParams?.nBits} bits
             </label>
             <Button
@@ -207,7 +207,9 @@ const PublicKeyParams: React.FC<{ data: RsaKeyAnalysis }> = ({ data }) => {
         {/* 公钥指数 e */}
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <label className="text-sm font-medium">公钥指数 (e)</label>
+            <label htmlFor="e" className="text-sm font-medium">
+              公钥指数 (e)
+            </label>
             <Button
               variant="ghost"
               size="sm"
@@ -232,9 +234,9 @@ const PublicKeyParams: React.FC<{ data: RsaKeyAnalysis }> = ({ data }) => {
   );
 };
 
-const PrivateKeyParams: React.FC<{ data: RsaKeyAnalysis }> = ({ data }) => {
+const _PrivateKeyParams: React.FC<{ data: RsaKeyAnalysis }> = ({ data }) => {
   const { formatNumber } = useRSAKeyAnalyzer();
-  const [showPrivateParams, setShowPrivateParams] = useState(false);
+  const [showPrivateParams, _setShowPrivateParams] = useState(false);
 
   return (
     <>
@@ -264,7 +266,9 @@ const PrivateKeyParams: React.FC<{ data: RsaKeyAnalysis }> = ({ data }) => {
             {/* 私钥指数 d */}
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <label className="text-sm font-medium">私钥指数 (d)</label>
+                <label htmlFor="d" className="text-sm font-medium">
+                  私钥指数 (d)
+                </label>
                 <Button
                   variant="ghost"
                   size="sm"
@@ -292,7 +296,9 @@ const PrivateKeyParams: React.FC<{ data: RsaKeyAnalysis }> = ({ data }) => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <label className="text-sm font-medium">质数 p</label>
+                  <label htmlFor="p" className="text-sm font-medium">
+                    质数 p
+                  </label>
                   <Button
                     variant="ghost"
                     size="sm"
@@ -321,7 +327,9 @@ const PrivateKeyParams: React.FC<{ data: RsaKeyAnalysis }> = ({ data }) => {
 
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <label className="text-sm font-medium">质数 q</label>
+                  <label htmlFor="q" className="text-sm font-medium">
+                    质数 q
+                  </label>
                   <Button
                     variant="ghost"
                     size="sm"
@@ -358,7 +366,9 @@ const PrivateKeyParams: React.FC<{ data: RsaKeyAnalysis }> = ({ data }) => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <label className="text-sm font-medium">指数1 (dp)</label>
+                    <label htmlFor="dp" className="text-sm font-medium">
+                      指数1 (dp)
+                    </label>
                     <Button
                       variant="ghost"
                       size="sm"
@@ -387,7 +397,9 @@ const PrivateKeyParams: React.FC<{ data: RsaKeyAnalysis }> = ({ data }) => {
 
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <label className="text-sm font-medium">指数2 (dq)</label>
+                    <label htmlFor="dq" className="text-sm font-medium">
+                      指数2 (dq)
+                    </label>
                     <Button
                       variant="ghost"
                       size="sm"
@@ -417,7 +429,9 @@ const PrivateKeyParams: React.FC<{ data: RsaKeyAnalysis }> = ({ data }) => {
 
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <label className="text-sm font-medium">系数 (qinv)</label>
+                  <label htmlFor="qinv" className="text-sm font-medium">
+                    系数 (qinv)
+                  </label>
                   <Button
                     variant="ghost"
                     size="sm"
@@ -473,7 +487,7 @@ export default function RSAKeyAnalyzer() {
     navigator.clipboard.writeText(text ?? "");
   };
 
-  const formatNumber = (value?: string, hexValue?: string) => {
+  const _formatNumber = (value?: string, hexValue?: string) => {
     if (!value) return "";
     if (showHexFormat && hexValue) {
       return hexValue
@@ -543,7 +557,10 @@ export default function RSAKeyAnalyzer() {
 
               <TabsContent value="public" className="space-y-4">
                 <div className="space-y-2">
-                  <label className="text-sm font-medium flex items-center gap-2">
+                  <label
+                    htmlFor="input-public-key"
+                    className="text-sm font-medium flex items-center gap-2"
+                  >
                     <Key className="w-4 h-4" />
                     RSA公钥 (PEM格式)
                   </label>
@@ -579,7 +596,10 @@ export default function RSAKeyAnalyzer() {
                 </Alert>
 
                 <div className="space-y-2">
-                  <label className="text-sm font-medium flex items-center gap-2">
+                  <label
+                    htmlFor="input-private-key"
+                    className="text-sm font-medium flex items-center gap-2"
+                  >
                     <Lock className="w-4 h-4" />
                     RSA私钥 (PEM格式)
                   </label>
@@ -746,7 +766,9 @@ export default function RSAKeyAnalyzer() {
               {/* 欧拉函数 φ(n) */}
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <label className="text-sm font-medium">欧拉函数 φ(n)</label>
+                  <label htmlFor="phi-n" className="text-sm font-medium">
+                    欧拉函数 φ(n)
+                  </label>
                   <Button
                     variant="ghost"
                     size="sm"
@@ -766,7 +788,7 @@ export default function RSAKeyAnalyzer() {
               {/* 卡迈克尔函数 λ(n) */}
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <label className="text-sm font-medium">
+                  <label htmlFor="lambda-n" className="text-sm font-medium">
                     卡迈克尔函数 λ(n)
                   </label>
                   <Button
@@ -789,7 +811,9 @@ export default function RSAKeyAnalyzer() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <label className="text-sm font-medium">p - 1</label>
+                    <label htmlFor="p-minus-1" className="text-sm font-medium">
+                      p - 1
+                    </label>
                     <Button
                       variant="ghost"
                       size="sm"
@@ -807,7 +831,9 @@ export default function RSAKeyAnalyzer() {
 
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <label className="text-sm font-medium">q - 1</label>
+                    <label htmlFor="q-minus-1" className="text-sm font-medium">
+                      q - 1
+                    </label>
                     <Button
                       variant="ghost"
                       size="sm"

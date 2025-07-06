@@ -13,14 +13,13 @@
  * See LICENSE file for details or contact admin@aprilnea.com
  */
 
-import { cn } from "@/lib/utils";
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
-import { useLingui } from "@lingui/react/macro";
 import ShikiHighlighter, {
   createHighlighterCore, // re-exported from shiki/engine/javascript
   createOnigurumaEngine,
 } from "react-shiki/core";
+import { cn } from "@/lib/utils";
 import { useTheme } from "../sidebar/theme-switcher";
 import { Textarea } from "../ui/textarea";
 import TwoSectionLayout, { type Orientation } from "./two-section";
@@ -30,7 +29,7 @@ const highlighter = await createHighlighterCore({
     import("@shikijs/themes/light-plus"),
     import("@shikijs/themes/dark-plus"),
   ],
-  langs: [import("@shikijs/langs/json")],
+  langs: [import("@shikijs/langs/json"), import("@shikijs/langs/html")],
   engine: createOnigurumaEngine(import("shiki/wasm")),
 });
 
@@ -62,7 +61,6 @@ const InputOutputLayout = ({
   outputProps,
   language,
 }: InputOutputLayoutProps) => {
-  const { t } = useLingui();
   const { theme } = useTheme();
   return (
     <TwoSectionLayout

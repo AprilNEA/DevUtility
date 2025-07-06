@@ -13,7 +13,7 @@
  * See LICENSE file for details or contact admin@aprilnea.com
  */
 
-import { readFileSync, writeFileSync } from "fs";
+import { readFileSync, writeFileSync } from "node:fs";
 
 // Define the files to update
 const files = [
@@ -65,7 +65,6 @@ function bumpVersion(versionType: "patch" | "minor" | "major" = "patch") {
     case "minor":
       newVersion = `${major}.${minor + 1}.0`;
       break;
-    case "patch":
     default:
       newVersion = `${major}.${minor}.${patch + 1}`;
       break;

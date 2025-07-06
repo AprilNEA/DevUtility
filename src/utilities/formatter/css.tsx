@@ -38,7 +38,7 @@ import { type IndentStyle, IndentStyleEnum, InvokeFunction } from "../types";
 const sampleCssMinified = `@font-face{font-family:Chunkfive;src:url('Chunkfive.otf');}body,.usertext{color:#F0F0F0;background:#600;font-family:Chunkfive,sans;--heading-1:30px / 32px Helvetica,sans-serif;}@import url('print.css');@media print{a[href^=http]::after{content:attr(href)x;}}`;
 
 export default function CssBeautifyMinifyTool() {
-  const { trigger, error } = useUtilityInvoke(InvokeFunction.FormatCss);
+  const { trigger } = useUtilityInvoke(InvokeFunction.FormatCss);
   const [input, setInput] = useState(sampleCssMinified);
   const [output, setOutput] = useState("");
 
@@ -49,7 +49,7 @@ export default function CssBeautifyMinifyTool() {
   const debouncedInput = useDebouncedValue(input, 100, false);
 
   const handleFormat = useCallback(
-    async (input: string, style: IndentStyle) => {
+    async (input: string, _style: IndentStyle) => {
       const result = await trigger({
         input,
       });

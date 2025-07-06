@@ -1,13 +1,13 @@
-import * as React from "react"
-import { cva, type VariantProps } from "class-variance-authority"
-import { cn } from "@/lib/utils"
+import { cva, type VariantProps } from "class-variance-authority";
 import {
-  InfoIcon,
-  CheckCircle2Icon,
-  TriangleAlert,
   AlertCircle,
+  CheckCircle2Icon,
+  InfoIcon,
   MessageSquareQuote,
-} from "lucide-react"
+  TriangleAlert,
+} from "lucide-react";
+import type * as React from "react";
+import { cn } from "@/lib/utils";
 
 const calloutVariants = cva(
   "relative w-full rounded-lg border px-4 py-3 text-base flex items-start gap-3 [&>svg]:size-5 [&>svg]:mt-0.5 [&>svg]:shrink-0 [&>svg]:text-current",
@@ -24,8 +24,8 @@ const calloutVariants = cva(
     defaultVariants: {
       variant: "info",
     },
-  }
-)
+  },
+);
 
 const icons = {
   info: InfoIcon,
@@ -33,15 +33,15 @@ const icons = {
   warning: TriangleAlert,
   error: AlertCircle,
   note: MessageSquareQuote,
-} as const
+} as const;
 
 type CalloutProps = React.PropsWithChildren<
   React.ComponentProps<"div"> &
     VariantProps<typeof calloutVariants> & {
-      title?: React.ReactNode
-      icon?: React.ReactNode
+      title?: React.ReactNode;
+      icon?: React.ReactNode;
     }
->
+>;
 
 export function Callout({
   className,
@@ -51,7 +51,7 @@ export function Callout({
   children,
   ...props
 }: CalloutProps) {
-  const Icon = icons[variant as keyof typeof icons] || InfoIcon
+  const Icon = icons[variant as keyof typeof icons] || InfoIcon;
   return (
     <div
       data-slot="callout"
@@ -67,5 +67,5 @@ export function Callout({
         <div className="text-base font-normal leading-relaxed">{children}</div>
       </div>
     </div>
-  )
+  );
 }
