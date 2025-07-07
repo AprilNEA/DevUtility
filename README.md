@@ -45,7 +45,7 @@
 
 ## 📊 Project Status
 
-![Project Status](https://repobeats.axiom.co/api/embed/731fc03bff4e8b722fa66c9f2b25242f54cf7a50.svg "Repobeats analytics image")
+![Project Status](https://repobeats.axiom.co/api/embed/0529cb5e27377848133ad8196106758f6a908472.svg "Repobeats analytics image")
 
 ## 🤝 Contributing
 
