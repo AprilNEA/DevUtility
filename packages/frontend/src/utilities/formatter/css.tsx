@@ -164,6 +164,7 @@ export default function CssBeautifyMinifyTool() {
         readOnly: true,
         placeholder: "Processed CSS will appear here",
       }}
+      language="css"
     />
   );
 }

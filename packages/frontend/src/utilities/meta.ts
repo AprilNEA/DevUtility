@@ -101,12 +101,12 @@ const utilities: UtilityMeta[] = [
         title: msg`CSS Beautify/Minify`,
         page: CssBeautifyMinifyToolPage,
       },
-      {
-        key: "javascript",
-        icon: FileCode2Icon,
-        title: msg`JS Beautify/Minify`,
-        page: CssBeautifyMinifyToolPage,
-      },
+      // {
+      //   key: "javascript",
+      //   icon: FileCode2Icon,
+      //   title: msg`JS Beautify/Minify`,
+      //   page: CssBeautifyMinifyToolPage,
+      // },
     ],
   },
   // {

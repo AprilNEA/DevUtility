@@ -42,7 +42,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-export default function HtmlToolPage() {
+export default function JsToolPage() {
   const [inputHtml, setInputHtml] = useState("<h1>Hello</h1>");
   const [outputHtml, _setOutputHtml] = useState("&lt;h1&gt;Hello&lt;/h1&gt;");
   const [mode, setMode] = useState("encode"); // "encode" or "decode"

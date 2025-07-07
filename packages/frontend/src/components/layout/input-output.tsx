@@ -29,7 +29,11 @@ const highlighter = await createHighlighterCore({
     import("@shikijs/themes/light-plus"),
     import("@shikijs/themes/dark-plus"),
   ],
-  langs: [import("@shikijs/langs/json"), import("@shikijs/langs/html")],
+  langs: [
+    import("@shikijs/langs/json"),
+    import("@shikijs/langs/html"),
+    import("@shikijs/langs/css"),
+  ],
   engine: createOnigurumaEngine(import("shiki/wasm")),
 });
 
@@ -73,7 +77,7 @@ const InputOutputLayout = ({
             {...inputProps}
             className={cn(
               "flex-grow border-input text-foreground font-mono text-sm resize-none focus:ring-ring focus:border-ring",
-              inputProps?.className,
+              inputProps?.className
             )}
             spellCheck="false"
           />
@@ -85,7 +89,7 @@ const InputOutputLayout = ({
       secondContent={
         <div className="flex flex-col gap-2 flex-grow">
           {language ? (
-            <div className="bg-[#FFFFFF] dark:bg-[#1E1E1E] rounded-md border flex-grow border-input text-foreground font-mono text-sm resize-none focus:ring-ring focus:border-ring">
+            <div className="bg-[#FFFFFF] dark:bg-[#1E1E1E] rounded-md overflow-y-auto border flex-grow border-input text-foreground font-mono text-sm resize-none focus:ring-ring focus:border-ring">
               <ShikiHighlighter
                 highlighter={highlighter}
                 language={language}
@@ -102,7 +106,7 @@ const InputOutputLayout = ({
               {...outputProps}
               className={cn(
                 "flex-grow border-input text-foreground font-mono text-sm resize-none focus:ring-ring focus:border-ring",
-                outputProps?.className,
+                outputProps?.className
               )}
               spellCheck="false"
             />
