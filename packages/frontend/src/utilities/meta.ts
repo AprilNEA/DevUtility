@@ -17,7 +17,7 @@ import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import {
   BrainIcon,
-  FileCode2Icon,
+  // FileCode2Icon,
   FileCodeIcon,
   FileIcon,
   FileJsonIcon,
