@@ -77,7 +77,7 @@ const InputOutputLayout = ({
             {...inputProps}
             className={cn(
               "flex-grow border-input text-foreground font-mono text-sm resize-none focus:ring-ring focus:border-ring",
-              inputProps?.className
+              inputProps?.className,
             )}
             spellCheck="false"
           />
@@ -106,7 +106,7 @@ const InputOutputLayout = ({
               {...outputProps}
               className={cn(
                 "flex-grow border-input text-foreground font-mono text-sm resize-none focus:ring-ring focus:border-ring",
-                outputProps?.className
+                outputProps?.className,
               )}
               spellCheck="false"
             />

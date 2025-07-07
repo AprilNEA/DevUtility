@@ -6,7 +6,10 @@
     "useIgnoreFile": true
   },
   "files": {
-    "includes": ["src/**/*.{ts,tsx}", "scripts/**/*.{ts,tsx}"],
+    "includes": [
+      "packages/frontend/src/**/*.{ts,tsx}",
+      "scripts/**/*.{ts,tsx}"
+    ],
     "ignoreUnknown": true
   },
   "formatter": {
