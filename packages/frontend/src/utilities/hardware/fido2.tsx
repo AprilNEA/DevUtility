@@ -15,6 +15,7 @@
 
 import { msg } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
+import { Channel, invoke } from "@tauri-apps/api/core";
 import {
   CheckCircle,
   Copy,
@@ -31,7 +32,7 @@ import {
   SmartphoneIcon,
   Unlock,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -55,6 +56,13 @@ import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
+import { useUtilityInvoke } from "../invoke";
+import {
+  type Fido2DeviceInfo,
+  Fido2SupportedAlgorithm,
+  InvokeFunction,
+} from "../types";
+import { useFido2Register } from "./hook";
 
 enum Fido2Tab {
   Authenticator = "authenticator",
@@ -64,8 +72,17 @@ enum Fido2Tab {
   Settings = "settings",
 }
 
-// FIDO2 Authenticator Simulator
-function AuthenticatorSimulator() {
+// FIDO2 Authenticator
+function Authenticator() {
+  const { data, trigger } = useUtilityInvoke<Fido2DeviceInfo>(
+    InvokeFunction.Fido2GetDeviceInfo,
+    {
+      onSuccess: (data) => {
+        console.log(data);
+      },
+    },
+  );
+
   const { t } = useLingui();
   const [isAuthenticatorActive, setIsAuthenticatorActive] = useState(false);
   const [pin, setPin] = useState("");
@@ -98,7 +115,7 @@ function AuthenticatorSimulator() {
   };
 
   return (
-    <div className="grid lg:grid-cols-2 gap-6">
+    <div className="grid lg:grid-cols-1 gap-6">
       {/* Authenticator Status */}
       <Card className="h-fit">
         <CardHeader>
@@ -109,8 +126,18 @@ function AuthenticatorSimulator() {
           <CardDescription>
             {t(msg`Manage your FIDO2 authenticator device`)}
           </CardDescription>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => {
+              trigger();
+            }}
+          >
+            <RefreshCw className="w-4 h-4" />
+            {t(msg`Refresh`)}
+          </Button>
         </CardHeader>
-        <CardContent className="space-y-4">
+        {/* <CardContent className="space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <div
@@ -185,7 +212,7 @@ function AuthenticatorSimulator() {
               )}
             </AlertDescription>
           </Alert>
-        </CardContent>
+        </CardContent> */}
       </Card>
 
       {/* Device Information */}
@@ -197,45 +224,209 @@ function AuthenticatorSimulator() {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
-          <div className="grid grid-cols-2 gap-4 text-sm">
-            <div>
-              <span className="text-muted-foreground">{t(msg`AAGUID`)}</span>
-              <p className="font-mono text-xs mt-1">
-                550e8400-e29b-41d4-a716-446655440000
+          {data ? (
+            <>
+              <div className="grid grid-cols-2 gap-4 text-sm">
+                <div>
+                  <span className="text-muted-foreground">
+                    {t(msg`AAGUID`)}
+                  </span>
+                  <p className="font-mono text-xs mt-1">
+                    {data.aaguid || "N/A"}
+                  </p>
+                </div>
+                <div>
+                  <span className="text-muted-foreground">
+                    {t(msg`Firmware Version`)}
+                  </span>
+                  <p className="font-mono text-xs mt-1">
+                    {data.firmwareVersionString || "N/A"}
+                  </p>
+                </div>
+                <div>
+                  <span className="text-muted-foreground">
+                    {t(msg`User Verification`)}
+                  </span>
+                  <Badge variant="secondary">
+                    {data.capabilities?.clientPin
+                      ? t(msg`Supported`)
+                      : t(msg`Not Supported`)}
+                  </Badge>
+                </div>
+                <div>
+                  <span className="text-muted-foreground">
+                    {t(msg`Resident Keys`)}
+                  </span>
+                  <Badge variant="secondary">
+                    {data.capabilities?.rk
+                      ? t(msg`Supported`)
+                      : t(msg`Not Supported`)}
+                  </Badge>
+                </div>
+                <div>
+                  <span className="text-muted-foreground">
+                    {t(msg`Min PIN Length`)}
+                  </span>
+                  <p className="font-mono text-xs mt-1">
+                    {data.minimumPinLength || "N/A"}
+                  </p>
+                </div>
+                <div>
+                  <span className="text-muted-foreground">
+                    {t(msg`Max Credentials`)}
+                  </span>
+                  <p className="font-mono text-xs mt-1">
+                    {data.maxCredentialsPerList || "N/A"}
+                  </p>
+                </div>
+              </div>
+
+              <Separator />
+
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">
+                  {t(msg`Supported Versions`)}
+                </Label>
+                <div className="flex flex-wrap gap-1">
+                  {data.supportedVersions?.map((version: string) => (
+                    <Badge key={version} variant="outline">
+                      {version}
+                    </Badge>
+                  )) || (
+                    <span className="text-muted-foreground text-xs">N/A</span>
+                  )}
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">
+                  {t(msg`Communication Methods`)}
+                </Label>
+                <div className="flex flex-wrap gap-1">
+                  {data.communicationMethods?.map((method: string) => (
+                    <Badge key={method} variant="outline">
+                      {method.toUpperCase()}
+                    </Badge>
+                  )) || (
+                    <span className="text-muted-foreground text-xs">N/A</span>
+                  )}
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">
+                  {t(msg`Supported Algorithms`)}
+                </Label>
+                <div className="flex flex-wrap gap-1">
+                  {data.supportedAlgorithms?.map((alg: any, index: number) => {
+                    // Map algorithm names to readable format
+                    const algName =
+                      alg.name === "-7"
+                        ? "ES256"
+                        : alg.name === "-8"
+                          ? "EdDSA"
+                          : alg.name === "-257"
+                            ? "RS256"
+                            : alg.name === "-37"
+                              ? "PS256"
+                              : `ALG ${alg.name}`;
+                    return (
+                      <Badge key={index} variant="outline">
+                        {algName}
+                      </Badge>
+                    );
+                  }) || (
+                    <span className="text-muted-foreground text-xs">N/A</span>
+                  )}
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">
+                  {t(msg`Available Extensions`)}
+                </Label>
+                <div className="flex flex-wrap gap-1">
+                  {data.availableExtensions?.map((ext: string) => (
+                    <Badge key={ext} variant="outline">
+                      {ext}
+                    </Badge>
+                  )) || (
+                    <span className="text-muted-foreground text-xs">N/A</span>
+                  )}
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">
+                  {t(msg`Device Capabilities`)}
+                </Label>
+                <div className="grid grid-cols-2 gap-2 text-xs">
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">
+                      {t(msg`User Presence`)}
+                    </span>
+                    <Badge
+                      variant={data.capabilities?.up ? "default" : "secondary"}
+                      className="h-4 text-xs"
+                    >
+                      {data.capabilities?.up ? t(msg`Yes`) : t(msg`No`)}
+                    </Badge>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">
+                      {t(msg`Platform`)}
+                    </span>
+                    <Badge
+                      variant={
+                        data.capabilities?.plat ? "default" : "secondary"
+                      }
+                      className="h-4 text-xs"
+                    >
+                      {data.capabilities?.plat ? t(msg`Yes`) : t(msg`No`)}
+                    </Badge>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">
+                      {t(msg`Credential Mgmt`)}
+                    </span>
+                    <Badge
+                      variant={
+                        data.capabilities?.credentialMgmtPreview
+                          ? "default"
+                          : "secondary"
+                      }
+                      className="h-4 text-xs"
+                    >
+                      {data.capabilities?.credentialMgmtPreview
+                        ? t(msg`Yes`)
+                        : t(msg`No`)}
+                    </Badge>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">
+                      {t(msg`PIN Required`)}
+                    </span>
+                    <Badge
+                      variant={
+                        data.requiresPinChange ? "destructive" : "default"
+                      }
+                      className="h-4 text-xs"
+                    >
+                      {data.requiresPinChange ? t(msg`Yes`) : t(msg`No`)}
+                    </Badge>
+                  </div>
+                </div>
+              </div>
+            </>
+          ) : (
+            <div className="flex flex-col items-center justify-center py-8 text-muted-foreground">
+              <SettingsIcon className="w-12 h-12 mb-4 opacity-50" />
+              <p>{t(msg`No device information available`)}</p>
+              <p className="text-sm">
+                {t(msg`Click refresh to load device data`)}
               </p>
             </div>
-            <div>
-              <span className="text-muted-foreground">
-                {t(msg`Protocol Version`)}
-              </span>
-              <p className="font-mono text-xs mt-1">FIDO_2_0</p>
-            </div>
-            <div>
-              <span className="text-muted-foreground">
-                {t(msg`User Verification`)}
-              </span>
-              <Badge variant="secondary">Supported</Badge>
-            </div>
-            <div>
-              <span className="text-muted-foreground">
-                {t(msg`Resident Keys`)}
-              </span>
-              <Badge variant="secondary">Supported</Badge>
-            </div>
-          </div>
-
-          <Separator />
-
-          <div className="space-y-2">
-            <Label className="text-sm font-medium">
-              {t(msg`Supported Algorithms`)}
-            </Label>
-            <div className="flex flex-wrap gap-1">
-              <Badge variant="outline">ES256</Badge>
-              <Badge variant="outline">RS256</Badge>
-              <Badge variant="outline">PS256</Badge>
-            </div>
-          </div>
+          )}
         </CardContent>
       </Card>
     </div>
@@ -244,37 +435,23 @@ function AuthenticatorSimulator() {
 
 // FIDO2 Registration
 function Registration() {
+  const { data, trigger, onEvent } = useFido2Register();
   const { t } = useLingui();
+
   const [relyingPartyId, setRelyingPartyId] = useState("example.com");
+
   const [userId, setUserId] = useState("");
   const [userName, setUserName] = useState("");
   const [userDisplayName, setUserDisplayName] = useState("");
+
   const [algorithm, setAlgorithm] = useState("ES256");
   const [residentKey, setResidentKey] = useState(false);
   const [userVerification, setUserVerification] = useState("preferred");
   const [attestation, setAttestation] = useState("none");
 
   const handleRegistration = async () => {
-    // TODO: Implement FIDO2 registration
-    // await invoke(InvokeFunction.Fido2Registration, {
-    //   relyingPartyId,
-    //   userId,
-    //   userName,
-    //   userDisplayName,
-    //   algorithm,
-    //   residentKey,
-    //   userVerification,
-    //   attestation,
-    // });
-    console.log("FIDO2 Registration:", {
-      relyingPartyId,
-      userId,
-      userName,
-      userDisplayName,
-      algorithm,
-      residentKey,
-      userVerification,
-      attestation,
+    trigger({
+      rpid: relyingPartyId,
     });
   };
 
@@ -292,46 +469,47 @@ function Registration() {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="relyingPartyId">{t(msg`Relying Party ID`)}</Label>
-            <Input
-              id="relyingPartyId"
-              placeholder="example.com"
-              value={relyingPartyId}
-              onChange={(e) => setRelyingPartyId(e.target.value)}
-            />
+          <div>
+            <div className="space-y-2">
+              <Label htmlFor="relyingPartyId">{t(msg`Relying Party ID`)}</Label>
+              <Input
+                id="relyingPartyId"
+                placeholder="example.com"
+                value={relyingPartyId}
+                onChange={(e) => setRelyingPartyId(e.target.value)}
+              />
+            </div>
           </div>
+          <div className="flex gap-2">
+            <div className="space-y-2">
+              <Label htmlFor="userId">{t(msg`User ID`)}</Label>
+              <Input
+                id="userId"
+                placeholder="user@example.com"
+                value={userId}
+                onChange={(e) => setUserId(e.target.value)}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="userName">{t(msg`User Name`)}</Label>
+              <Input
+                id="userName"
+                placeholder="john.doe"
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
+              />
+            </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="userId">{t(msg`User ID`)}</Label>
-            <Input
-              id="userId"
-              placeholder="user@example.com"
-              value={userId}
-              onChange={(e) => setUserId(e.target.value)}
-            />
+            <div className="space-y-2">
+              <Label htmlFor="userDisplayName">{t(msg`Display Name`)}</Label>
+              <Input
+                id="userDisplayName"
+                placeholder="John Doe"
+                value={userDisplayName}
+                onChange={(e) => setUserDisplayName(e.target.value)}
+              />
+            </div>
           </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="userName">{t(msg`User Name`)}</Label>
-            <Input
-              id="userName"
-              placeholder="john.doe"
-              value={userName}
-              onChange={(e) => setUserName(e.target.value)}
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="userDisplayName">{t(msg`Display Name`)}</Label>
-            <Input
-              id="userDisplayName"
-              placeholder="John Doe"
-              value={userDisplayName}
-              onChange={(e) => setUserDisplayName(e.target.value)}
-            />
-          </div>
-
           <div className="space-y-2">
             <Label htmlFor="algorithm">{t(msg`Algorithm`)}</Label>
             <Select value={algorithm} onValueChange={setAlgorithm}>
@@ -414,6 +592,7 @@ function Registration() {
                 rows={3}
                 readOnly
                 className="font-mono text-xs"
+                value={data?.id}
               />
               <Button variant="outline" size="sm" className="h-fit">
                 <Copy className="w-4 h-4" />
@@ -431,6 +610,7 @@ function Registration() {
                 rows={6}
                 readOnly
                 className="font-mono text-xs"
+                value={data?.publicKey.pem}
               />
               <Button variant="outline" size="sm" className="h-fit">
                 <Copy className="w-4 h-4" />
@@ -448,6 +628,7 @@ function Registration() {
                 rows={8}
                 readOnly
                 className="font-mono text-xs"
+                value={data?.publicKey.derHex}
               />
               <Button variant="outline" size="sm" className="h-fit">
                 <Copy className="w-4 h-4" />
@@ -902,7 +1083,7 @@ export default function Fido2Page() {
 
   return (
     <div className="container mx-auto p-6 space-y-6">
-      <div className="text-center space-y-2">
+      {/* <div className="text-center space-y-2">
         <h1 className="text-3xl font-bold tracking-tight">
           {t(msg`FIDO2 Authenticator`)}
         </h1>
@@ -911,7 +1092,7 @@ export default function Fido2Page() {
             msg`Test and manage FIDO2 WebAuthn operations with a beautiful, Apple-inspired interface.`,
           )}
         </p>
-      </div>
+      </div> */}
 
       <Tabs defaultValue={Fido2Tab.Authenticator} className="w-full">
         <TabsList className="grid w-full grid-cols-5 mb-6">
@@ -938,7 +1119,7 @@ export default function Fido2Page() {
         </TabsList>
 
         <TabsContent value={Fido2Tab.Authenticator}>
-          <AuthenticatorSimulator />
+          <Authenticator />
         </TabsContent>
 
         <TabsContent value={Fido2Tab.Registration}>

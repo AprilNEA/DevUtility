@@ -31,6 +31,9 @@ export enum InvokeFunction {
   ValidateTotpCode = "validate_totp_code",
   // Hardware Functions
   ListHidDevices = "list_hid_devices",
+  Fido2GetDeviceInfo = "fido2_get_device_info",
+  Fido2Register = "fido2_register",
+  // Fido2Authenticate = "fido2_authenticate",
 }
 
 export enum HashAlgorithm {

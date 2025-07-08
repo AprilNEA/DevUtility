@@ -17,7 +17,11 @@
 import wasmFunctions from "./invoke-wasm";
 // #v-endif
 
-import { type InvokeOptions, invoke as invokeCore } from "@tauri-apps/api/core";
+import {
+  type Channel,
+  type InvokeOptions,
+  invoke as invokeCore,
+} from "@tauri-apps/api/core";
 import useSWRMutation, {
   type SWRMutationConfiguration,
   type SWRMutationResponse,
@@ -30,6 +34,11 @@ import type {
   TotpValidateCodeParams,
   TotpValidationResult,
 } from "./cryptography/oath/types";
+import type {
+  Fido2Credential,
+  Fido2DeviceInfo,
+  Fido2RegisterParams,
+} from "./hardware/hook";
 import {
   type HashResult,
   type HidDeviceInfo,
@@ -40,6 +49,8 @@ import {
 } from "./types";
 
 export const IS_TAURI = "__TAURI__" in window;
+
+type EventArgs = { onEvent: Channel<any> };
 
 export interface UtilitiesArgs {
   [InvokeFunction.GenerateUlid]: { count: number };
@@ -57,6 +68,10 @@ export interface UtilitiesArgs {
   [InvokeFunction.GenerateTotpCode]: TotpGenerateCodeParams;
   [InvokeFunction.ValidateTotpCode]: TotpValidateCodeParams;
   [InvokeFunction.ListHidDevices]: undefined;
+  [InvokeFunction.Fido2GetDeviceInfo]: undefined;
+  [InvokeFunction.Fido2Register]: {
+    params: Fido2RegisterParams;
+  } & EventArgs;
 }
 
 export interface UtilitiesReturns {
@@ -75,12 +90,14 @@ export interface UtilitiesReturns {
   [InvokeFunction.GenerateTotpCode]: TotpCodeResult;
   [InvokeFunction.ValidateTotpCode]: TotpValidationResult;
   [InvokeFunction.ListHidDevices]: HidDeviceInfo[];
+  [InvokeFunction.Fido2GetDeviceInfo]: Fido2DeviceInfo;
+  [InvokeFunction.Fido2Register]: Fido2Credential;
 }
 
 export async function utilityInvoke<T extends InvokeFunction>(
   cmd: T,
   args: UtilitiesArgs[T],
-  options?: InvokeOptions,
+  options?: InvokeOptions
 ): Promise<UtilitiesReturns[T]> {
   if (IS_TAURI) {
     return invokeCore(cmd, args, options);
@@ -105,12 +122,12 @@ export function useUtilityInvoke<T extends InvokeFunction>(
     T,
     UtilitiesArgs[T],
     UtilitiesReturns[T]
-  >,
+  >
 ): SWRMutationResponse<UtilitiesReturns[T], Error, T, UtilitiesArgs[T]> {
   return useSWRMutation<UtilitiesReturns[T], Error, T, UtilitiesArgs[T]>(
     cmd,
     // @ts-expect-error
     (_, { arg }) => utilityInvoke(cmd, arg),
-    options,
+    options
   );
 }

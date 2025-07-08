@@ -9,6 +9,7 @@
     "web": "pnpm --filter @dev-utility/frontend dev:wasm"
   },
   "dependencies": {
+    "@tauri-apps/plugin-dialog": "~2.3.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },

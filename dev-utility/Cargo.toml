@@ -80,6 +80,7 @@ markup5ever_rcdom = "0.3.0"
 
 # USB
 hidapi = { version = "2.6.3", features = ["macos-shared-device"] }
+ctap-hid-fido2 = "3.5.5"
 
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
 tauri = { workspace = true }
