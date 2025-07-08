@@ -430,3 +430,67 @@ msgstr ""
 msgid "You must verify that the algorithm you want to use is supported by the application your clients might be using."
 msgstr ""
 
+#: src/utilities/meta.ts:233
+msgid "Hardware"
+msgstr "硬件"
+
+#: src/utilities/meta.ts:239
+msgid "HID Devices"
+msgstr "HID 设备"
+
+#: src/utilities/hardware/hid.tsx:61
+msgid "Refresh"
+msgstr "刷新"
+
+#: src/utilities/hardware/hid.tsx:67
+msgid "Error: {0}"
+msgstr "错误：{0}"
+
+#: src/utilities/hardware/hid.tsx:79
+msgid "No HID devices found"
+msgstr "未找到 HID 设备"
+
+#: src/utilities/hardware/hid.tsx:87
+msgid "Device Info"
+msgstr "设备信息"
+
+#: src/utilities/hardware/hid.tsx:91
+msgid "VID"
+msgstr "VID"
+
+#: src/utilities/hardware/hid.tsx:95
+msgid "PID"
+msgstr "PID"
+
+#: src/utilities/hardware/hid.tsx:99
+msgid "Serial Number"
+msgstr "序列号"
+
+#: src/utilities/hardware/hid.tsx:103
+msgid "Interface"
+msgstr "接口"
+
+#: src/utilities/hardware/hid.tsx:107
+msgid "Usage"
+msgstr "用途"
+
+#: src/utilities/hardware/hid.tsx:111
+msgid "Device Path"
+msgstr "设备路径"
+
+#: src/utilities/hardware/hid.tsx:122
+msgid "Unknown Product"
+msgstr "未知产品"
+
+#: src/utilities/hardware/hid.tsx:125
+msgid "Unknown Manufacturer"
+msgstr "未知制造商"
+
+#: src/utilities/hardware/hid.tsx:146
+msgid "None"
+msgstr "无"
+
+#: src/utilities/hardware/hid.tsx:57
+msgid "{0} devices"
+msgstr "{0} 设备"
+

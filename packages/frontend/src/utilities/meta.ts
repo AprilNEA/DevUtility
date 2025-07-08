@@ -27,10 +27,11 @@ import {
   LinkIcon,
   RadarIcon,
   RotateCcwKeyIcon,
+  UsbIcon,
 } from "lucide-react";
 import { lazy } from "react";
 import type { RouteComponentProps } from "wouter";
-import Fido2Page from "./cryptography/fido/fido2";
+
 import IpPage from "./network/ip";
 
 const GptTokenizerPage = lazy(() => import("./ai/tokenizer"));
@@ -45,7 +46,8 @@ const RSAKeyAnalyzerPage = lazy(() => import("./cryptography/rsa/analyzer"));
 // const RSAKeyConverterPage = lazy(() => import("./cryptography/rsa/converter"));
 // const HotpDebuggerPage = lazy(() => import("./cryptography/oath/hotp"));
 const TotpDebuggerPage = lazy(() => import("./cryptography/oath/totp"));
-// const HidDevicesPage = lazy(() => import("./hardware/hid"));
+const HidDevicesPage = lazy(() => import("./hardware/hid"));
+const Fido2Page = lazy(() => import("./hardware/fido2"));
 
 export type Utility = {
   key: string;
@@ -146,19 +148,6 @@ const utilities: UtilityMeta[] = [
     title: msg`Cryptography & Security`,
     items: [
       {
-        key: "fido",
-        icon: KeyIcon,
-        title: msg`FIDO Debugger`,
-        items: [
-          {
-            key: "fido2",
-            icon: KeyIcon,
-            title: msg`FIDO2 Authenticator`,
-            page: Fido2Page,
-          },
-        ],
-      },
-      {
         key: "oath",
         icon: KeyIcon,
         title: msg`OATH Debugger`,
@@ -229,18 +218,24 @@ const utilities: UtilityMeta[] = [
       },
     ],
   },
-  // {
-  //   key: "hardware",
-  //   title: msg`Hardware`,
-  //   items: [
-  //     {
-  //       key: "hid",
-  //       icon: UsbIcon,
-  //       title: msg`HID Devices`,
-  //       page: HidDevicesPage,
-  //     },
-  //   ],
-  // },
+  {
+    key: "hardware",
+    title: msg`Hardware`,
+    items: [
+      {
+        key: "fido2",
+        icon: KeyIcon,
+        title: msg`FIDO2 Authenticator`,
+        page: Fido2Page,
+      },
+      {
+        key: "hid",
+        icon: UsbIcon,
+        title: msg`HID Devices`,
+        page: HidDevicesPage,
+      },
+    ],
+  },
 ];
 
 export default utilities;

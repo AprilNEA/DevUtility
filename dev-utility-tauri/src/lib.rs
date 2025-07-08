@@ -30,6 +30,7 @@ const UPDATE_ID: &str = "update";
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_os::init())
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_clipboard_manager::init())
@@ -119,7 +120,13 @@ pub fn run() {
             #[cfg(desktop)]
             updates::app_install_update,
             #[cfg(desktop)]
-            // dev_utility_core::hardware::list_hid_devices,
+            dev_utility_core::hardware::list_hid_devices,
+            #[cfg(desktop)]
+            dev_utility_core::hardware::fido2_get_device_info,
+            #[cfg(desktop)]
+            dev_utility_core::hardware::fido2_register,
+            #[cfg(desktop)]
+            dev_utility_core::hardware::fido2_authenticate,
             dev_utility_core::codec::decode_base64,
             dev_utility_core::codec::encode_base64,
             dev_utility_core::cryptography::generate_rsa_key,

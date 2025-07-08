@@ -424,3 +424,67 @@ msgstr "windows"
 #: src/utilities/cryptography/oath/totp.tsx:230
 msgid "You must verify that the algorithm you want to use is supported by the application your clients might be using."
 msgstr "You must verify that the algorithm you want to use is supported by the application your clients might be using."
+
+#: src/utilities/meta.ts:233
+msgid "Hardware"
+msgstr "Hardware"
+
+#: src/utilities/meta.ts:239
+msgid "HID Devices"
+msgstr "HID Devices"
+
+#: src/utilities/hardware/hid.tsx:61
+msgid "Refresh"
+msgstr "Refresh"
+
+#: src/utilities/hardware/hid.tsx:67
+msgid "Error: {0}"
+msgstr "Error: {0}"
+
+#: src/utilities/hardware/hid.tsx:79
+msgid "No HID devices found"
+msgstr "No HID devices found"
+
+#: src/utilities/hardware/hid.tsx:87
+msgid "Device Info"
+msgstr "Device Info"
+
+#: src/utilities/hardware/hid.tsx:91
+msgid "VID"
+msgstr "VID"
+
+#: src/utilities/hardware/hid.tsx:95
+msgid "PID"
+msgstr "PID"
+
+#: src/utilities/hardware/hid.tsx:99
+msgid "Serial Number"
+msgstr "Serial Number"
+
+#: src/utilities/hardware/hid.tsx:103
+msgid "Interface"
+msgstr "Interface"
+
+#: src/utilities/hardware/hid.tsx:107
+msgid "Usage"
+msgstr "Usage"
+
+#: src/utilities/hardware/hid.tsx:111
+msgid "Device Path"
+msgstr "Device Path"
+
+#: src/utilities/hardware/hid.tsx:122
+msgid "Unknown Product"
+msgstr "Unknown Product"
+
+#: src/utilities/hardware/hid.tsx:125
+msgid "Unknown Manufacturer"
+msgstr "Unknown Manufacturer"
+
+#: src/utilities/hardware/hid.tsx:146
+msgid "None"
+msgstr "None"
+
+#: src/utilities/hardware/hid.tsx:57
+msgid "{0} devices"
+msgstr "{0} devices"
