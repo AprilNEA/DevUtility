@@ -8,6 +8,7 @@ use ctap_hid_fido2::{
 use serde::{Deserialize, Serialize};
 use std::{
     collections::HashMap,
+    error::Error,
     sync::{Arc, Mutex},
 };
 use tauri::{ipc::Channel, AppHandle, Listener};
@@ -160,10 +161,11 @@ pub struct Fido2DeviceInfo {
 }
 
 pub trait FidoKeyHidExt {
-    fn get_human_readable_info(&self) -> Result<Fido2DeviceInfo, Error>;
+    fn get_human_readable_info(&self) -> Result<Fido2DeviceInfo, Box<dyn Error>>;
 }
+
 impl FidoKeyHidExt for FidoKeyHid {
-    fn get_human_readable_info(&self) -> Result<Fido2DeviceInfo, Error> {
+    fn get_human_readable_info(&self) -> Result<Fido2DeviceInfo, Box<dyn Error>> {
         let info = self.get_info()?;
         Ok(Fido2DeviceInfo {
             supported_versions: info.versions,
