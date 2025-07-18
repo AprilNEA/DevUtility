@@ -16,7 +16,7 @@
     windows_subsystem = "windows"
 )]
 
-mod updates;
+mod updater;
 use dev_utility_core;
 use std::sync::Mutex;
 use tauri::{
@@ -41,7 +41,7 @@ pub fn run() {
                     .unwrap();
                 app.handle().plugin(tauri_plugin_shell::init()).unwrap();
 
-                app.manage(updates::PendingUpdate(Mutex::new(None)));
+                app.manage(updater::PendingUpdate(Mutex::new(None)));
 
                 let global_menu = app.menu().unwrap();
 
@@ -115,9 +115,9 @@ pub fn run() {
         })
         .invoke_handler(tauri::generate_handler![
             #[cfg(desktop)]
-            updates::app_fetch_update,
+            updater::app_fetch_update,
             #[cfg(desktop)]
-            updates::app_install_update,
+            updater::app_install_update,
             #[cfg(desktop)]
             // dev_utility_core::hardware::list_hid_devices,
             dev_utility_core::codec::decode_base64,
