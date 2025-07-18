@@ -18,77 +18,222 @@ msgstr ""
 "X-Crowdin-File: /src/locales/en-US/messages.po\n"
 "X-Crowdin-File-ID: 34\n"
 
-#: src/utilities/cryptography/oath/totp.tsx:216
+#: src/utilities/generators/hash.tsx:73
+msgid ""
+"- Enter Your Text\n"
+"- Drag/Drop Files\n"
+"- Right Click • Load from File...\n"
+"- ⌘ + F to Search\n"
+"- ⌘ + ⌥ + F to Replace"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:210
 msgid "💡 The most common parameters used by services is a <0>period of 30 seconds</0>, <1>sha1 algorithm</1> and <2>6 Digits</2> for your OTP code. If you are not sure what parameters are used by your service, always use this as default."
 msgstr "💡 服务中最常用的参数<0>包括30秒的验证间隔</0>、<1>SHA-1算法以及</1> <2>6位数字的</2>OTP代码。如果您不确定服务使用的具体参数，请始终使用此默认设置。"
 
-#: src/utilities/cryptography/oath/totp.tsx:208
+#: src/utilities/cryptography/fido/fido2.tsx:202
+msgid "AAGUID"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:860
+msgid "About FIDO2"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:136
+msgid "Activate"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:120
+msgid "Active"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:202
 msgid "Additionally add issuer as query parameter?"
 msgstr "在查询参数中添加发行者？"
 
-#: src/utilities/meta.ts:69
+#: src/utilities/meta.ts:76
 msgid "AI"
 msgstr "AI"
 
-#: src/utilities/cryptography/oath/totp.tsx:233
-#: src/utilities/cryptography/oath/totp.tsx:442
-#: src/utilities/cryptography/oath/totp.tsx:659
+#: src/utilities/cryptography/oath/totp.tsx:227
+#: src/utilities/cryptography/oath/totp.tsx:436
+#: src/utilities/cryptography/oath/totp.tsx:653
+#: src/utilities/cryptography/fido/fido2.tsx:336
 msgid "Algorithm"
 msgstr "算法"
 
-#: src/utilities/cryptography/oath/totp.tsx:527
+#: src/utilities/cryptography/oath/totp.tsx:521
 msgid "Algorithm:"
 msgstr "算法："
 
-#: src/utilities/meta.ts:200
+#: src/utilities/cryptography/fido/fido2.tsx:810
+msgid "Allow storing credentials on device"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:369
+msgid "Attestation"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:442
+msgid "Attestation Object"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:446
+msgid "Attestation object will appear here after registration"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:928
+msgid "Authentication"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:558
+msgid "Authentication challenge"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:503
+msgid "Authentication Parameters"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:581
+msgid "Authentication Result"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:640
+msgid "Authentication successful! The signature can be verified using the public key from registration."
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:920
+msgid "Authenticator"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:586
+msgid "Authenticator Data"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:590
+msgid "Authenticator data will appear here after authentication"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:786
+msgid "Authenticator Settings"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:107
+msgid "Authenticator Status"
+msgstr ""
+
+#: src/utilities/converter/number-case.tsx:45
+msgid "Base 10 (Decimal)"
+msgstr ""
+
+#: src/utilities/converter/number-case.tsx:46
+msgid "Base 16 (Hex)"
+msgstr ""
+
+#: src/utilities/converter/number-case.tsx:43
+msgid "Base 2 (Binary)"
+msgstr ""
+
+#: src/utilities/converter/number-case.tsx:44
+msgid "Base 8 (Octal)"
+msgstr ""
+
+#: src/utilities/meta.ts:225
 msgid "Base64 Encode/Decode"
 msgstr "Base64 编码/解码"
 
-#: src/utilities/cryptography/oath/totp.tsx:415
+#: src/utilities/cryptography/oath/totp.tsx:409
 msgid "Based on a TOTP Secret ..."
 msgstr "基于 TOTP 密钥……"
 
-#: src/utilities/cryptography/oath/totp.tsx:626
+#: src/utilities/cryptography/oath/totp.tsx:620
 msgid "Based on your secret"
 msgstr "基于您的密钥"
 
-#: src/utilities/cryptography/oath/totp.tsx:171
+#: src/utilities/network/ip.tsx:302
+msgid "Broadcast Address"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:165
 msgid "By default and to be compatible with Google Authenticator, the issuer is set in the query parameters and as the label prefix."
 msgstr "默认情况下，为了与 Google Authenticator 兼容，发行者在查询参数中设置，并作为标签前缀。"
 
-#: src/utilities/cryptography/oath/totp.tsx:889
+#: src/utilities/network/ip.tsx:249
+#: src/utilities/network/ip.tsx:279
+msgid "Calculate"
+msgstr ""
+
+#: src/utilities/network/ip.tsx:294
+msgid "Calculation Results"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:554
+msgid "Challenge"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:883
 msgid "Check Code"
 msgstr "检查验证码"
 
-#: src/utilities/cryptography/oath/totp.tsx:601
+#: src/utilities/cryptography/oath/totp.tsx:595
 msgid "Check TOTP Code"
 msgstr "验证 TOTP 代码"
 
-#: src/utilities/cryptography/oath/totp.tsx:720
+#: src/utilities/cryptography/oath/totp.tsx:714
 msgid "CHECK TOTP CODE"
 msgstr "验证 TOTP 代码"
 
-#: src/utilities/cryptography/oath/totp.tsx:720
+#: src/utilities/cryptography/oath/totp.tsx:714
 msgid "Checking..."
 msgstr "正在检查……"
+
+#: src/utilities/network/ip.tsx:214
+msgid "CIDR Calculator"
+msgstr ""
+
+#: src/utilities/network/ip.tsx:335
+msgid "CIDR Notation"
+msgstr ""
+
+#: src/utilities/converter/number-case.tsx:221
+#: src/utilities/converter/number-case.tsx:292
+msgid "Clear"
+msgstr ""
 
 #: src/components/tools.tsx:164
 msgid "Clear Input"
 msgstr "清除输入"
 
-#: src/utilities/cryptography/oath/totp.tsx:632
+#: src/utilities/converter/number-case.tsx:213
+#: src/utilities/converter/number-case.tsx:273
+msgid "Clipboard"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:626
 msgid "Code ..."
 msgstr "代码 ……"
 
-#: src/utilities/cryptography/oath/totp.tsx:767
+#: src/utilities/cryptography/oath/totp.tsx:761
 msgid "Code is Invalid!"
 msgstr "验证码无效！"
 
-#: src/utilities/cryptography/oath/totp.tsx:760
+#: src/utilities/cryptography/oath/totp.tsx:754
 msgid "Code is Valid!"
 msgstr "验证码有效！"
 
-#: src/utilities/cryptography/oath/totp.tsx:553
+#: src/utilities/cryptography/fido/fido2.tsx:506
+msgid "Configure FIDO2 authentication options"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:789
+msgid "Configure FIDO2 authenticator behavior"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:291
+msgid "Configure FIDO2 registration options"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:547
 msgid "Continue to Validate Code"
 msgstr "继续校验验证码"
 
@@ -96,7 +241,16 @@ msgstr "继续校验验证码"
 msgid "Continuous Mode"
 msgstr "连续模式"
 
-#: src/utilities/cryptography/oath/totp.tsx:518
+#: src/utilities/meta.ts:150
+msgid "Converter"
+msgstr ""
+
+#: src/utilities/converter/number-case.tsx:239
+#: src/utilities/converter/number-case.tsx:310
+msgid "Copy"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:512
 msgid "Copy Code"
 msgstr "复制验证码"
 
@@ -104,329 +258,637 @@ msgstr "复制验证码"
 msgid "Copy Output"
 msgstr "复制输出"
 
-#: src/utilities/cryptography/oath/totp.tsx:867
+#: src/utilities/cryptography/oath/totp.tsx:861
 msgid "Create Secret"
 msgstr "创建密钥"
 
-#: src/utilities/cryptography/oath/totp.tsx:146
+#: src/utilities/cryptography/oath/totp.tsx:140
 msgid "Create TOTP Secret"
 msgstr "创建 TOTP 密钥"
 
-#: src/utilities/cryptography/oath/totp.tsx:295
+#: src/utilities/cryptography/oath/totp.tsx:289
 msgid "CREATE TOTP SECRET"
 msgstr "创建 TOTP 密钥"
 
-#: src/utilities/cryptography/oath/totp.tsx:294
+#: src/utilities/cryptography/fido/fido2.tsx:726
+msgid "Created"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:288
 msgid "Creating..."
 msgstr "正在创建……"
 
-#: src/utilities/meta.ts:144
+#: src/utilities/cryptography/fido/fido2.tsx:408
+#: src/utilities/cryptography/fido/fido2.tsx:523
+msgid "Credential ID"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:412
+msgid "Credential ID will appear here after registration"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:700
+msgid "credentials"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:932
+msgid "Credentials"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:880
+msgid "Cross-platform compatibility"
+msgstr ""
+
+#: src/utilities/meta.ts:163
 msgid "Cryptography & Security"
 msgstr "密码学"
 
-#: src/utilities/meta.ts:99
+#: src/utilities/meta.ts:106
 msgid "CSS Beautify/Minify"
 msgstr "CSS 美化/压缩"
 
-#: src/utilities/cryptography/oath/totp.tsx:497
+#: src/utilities/cryptography/oath/totp.tsx:491
 msgid "Current TOTP Code"
 msgstr "当前 TOTP 代码"
 
-#: src/utilities/cryptography/oath/totp.tsx:813
+#: src/utilities/cryptography/oath/totp.tsx:807
 msgid "Current Window:"
 msgstr "当前窗口："
+
+#: src/utilities/cryptography/fido/fido2.tsx:136
+msgid "Deactivate"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:795
+msgid "Debug Mode"
+msgstr ""
 
 #: src/components/codec-mode.tsx:48
 msgid "Decode"
 msgstr "解码"
 
-#: src/utilities/cryptography/oath/totp.tsx:276
-#: src/utilities/cryptography/oath/totp.tsx:469
-#: src/utilities/cryptography/oath/totp.tsx:686
+#: src/utilities/cryptography/fido/fido2.tsx:740
+msgid "Delete"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:196
+msgid "Device Information"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:270
+#: src/utilities/cryptography/oath/totp.tsx:463
+#: src/utilities/cryptography/oath/totp.tsx:680
 msgid "Digits"
 msgstr "验证码长度"
 
-#: src/utilities/cryptography/oath/totp.tsx:532
+#: src/utilities/cryptography/oath/totp.tsx:526
 msgid "Digits:"
 msgstr "验证码长度："
+
+#: src/utilities/cryptography/fido/fido2.tsx:326
+msgid "Display Name"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:797
+msgid "Enable detailed logging for development"
+msgstr ""
 
 #: src/components/codec-mode.tsx:42
 msgid "Encode"
 msgstr "编码"
 
-#: src/utilities/meta.ts:195
+#: src/utilities/meta.ts:220
 msgid "Encoder, Decoder"
 msgstr "编码器，解码器"
 
-#: src/utilities/cryptography/oath/totp.tsx:411
+#. placeholder {0}: base.label.toLowerCase()
+#: src/utilities/converter/number-case.tsx:229
+msgid "Enter {0}"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:405
 msgid "Enter a generated TOTP (Time based) secret"
 msgstr "输入生成的 TOTP（基于时间）密钥"
 
-#: src/utilities/cryptography/oath/totp.tsx:408
+#: src/utilities/converter/number-case.tsx:300
+msgid "Enter base {customBase} number"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:149
+msgid "Enter PIN (4-8 digits)"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:402
 msgid "Enter the base32-encoded secret that was generated in step 1"
 msgstr "输入在步骤 1 中生成的 base32 编码的密钥"
 
-#: src/utilities/cryptography/oath/totp.tsx:154
+#: src/utilities/cryptography/fido/fido2.tsx:526
+msgid "Enter the credential ID from registration"
+msgstr ""
+
+#: src/utilities/converter/number-case.tsx:195
+msgid "Enter your number in any of the text field. The other text fields will automatically calculated."
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:704
+msgid "Export All"
+msgstr ""
+
+#: src/utilities/meta.ts:168
+msgid "FIDO Debugger"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:907
+msgid "FIDO2 Authenticator"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:868
+msgid "FIDO2 is a standard for passwordless authentication using public-key cryptography."
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:148
 msgid "For e.g the users email address. You must set label before to generate ProvisioningURI/QR code"
 msgstr "例如用户的电子邮件地址。在生成 ProvisioningURI/QR 码之前，必须先设置标签"
 
-#: src/utilities/meta.ts:82
+#: src/utilities/network/ip.tsx:198
+msgid "For subnetting and CIDR conversion. Enter data on the left, view results on the right."
+msgstr ""
+
+#: src/utilities/meta.ts:89
 msgid "Format / Validate / Minify"
 msgstr "格式化 / 验证 / 压缩"
 
-#: src/utilities/cryptography/oath/totp.tsx:878
+#: src/utilities/cryptography/oath/totp.tsx:872
 msgid "Generate Code"
 msgstr "获取验证码"
 
-#: src/utilities/cryptography/oath/totp.tsx:400
+#: src/utilities/cryptography/oath/totp.tsx:394
 msgid "Generate TOTP Code"
 msgstr "生成 TOTP 验证码"
 
-#: src/utilities/cryptography/oath/totp.tsx:486
+#: src/utilities/cryptography/oath/totp.tsx:480
 msgid "GENERATE TOTP CODE"
 msgstr "生成 TOTP 代码"
 
-#: src/utilities/cryptography/oath/totp.tsx:305
+#: src/utilities/cryptography/oath/totp.tsx:299
 msgid "Generated Secret"
 msgstr "生成的密钥"
 
-#: src/utilities/cryptography/oath/totp.tsx:628
+#: src/utilities/cryptography/oath/totp.tsx:622
 msgid "Generated TOTP Code to auth"
 msgstr "生成的 TOTP 验证码用于身份验证"
 
-#: src/utilities/cryptography/oath/totp.tsx:486
+#: src/utilities/cryptography/oath/totp.tsx:480
 msgid "Generating..."
 msgstr "正在生成……"
 
-#: src/utilities/meta.ts:125
+#: src/utilities/meta.ts:132
 msgid "Generators"
 msgstr "生成器"
 
-#: src/utilities/meta.ts:136
+#: src/utilities/meta.ts:143
 msgid "Hash Generator"
 msgstr "哈希生成器"
 
-#: src/utilities/cryptography/oath/totp.tsx:467
-#: src/utilities/cryptography/oath/totp.tsx:684
+#: src/utilities/cryptography/oath/totp.tsx:461
+#: src/utilities/cryptography/oath/totp.tsx:678
 msgid "How much digits set for your created secret"
 msgstr "您创建的密钥包含多少位数字"
 
-#: src/utilities/cryptography/oath/totp.tsx:274
+#: src/utilities/cryptography/oath/totp.tsx:268
 msgid "How much digits should the OTP have"
 msgstr "一次性密码（OTP）应包含多少位数字"
 
-#: src/utilities/meta.ts:93
+#: src/utilities/meta.ts:100
 msgid "HTML Beautify/Minify"
 msgstr "HTML 美化/压缩"
 
-#: src/utilities/cryptography/oath/totp.tsx:191
+#: src/utilities/cryptography/oath/totp.tsx:185
 msgid "Image"
 msgstr "图片"
 
-#: src/utilities/cryptography/oath/totp.tsx:195
+#: src/utilities/cryptography/oath/totp.tsx:189
 msgid "Image URL, e.g 'https://foo.bar/otp.png ..."
 msgstr "图像 URL，例如 'https://foo.bar/otp.png ……"
 
-#: src/components/layout/input-output.tsx:40
+#: src/utilities/cryptography/fido/fido2.tsx:120
+msgid "Inactive"
+msgstr ""
+
+#: src/utilities/generators/hash.tsx:140
+#: src/components/layout/input-output.tsx:58
 msgid "Input"
 msgstr "输入"
 
-#: src/utilities/cryptography/oath/totp.tsx:792
+#: src/utilities/cryptography/oath/totp.tsx:786
 msgid "Invalid"
 msgstr "无效"
 
-#: src/utilities/meta.ts:212
+#: src/utilities/network/ip.tsx:224
 msgid "IP Address"
 msgstr "IP 地址"
 
-#: src/utilities/cryptography/oath/totp.tsx:178
+#: src/utilities/meta.ts:237
+#: src/utilities/network/ip.tsx:195
+msgid "IP Address Calculator"
+msgstr ""
+
+#: src/utilities/network/ip.tsx:265
+msgid "IP Address with CIDR"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:172
 msgid "Issuer, e.g your service name ..."
 msgstr "签发者，例如您的服务名称 ……"
 
 #: src/utilities/meta.ts:105
-msgid "JS Beautify/Minify"
-msgstr "JS 美化/压缩"
+#~ msgid "JS Beautify/Minify"
+#~ msgstr "JS 美化/压缩"
 
-#: src/utilities/meta.ts:87
+#: src/utilities/meta.ts:94
 msgid "JSON Format/Validate"
 msgstr "JSON 格式/验证"
 
-#: src/utilities/meta.ts:179
+#: src/utilities/meta.ts:204
 msgid "Key Analyzer"
 msgstr "密钥分析器"
 
-#: src/utilities/meta.ts:173
+#: src/utilities/cryptography/fido/fido2.tsx:875
+msgid "Key Features"
+msgstr ""
+
+#: src/utilities/meta.ts:198
 msgid "Key Generator"
 msgstr "密钥生成器"
 
-#: src/utilities/cryptography/oath/totp.tsx:161
+#: src/utilities/cryptography/oath/totp.tsx:155
 msgid "Label, e.g email address of user ..."
 msgstr "标签，例如用户的电子邮件地址 ……"
+
+#: src/utilities/cryptography/fido/fido2.tsx:730
+msgid "Last Used"
+msgstr ""
+
+#. placeholder {0}: input.length
+#: src/utilities/generators/hash.tsx:87
+msgid "Length: {0}"
+msgstr ""
 
 #: src/components/tools.tsx:106
 msgid "Load Sample JSON"
 msgstr "加载示例 JSON"
 
-#: src/utilities/cryptography/oath/totp.tsx:831
+#: src/utilities/generators/hash.tsx:96
+msgid "lowercased"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:110
+msgid "Manage your FIDO2 authenticator device"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:694
+msgid "Manage your FIDO2 credentials"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:834
+msgid "Maximum Credentials"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:825
 msgid "Message:"
 msgstr "消息："
 
-#: src/utilities/meta.ts:207
+#: src/utilities/cryptography/fido/fido2.tsx:879
+msgid "Multi-factor authentication"
+msgstr ""
+
+#: src/utilities/meta.ts:232
 msgid "Network"
 msgstr "Network"
+
+#: src/utilities/network/ip.tsx:298
+msgid "Network Address"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:750
+msgid "No credentials stored"
+msgstr ""
 
 #: src/components/sidebar/index.tsx:146
 msgid "No results found."
 msgstr "未找到结果。"
 
-#: src/utilities/cryptography/oath/totp.tsx:609
+#: src/utilities/cryptography/oath/totp.tsx:603
 msgid "Normally the secret is securely saved on server-side DB, however on test you have to enter manually"
 msgstr "通常，密钥会安全地存储在服务器端的数据库中，但在测试时需要手动输入"
 
-#: src/utilities/cryptography/oath/totp.tsx:701
+#: src/utilities/meta.ts:155
+msgid "Number Base Converter"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:695
 msgid "Number of time windows to check before and after current time (0 = only current window)"
 msgstr "在当前时间前后需要检查的时间窗口数量（0 表示仅检查当前时间窗口）"
 
-#: src/utilities/meta.ts:149
+#: src/utilities/meta.ts:174
 msgid "OATH Debugger"
 msgstr "OATH 调试器"
 
-#: src/components/layout/input-output.tsx:44
+#: src/utilities/generators/hash.tsx:143
+#: src/components/layout/input-output.tsx:62
 msgid "Output"
 msgstr "输出"
+
+#: src/utilities/cryptography/fido/fido2.tsx:877
+msgid "Passwordless authentication"
+msgstr ""
 
 #: src/components/tools.tsx:78
 msgid "Paste from Clipboard"
 msgstr "从剪贴板粘贴"
 
-#: src/utilities/cryptography/oath/totp.tsx:259
+#: src/utilities/cryptography/oath/totp.tsx:253
 msgid "Period"
 msgstr "有效时长"
 
-#: src/utilities/cryptography/oath/totp.tsx:427
-#: src/utilities/cryptography/oath/totp.tsx:644
+#: src/utilities/cryptography/oath/totp.tsx:421
+#: src/utilities/cryptography/oath/totp.tsx:638
 msgid "Period in seconds"
 msgstr "有效时长（秒）"
 
-#: src/utilities/cryptography/oath/totp.tsx:536
+#: src/utilities/cryptography/oath/totp.tsx:530
 msgid "Period:"
 msgstr "有效时长："
 
-#: src/utilities/cryptography/oath/totp.tsx:328
+#: src/utilities/cryptography/fido/fido2.tsx:878
+msgid "Phishing-resistant"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:184
+msgid "PIN is required for resident keys and user verification. Minimum 4 digits, maximum 8 digits."
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:209
+msgid "Protocol Version"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:322
 msgid "Provisioning URI"
 msgstr "配置 URI"
 
-#: src/utilities/cryptography/oath/totp.tsx:348
+#: src/utilities/cryptography/fido/fido2.tsx:425
+msgid "Public Key"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:429
+msgid "Public key will appear here after registration"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:342
 msgid "QR Code"
 msgstr "二维码"
 
-#: src/utilities/meta.ts:168
+#: src/utilities/cryptography/fido/fido2.tsx:752
+msgid "Register with a service to see credentials here"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:924
+msgid "Registration"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:288
+msgid "Registration Parameters"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:403
+msgid "Registration Result"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:296
+#: src/utilities/cryptography/fido/fido2.tsx:512
+msgid "Relying Party ID"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:823
+msgid "Require PIN/biometric for operations"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:388
+msgid "Resident Key"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:221
+#: src/utilities/cryptography/fido/fido2.tsx:808
+msgid "Resident Keys"
+msgstr ""
+
+#: src/utilities/meta.ts:193
 msgid "RSA Debugger"
 msgstr "RSA 调试器"
 
-#: src/utilities/cryptography/oath/totp.tsx:357
+#: src/utilities/converter/number-case.tsx:281
+msgid "Sample"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:851
+msgid "Save Settings"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:351
 msgid "Scan this QR code with your authenticator app"
 msgstr ""
 
-#: src/utilities/cryptography/oath/totp.tsx:612
+#: src/utilities/cryptography/oath/totp.tsx:606
 msgid "Secret"
 msgstr ""
 
-#: src/utilities/cryptography/oath/totp.tsx:616
+#: src/utilities/cryptography/oath/totp.tsx:610
 msgid "Secret ..."
 msgstr ""
 
-#: src/utilities/cryptography/oath/totp.tsx:310
+#: src/utilities/cryptography/oath/totp.tsx:304
 msgid "Secret (Base32)"
 msgstr ""
 
-#: src/utilities/cryptography/oath/totp.tsx:157
+#: src/utilities/converter/number-case.tsx:249
+msgid "Select base:"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:175
+msgid "Set"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:151
 msgid "Set a label"
 msgstr ""
 
-#: src/utilities/cryptography/oath/totp.tsx:174
+#: src/utilities/cryptography/oath/totp.tsx:168
 msgid "Set an issuer"
 msgstr ""
 
-#: src/utilities/cryptography/oath/totp.tsx:256
+#: src/utilities/cryptography/fido/fido2.tsx:143
+msgid "Set PIN"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:250
 msgid "Set the period how long the OTP is valid, recommend is 30 seconds"
 msgstr ""
 
-#: src/utilities/cryptography/oath/totp.tsx:188
+#: src/utilities/cryptography/fido/fido2.tsx:936
+msgid "Settings"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:603
+msgid "Signature"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:607
+msgid "Signature will appear here after authentication"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:182
 msgid "Some applications such as FreeOTP can load images from an URI (image parameter). It need to be a valid URL to an image."
 msgstr ""
 
-#: src/utilities/cryptography/oath/totp.tsx:753
+#: src/utilities/cryptography/fido/fido2.tsx:571
+msgid "Start Authentication"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:393
+msgid "Start Registration"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:747
 msgid "Status Unknown"
 msgstr ""
 
-#: src/utilities/cryptography/oath/totp.tsx:778
+#: src/utilities/cryptography/oath/totp.tsx:772
 msgid "Status:"
 msgstr ""
 
-#: src/utilities/cryptography/oath/totp.tsx:798
+#: src/utilities/cryptography/fido/fido2.tsx:691
+msgid "Stored Credentials"
+msgstr ""
+
+#: src/utilities/network/ip.tsx:211
+msgid "Subnet Calculator"
+msgstr ""
+
+#: src/utilities/network/ip.tsx:235
+#: src/utilities/network/ip.tsx:331
+msgid "Subnet Mask"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:231
+#: src/utilities/cryptography/fido/fido2.tsx:885
+msgid "Supported Algorithms"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:911
+msgid "Test and manage FIDO2 WebAuthn operations with a beautiful, Apple-inspired interface."
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:792
 msgid "Time Offset:"
 msgstr ""
 
-#: src/utilities/cryptography/oath/totp.tsx:541
+#: src/utilities/cryptography/oath/totp.tsx:535
 msgid "Time Window:"
 msgstr ""
 
-#: src/utilities/meta.ts:74
+#: src/utilities/meta.ts:81
 msgid "Tokenizer"
 msgstr "Tokenizer"
 
-#: src/utilities/meta.ts:160
-#: src/utilities/cryptography/oath/totp.tsx:856
+#: src/utilities/network/ip.tsx:315
+msgid "Total Hosts"
+msgstr ""
+
+#: src/utilities/meta.ts:185
+#: src/utilities/cryptography/oath/totp.tsx:850
 msgid "TOTP Debugger"
 msgstr "TOTP 调试器"
 
-#: src/utilities/cryptography/oath/totp.tsx:352
+#: src/utilities/cryptography/oath/totp.tsx:346
 msgid "TOTP QR Code"
 msgstr ""
 
-#: src/utilities/cryptography/oath/totp.tsx:789
+#: src/utilities/cryptography/oath/totp.tsx:783
 msgid "Unknown"
 msgstr ""
 
-#: src/utilities/cryptography/oath/totp.tsx:821
+#: src/utilities/network/ip.tsx:306
+msgid "Usable Host Range"
+msgstr ""
+
+#: src/utilities/network/ip.tsx:323
+msgid "Usable Hosts"
+msgstr ""
+
+#: src/utilities/cryptography/oath/totp.tsx:815
 msgid "Used Window:"
 msgstr ""
 
-#: src/utilities/meta.ts:130
+#: src/utilities/cryptography/fido/fido2.tsx:722
+msgid "User"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:620
+msgid "User Handle"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:624
+msgid "User handle will appear here after authentication"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:306
+msgid "User ID"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:316
+msgid "User Name"
+msgstr ""
+
+#: src/utilities/cryptography/fido/fido2.tsx:215
+#: src/utilities/cryptography/fido/fido2.tsx:351
+#: src/utilities/cryptography/fido/fido2.tsx:536
+#: src/utilities/cryptography/fido/fido2.tsx:821
+msgid "User Verification"
+msgstr ""
+
+#: src/utilities/meta.ts:137
 msgid "UUID/ULID Generate/Decode"
 msgstr "UUID/ULID 生成/解码"
 
-#: src/utilities/cryptography/oath/totp.tsx:791
+#: src/utilities/cryptography/oath/totp.tsx:785
 msgid "Valid"
 msgstr ""
 
-#: src/utilities/cryptography/oath/totp.tsx:735
+#: src/utilities/cryptography/oath/totp.tsx:729
 msgid "Validation Result"
 msgstr ""
 
-#: src/utilities/cryptography/oath/totp.tsx:704
+#: src/utilities/cryptography/oath/totp.tsx:698
 msgid "Validation Window"
 msgstr ""
 
-#: src/utilities/cryptography/oath/totp.tsx:657
+#: src/utilities/cryptography/oath/totp.tsx:651
 msgid "What algorithm used for the secret"
 msgstr ""
 
-#: src/utilities/cryptography/oath/totp.tsx:440
+#: src/utilities/cryptography/oath/totp.tsx:434
 msgid "What algorithm was used for the secret"
 msgstr ""
 
-#: src/utilities/cryptography/oath/totp.tsx:425
-#: src/utilities/cryptography/oath/totp.tsx:642
+#: src/utilities/cryptography/oath/totp.tsx:419
+#: src/utilities/cryptography/oath/totp.tsx:636
 msgid "What period used for the secret"
 msgstr ""
 
-#: src/utilities/cryptography/oath/totp.tsx:806
+#: src/utilities/cryptography/oath/totp.tsx:800
 msgid "windows"
 msgstr ""
 
-#: src/utilities/cryptography/oath/totp.tsx:230
+#: src/utilities/cryptography/oath/totp.tsx:224
 msgid "You must verify that the algorithm you want to use is supported by the application your clients might be using."
 msgstr ""
-
