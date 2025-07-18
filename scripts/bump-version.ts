@@ -26,19 +26,19 @@ const files = [
     },
   },
   {
-    path: "src-tauri/Cargo.toml",
+    path: "dev-utility/Cargo.toml",
     updateVersion: (content: string, newVersion: string) => {
       return content.replace(/^version = ".*"$/m, `version = "${newVersion}"`);
     },
   },
   {
-    path: "src-utility/Cargo.toml",
+    path: "dev-utility-workers/Cargo.toml",
     updateVersion: (content: string, newVersion: string) => {
       return content.replace(/^version = ".*"$/m, `version = "${newVersion}"`);
     },
   },
   {
-    path: "src-tauri/tauri.conf.json",
+    path: "dev-utility-tauri/tauri.conf.json",
     updateVersion: (content: string, newVersion: string) => {
       const config = JSON.parse(content);
       config.version = newVersion;

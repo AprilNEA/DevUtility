@@ -220,7 +220,7 @@ const utilities: UtilityMeta[] = [
       {
         key: "ip",
         icon: LinkIcon,
-        title: msg`IP Address`,
+        title: msg`IP Address Calculator`,
         page: IpPage,
       },
     ],

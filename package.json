@@ -1,7 +1,7 @@
 {
   "name": "dev-utility",
   "private": true,
-  "version": "0.1.6",
+  "version": "0.1.8",
   "type": "module",
   "scripts": {
     "tauri": "tauri",

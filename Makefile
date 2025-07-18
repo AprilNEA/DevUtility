@@ -10,12 +10,12 @@ license:
 	addlicense -f ./LICENSE dev-utility-tauri
 	addlicense -f ./LICENSE dev-utility
 
-merge-license: LICENSE.FULL
-	pnpm tsx merge-license
+LICENSE.FULL: 
+	pnpm tsx scripts/merge-license.ts
 
 .PHONY: version
 version:
-	pnpm tsx version
+	pnpm tsx scripts/bump-version.ts
 
 
 CORE_NAME = core
@@ -36,7 +36,7 @@ $(CORE_BUILD_OUTPUTS): $(CORE_SRC_FILES) $(CORE_CARGO_TOML)
 	rm packages/LICENSE
 
 prebuild-desktop:
-	make merge-license
+	make LICENSE.FULL
 	pnpm --filter @dev-utility/frontend build
 
 build-desktop:
