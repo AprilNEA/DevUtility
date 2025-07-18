@@ -15,13 +15,13 @@
 
 import "./index.css";
 
-// import { lazy } from "react";
+import { lazy } from "react";
 import { Route, Router, Switch } from "wouter";
 import Metadata from "./components/meta";
 import AppSidebar from "./components/sidebar";
 import utilities, { type UtilityMeta } from "./utilities/meta";
 
-// const SettingsPage = lazy(() => import("./pages/settings"));
+const SettingsPage = lazy(() => import("./pages/settings"));
 
 const convertToRoute = (utility: UtilityMeta) => {
   if ("items" in utility) {
@@ -52,7 +52,7 @@ function App() {
   return (
     <Router>
       <Switch>
-        {/*  <Route path="settings" component={SettingsPage} /> */}
+        <Route path="settings" component={SettingsPage} />
         {/* <Route path="totp" component={TotpDebugger} /> */}
         <AppSidebar>
           {utilities.map((utility) => convertToRoute(utility))}
