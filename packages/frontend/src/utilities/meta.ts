@@ -33,6 +33,7 @@ import {
 import { lazy } from "react";
 import type { RouteComponentProps } from "wouter";
 import FIDOPasskeyMarkA from "@/assets/fido-passkey-mark-a";
+import NumberCasePage from "./converter/number-case";
 import Fido2Page from "./cryptography/fido/fido2";
 import IpPage from "./network/ip";
 
@@ -45,6 +46,7 @@ const HashGeneratorPage = lazy(() => import("./generators/hash"));
 const Base64EncoderDecoderPage = lazy(() => import("./codec/base64"));
 const RSAKeyGeneratorPage = lazy(() => import("./cryptography/rsa/generator"));
 const RSAKeyAnalyzerPage = lazy(() => import("./cryptography/rsa/analyzer"));
+const NumberCaseConverterPage = lazy(() => import("./converter/number-case"));
 // const RSAKeyConverterPage = lazy(() => import("./cryptography/rsa/converter"));
 // const HotpDebuggerPage = lazy(() => import("./cryptography/oath/hotp"));
 const TotpDebuggerPage = lazy(() => import("./cryptography/oath/totp"));
@@ -140,6 +142,18 @@ const utilities: UtilityMeta[] = [
         icon: HashIcon,
         title: msg`Hash Generator`,
         page: HashGeneratorPage,
+      },
+    ],
+  },
+  {
+    key: "converter",
+    title: msg`Converter`,
+    items: [
+      {
+        key: "number-case",
+        icon: HashIcon,
+        title: msg`Number Base Converter`,
+        page: NumberCaseConverterPage,
       },
     ],
   },
