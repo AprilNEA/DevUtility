@@ -20,9 +20,11 @@ import {
   // FileCode2Icon,
   FileCodeIcon,
   FileIcon,
+  FileJson2Icon,
   FileJsonIcon,
   FileTextIcon,
   HashIcon,
+  Heading5Icon,
   KeyIcon,
   LinkIcon,
   RadarIcon,
@@ -30,6 +32,7 @@ import {
 } from "lucide-react";
 import { lazy } from "react";
 import type { RouteComponentProps } from "wouter";
+import FIDOPasskeyMarkA from "@/assets/fido-passkey-mark-a";
 import Fido2Page from "./cryptography/fido/fido2";
 import IpPage from "./network/ip";
 
@@ -85,13 +88,13 @@ const utilities: UtilityMeta[] = [
     items: [
       {
         key: "json",
-        icon: FileJsonIcon,
+        icon: FileJson2Icon,
         title: msg`JSON Format/Validate`,
         page: JsonFormatterPage,
       },
       {
         key: "html",
-        icon: FileCodeIcon,
+        icon: Heading5Icon,
         title: msg`HTML Beautify/Minify`,
         page: HtmlEncoderDecoderPage,
       },
@@ -147,16 +150,9 @@ const utilities: UtilityMeta[] = [
     items: [
       {
         key: "fido",
-        icon: KeyIcon,
+        icon: FIDOPasskeyMarkA,
         title: msg`FIDO Debugger`,
-        items: [
-          {
-            key: "fido2",
-            icon: KeyIcon,
-            title: msg`FIDO2 Authenticator`,
-            page: Fido2Page,
-          },
-        ],
+        page: Fido2Page,
       },
       {
         key: "oath",
