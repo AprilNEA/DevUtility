@@ -13,9 +13,12 @@
  * See LICENSE file for details or contact admin@aprilnea.com
  */
 
+import { relaunch } from "@tauri-apps/plugin-process";
+import { check } from "@tauri-apps/plugin-updater";
 import {
   DownloadIcon,
   InfoIcon,
+  Loader2Icon,
   MinusIcon,
   MonitorIcon,
   MoonIcon,
@@ -23,6 +26,10 @@ import {
   SunIcon,
 } from "lucide-react";
 import { useState } from "react";
+import useSWR from "swr";
+import useSWRSubscription, {
+  type SWRSubscriptionOptions,
+} from "swr/subscription";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -36,7 +43,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
-import { Switch } from "@/components/ui/switch";
 
 interface SettingItemProps {
   title: string;
@@ -57,6 +63,117 @@ const SettingItem = ({ title, description, children }: SettingItemProps) => (
     </div>
   </div>
 );
+
+const UpdateItem = () => {
+  const { data: update, isLoading } = useSWR("updater_check", check);
+
+  const [isUpdating, setIsUpdating] = useState(false);
+  const { data: process } = useSWRSubscription(
+    isUpdating ? "updater_download" : null,
+    (
+      _,
+      {
+        next,
+      }: SWRSubscriptionOptions<
+        {
+          status: "pending" | "started" | "progress" | "finished";
+          downloaded?: number;
+          contentLength?: number;
+        },
+        Error
+      >,
+    ) => {
+      next(null, {
+        status: "pending",
+      });
+      update?.downloadAndInstall((event) => {
+        switch (event.event) {
+          case "Started": {
+            const contentLength = event.data.contentLength;
+            if (contentLength) {
+              next(null, (prev) => ({
+                ...prev,
+                status: "started",
+                contentLength: (prev?.contentLength ?? 0) + contentLength,
+              }));
+            }
+            console.log(
+              `started downloading ${event.data.contentLength} bytes`,
+            );
+            break;
+          }
+          case "Progress": {
+            const chunkLength = event.data.chunkLength;
+            if (chunkLength) {
+              next(null, (prev) => ({
+                ...prev,
+                status: "progress",
+                downloaded: (prev?.downloaded ?? 0) + chunkLength,
+              }));
+            }
+            console.log(`downloaded ${chunkLength}`);
+            break;
+          }
+          case "Finished": {
+            next(null, (prev) => ({
+              ...prev,
+              status: "finished",
+            }));
+            console.log("download finished");
+            break;
+          }
+        }
+      });
+      return () => {
+        setIsUpdating(false);
+        // update?.close();
+      };
+    },
+    {
+      onSuccess(data) {
+        console.log(data);
+        if (data.status === "finished") {
+          relaunch();
+        }
+      },
+      fallbackData: {
+        status: "pending",
+      },
+    },
+  );
+
+  return (
+    <SettingItem title="更新">
+      <div className="flex items-center gap-3">
+        {isUpdating ? (
+          <Badge variant="secondary" className="text-xs">
+            正在更新中
+            <Loader2Icon className="h-3 w-3 animate-spin" />
+          </Badge>
+        ) : isLoading ? (
+          <Badge variant="secondary" className="text-xs">
+            检查更新中
+            <Loader2Icon className="h-3 w-3 animate-spin" />
+          </Badge>
+        ) : update === null ? (
+          <Badge variant="secondary" className="text-xs">
+            已是最新
+          </Badge>
+        ) : (
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => {
+              setIsUpdating(true);
+            }}
+          >
+            立刻更新
+          </Button>
+        )}
+      </div>
+    </SettingItem>
+  );
+};
 
 export default function SettingsPage() {
   const [settings, setSettings] = useState({
@@ -281,21 +398,7 @@ export default function SettingsPage() {
             <CardTitle className="text-base font-medium">关于</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
-            <SettingItem title="更新">
-              <div className="flex items-center gap-3">
-                {settings.autoUpdate && (
-                  <Badge variant="secondary" className="text-xs">
-                    已是最新
-                  </Badge>
-                )}
-                <Switch
-                  checked={settings.autoUpdate}
-                  onCheckedChange={(checked) =>
-                    updateSetting("autoUpdate", checked)
-                  }
-                />
-              </div>
-            </SettingItem>
+            <UpdateItem />
 
             <Separator />
 
@@ -306,7 +409,7 @@ export default function SettingsPage() {
                   onClick={() => {
                     window.open(
                       "https://github.com/aprilnea/devutility/releases",
-                      "_blank"
+                      "_blank",
                     );
                   }}
                   className="flex items-center gap-1 hover:text-foreground transition-colors"
@@ -319,7 +422,7 @@ export default function SettingsPage() {
                   onClick={() => {
                     window.open(
                       "https://github.com/aprilnea/devutility/issues",
-                      "_blank"
+                      "_blank",
                     );
                   }}
                   className="flex items-center gap-1 hover:text-foreground transition-colors"

@@ -16,9 +16,7 @@
     windows_subsystem = "windows"
 )]
 
-mod updater;
 use dev_utility_core;
-use std::sync::Mutex;
 use tauri::{
     menu::{MenuItem, MenuItemKind, PredefinedMenuItem, SubmenuBuilder, HELP_SUBMENU_ID},
     Manager,
@@ -30,6 +28,7 @@ const UPDATE_ID: &str = "update";
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_process::init())
         .plugin(tauri_plugin_os::init())
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_clipboard_manager::init())
@@ -40,8 +39,6 @@ pub fn run() {
                     .plugin(tauri_plugin_updater::Builder::new().build())
                     .unwrap();
                 app.handle().plugin(tauri_plugin_shell::init()).unwrap();
-
-                app.manage(updater::PendingUpdate(Mutex::new(None)));
 
                 let global_menu = app.menu().unwrap();
 
@@ -103,7 +100,7 @@ pub fn run() {
                                 "settings",
                                 tauri::WebviewUrl::App("/settings".into()),
                             )
-                            // .inner_size(800.0, 600.0)
+                            .inner_size(360.0, 680.0)
                             .build()
                             .unwrap();
                         });
@@ -114,10 +111,6 @@ pub fn run() {
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
-            #[cfg(desktop)]
-            updater::app_fetch_update,
-            #[cfg(desktop)]
-            updater::app_install_update,
             #[cfg(desktop)]
             // dev_utility_core::hardware::list_hid_devices,
             dev_utility_core::codec::decode_base64,

@@ -53,7 +53,7 @@
     "updater": {
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEZDQ0I5NzYzMDM3REIzN0MKUldSOHMzMERZNWZML0xKTUdzVkhxVUpUeVdRUFhCemNNQ1hWYytKalFtaHpyaHRBdkFrbkY0ZmkK",
       "endpoints": [
-        "https://releases.utility.dev/download/latest/manifest.json"
+        "https://cdn.utility.dev/download/latest/manifest.json"
       ]
     }
   }
