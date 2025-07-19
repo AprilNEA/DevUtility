@@ -25,10 +25,12 @@ jobs:
           path-to-signatures: 'signatures/version1/cla.json'
           path-to-document: 'https://github.com/AprilNEA/DevUtility/blob/master/CLA-INDIVIDUAL.md'
           branch: 'cla-signatures'
-          allowlist: 'dependabot[bot],renovate[bot],github-actions[bot],AprilNEA'
+          allowlist: 'dependabot[bot],renovate[bot],github-actions[bot],claude[bot],AprilNEA'
           signed-commit-message: 'CLA Signature: $contributorName has signed the CLA in $owner/$repo#$pullRequestNo'
           custom-notsigned-prcomment: |
             🔒 **CLA Signature Required for DevUtility**
+            
+            $contributorName
             
             Thank you for your contribution to **DevUtility**! Before we can merge your pull request, you need to sign our Contributor License Agreement (CLA).
             

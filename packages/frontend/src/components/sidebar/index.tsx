@@ -176,7 +176,10 @@ export default function AppSidebar({
                                       const href = `/${category.key}/${item.key}/${subItem.key}`;
                                       return (
                                         <SidebarMenuSubItem key={subItem.key}>
-                                          <SidebarMenuSubButton asChild>
+                                          <SidebarMenuSubButton 
+                                            asChild
+                                            isActive={pathname === href}
+                                          >
                                             <Link
                                               href={href}
                                               onClick={() => {
