@@ -17,6 +17,7 @@ import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import {
   BrainIcon,
+  ClockIcon,
   // FileCode2Icon,
   FileCodeIcon,
   FileIcon,
@@ -33,7 +34,9 @@ import {
 import { lazy } from "react";
 import type { RouteComponentProps } from "wouter";
 import FIDOPasskeyMarkA from "@/assets/fido-passkey-mark-a";
+import JwtDecoderPage from "./codec/jwt";
 import NumberCasePage from "./converter/number-case";
+import StringInspectorPage from "./converter/string-inspector";
 import Fido2Page from "./cryptography/fido/fido2";
 import IpPage from "./network/ip";
 
@@ -51,6 +54,7 @@ const NumberCaseConverterPage = lazy(() => import("./converter/number-case"));
 // const HotpDebuggerPage = lazy(() => import("./cryptography/oath/hotp"));
 const TotpDebuggerPage = lazy(() => import("./cryptography/oath/totp"));
 // const HidDevicesPage = lazy(() => import("./hardware/hid"));
+const UnixTimePage = lazy(() => import("./converter/unix-time"));
 
 export type Utility = {
   key: string;
@@ -114,19 +118,6 @@ const utilities: UtilityMeta[] = [
       // },
     ],
   },
-  // {
-  //   key: "converter",
-  //   icon: LinkIcon,
-  //   title: msg`Data Converter`,
-  //   utilities: [
-  //     {
-  //       key: "url-parser",
-  //       title: msg`URL Parser`,
-
-  //       icon: LinkIcon,
-  //     },
-  //   ],
-  // },
   {
     key: "generator",
     title: msg`Generators`,
@@ -155,6 +146,24 @@ const utilities: UtilityMeta[] = [
         title: msg`Number Base Converter`,
         page: NumberCaseConverterPage,
       },
+      {
+        key: "string-inspector",
+        icon: FileTextIcon,
+        title: msg`String Inspector`,
+        page: StringInspectorPage,
+      },
+      {
+        key: "unix-time",
+        icon: ClockIcon,
+        title: msg`Unix Time Converter`,
+        page: UnixTimePage,
+      },
+      // {
+      //   key: "url-parser",
+      //   title: msg`URL Parser`,
+
+      //   icon: LinkIcon,
+      // },
     ],
   },
   {
@@ -224,6 +233,18 @@ const utilities: UtilityMeta[] = [
         icon: FileTextIcon,
         title: msg`Base64 Encode/Decode`,
         page: Base64EncoderDecoderPage,
+      },
+      {
+        key: "jwt",
+        icon: FileCodeIcon,
+        title: msg`JWT Decoder`,
+        page: JwtDecoderPage,
+      },
+      {
+        key: "unix-time",
+        icon: ClockIcon,
+        title: msg`Unix Time Converter`,
+        page: lazy(() => import("./converter/unix-time")),
       },
     ],
   },
