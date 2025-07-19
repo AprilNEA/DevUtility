@@ -13,11 +13,6 @@ license:
 LICENSE.FULL: 
 	pnpm tsx scripts/merge-license.ts
 
-.PHONY: version
-version:
-	pnpm tsx scripts/bump-version.ts
-
-
 CORE_NAME = core
 CORE_PKG_DIR = packages/core
 CORE_WASM_FILE = $(CORE_PKG_DIR)/$(CORE_NAME)_bg.wasm $(CORE_PKG_DIR)/$(CORE_NAME)_bg.wasm.d.ts

@@ -1,6 +1,6 @@
 [package]
 name = "dev-utility-workers"
-version = "0.1.10"
+version = "1.0.0-alpha.2"
 edition = "2021"
 authors = ["AprilNEA <github@sku.moe>"]
 
