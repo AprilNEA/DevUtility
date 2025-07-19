@@ -1,15 +1,12 @@
-name: Release App
+name: Build App
 
 on:
   push:
-    branches:
-      - release
     tags:
       - 'v*'
-  workflow_dispatch:
 
 jobs:
-  release:
+  release-app:
     permissions:
       contents: write
     strategy:
@@ -110,3 +107,26 @@ jobs:
           releaseDraft: true
           prerelease: false
           args: ${{ matrix.args }}
+
+  update-changelog:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    env:
+      RELEASE_TAG: ${{ github.ref_name }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - uses: orhun/git-cliff-action@v3
+        id: git-cliff
+        with:
+          args: --latest --strip header
+
+      - uses: softprops/action-gh-release@v1
+        with:
+          body: ${{ steps.git-cliff.outputs.content }}
+          tag_name: ${{ env.RELEASE_TAG }}
