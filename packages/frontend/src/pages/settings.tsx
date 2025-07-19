@@ -69,7 +69,8 @@ const UpdateItem = () => {
   const { data: update, isLoading } = useSWR("updater_check", check);
 
   const [isUpdating, setIsUpdating] = useState(false);
-  const { data: process } = useSWRSubscription(
+
+  useSWRSubscription(
     isUpdating ? "updater_download" : null,
     (
       _,
@@ -82,7 +83,7 @@ const UpdateItem = () => {
           contentLength?: number;
         },
         Error
-      >,
+      >
     ) => {
       next(null, {
         status: "pending",
@@ -99,7 +100,7 @@ const UpdateItem = () => {
               }));
             }
             console.log(
-              `started downloading ${event.data.contentLength} bytes`,
+              `started downloading ${event.data.contentLength} bytes`
             );
             break;
           }
@@ -121,6 +122,8 @@ const UpdateItem = () => {
               status: "finished",
             }));
             console.log("download finished");
+            relaunch();
+            setIsUpdating(false);
             break;
           }
         }
@@ -131,16 +134,10 @@ const UpdateItem = () => {
       };
     },
     {
-      onSuccess(data) {
-        console.log(data);
-        if (data.status === "finished") {
-          relaunch();
-        }
-      },
       fallbackData: {
         status: "pending",
       },
-    },
+    }
   );
 
   return (
@@ -414,7 +411,7 @@ export default function SettingsPage() {
                   onClick={() => {
                     window.open(
                       "https://github.com/aprilnea/devutility/releases",
-                      "_blank",
+                      "_blank"
                     );
                   }}
                   className="flex items-center gap-1 hover:text-foreground transition-colors"
@@ -427,7 +424,7 @@ export default function SettingsPage() {
                   onClick={() => {
                     window.open(
                       "https://github.com/aprilnea/devutility/issues",
-                      "_blank",
+                      "_blank"
                     );
                   }}
                   className="flex items-center gap-1 hover:text-foreground transition-colors"
