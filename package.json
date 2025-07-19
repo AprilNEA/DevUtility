@@ -6,7 +6,8 @@
   "scripts": {
     "tauri": "tauri",
     "dev": "pnpm tauri dev",
-    "web": "pnpm --filter @dev-utility/frontend dev:wasm"
+    "web": "pnpm --filter @dev-utility/frontend dev:wasm",
+    "format": "biome format --write"
   },
   "dependencies": {
     "react": "^19.1.0",

@@ -200,7 +200,9 @@ export default function SettingsPage() {
         {/* 通用设置 */}
         <Card>
           <CardHeader className="pb-4">
-            <CardTitle className="text-base font-medium"><Trans>General</Trans></CardTitle>
+            <CardTitle className="text-base font-medium">
+              <Trans>General</Trans>
+            </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
             <SettingItem title={<Trans>Appearance</Trans>}>
@@ -396,7 +398,9 @@ export default function SettingsPage() {
         {/* 关于 */}
         <Card>
           <CardHeader className="pb-4">
-            <CardTitle className="text-base font-medium"><Trans>About</Trans></CardTitle>
+            <CardTitle className="text-base font-medium">
+              <Trans>About</Trans>
+            </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
             <UpdateItem />
@@ -445,7 +449,9 @@ export default function SettingsPage() {
 
             <div className="flex items-center justify-between text-sm text-muted-foreground">
               <div className="flex items-center gap-6">
-                <span><Trans>Follow DevUtility</Trans></span>
+                <span>
+                  <Trans>Follow DevUtility</Trans>
+                </span>
                 {/* <span>隐私政策</span> */}
               </div>
               <div className="flex items-center gap-4">
