@@ -64,13 +64,13 @@ export default function StringInspectorPage() {
   // Calculate statistics
   const stats: StringStats = useMemo(() => {
     const text = debouncedInput;
-    
+
     // Basic counts
     const characters = text.length;
     const bytes = new TextEncoder().encode(text).length;
     const words = text.trim() ? text.trim().split(/\s+/).length : 0;
-    const lines = text.split('\n').length;
-    
+    const lines = text.split("\n").length;
+
     // ASCII vs Unicode
     let ascii = 0;
     let unicode = 0;
@@ -81,13 +81,14 @@ export default function StringInspectorPage() {
         unicode++;
       }
     }
-    
+
     // Selection information
     const beforeSelection = text.substring(0, selectionEnd);
-    const linesBeforeSelection = beforeSelection.split('\n');
+    const linesBeforeSelection = beforeSelection.split("\n");
     const currentLine = linesBeforeSelection.length;
-    const column = linesBeforeSelection[linesBeforeSelection.length - 1].length + 1;
-    
+    const column =
+      linesBeforeSelection[linesBeforeSelection.length - 1].length + 1;
+
     return {
       characters,
       bytes,
@@ -99,7 +100,7 @@ export default function StringInspectorPage() {
         location: selectionEnd,
         currentLine,
         column,
-      }
+      },
     };
   }, [debouncedInput, selectionEnd]);
 
@@ -107,26 +108,26 @@ export default function StringInspectorPage() {
   const wordDistribution: WordDistribution[] = useMemo(() => {
     const text = caseSensitive ? debouncedInput : debouncedInput.toLowerCase();
     const words = text.match(/\b[\w']+\b/g) || [];
-    
+
     const wordMap = new Map<string, number>();
     for (const word of words) {
       const key = caseSensitive ? word : word.toLowerCase();
       wordMap.set(key, (wordMap.get(key) || 0) + 1);
     }
-    
+
     // Convert to array and sort by frequency
     const distribution = Array.from(wordMap.entries())
       .map(([word, count]) => ({ word, count }))
       .sort((a, b) => b.count - a.count);
-    
+
     // Apply filter if present
     if (wordFilter) {
       const filterLower = wordFilter.toLowerCase();
-      return distribution.filter(item => 
+      return distribution.filter((item) =>
         item.word.toLowerCase().includes(filterLower)
       );
     }
-    
+
     return distribution;
   }, [debouncedInput, caseSensitive, wordFilter]);
 
@@ -181,146 +182,126 @@ export default function StringInspectorPage() {
   );
 
   const statsContent = (
-    <div className="space-y-4">
+    <div className="space-y-2">
       {/* Count Section */}
-      <Card>
-        <CardHeader className="pb-2">
-          <CardTitle className="text-sm font-medium">
-            <Trans>Count</Trans>
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-2">
-          <div className="flex justify-between items-center">
-            <span className="text-sm text-muted-foreground">
-              <Trans>Characters</Trans>
-            </span>
-            <span className="text-sm font-mono">{stats.characters}</span>
-          </div>
-          <div className="flex justify-between items-center">
-            <span className="text-sm text-muted-foreground">
-              <Trans>Bytes</Trans>
-            </span>
-            <span className="text-sm font-mono">{stats.bytes}</span>
-          </div>
-          <div className="flex justify-between items-center">
-            <span className="text-sm text-muted-foreground">
-              <Trans>Words</Trans>
-            </span>
-            <span className="text-sm font-mono">{stats.words}</span>
-          </div>
-          <div className="flex justify-between items-center">
-            <span className="text-sm text-muted-foreground">
-              <Trans>Lines</Trans>
-            </span>
-            <span className="text-sm font-mono">{stats.lines}</span>
-          </div>
-        </CardContent>
-      </Card>
+
+      <p className="text-sm font-medium">
+        <Trans>Count</Trans>
+      </p>
+
+      <div className="flex justify-between items-center">
+        <span className="text-sm text-muted-foreground">
+          <Trans>Characters</Trans>
+        </span>
+        <span className="text-sm font-mono">{stats.characters}</span>
+      </div>
+      <div className="flex justify-between items-center">
+        <span className="text-sm text-muted-foreground">
+          <Trans>Bytes</Trans>
+        </span>
+        <span className="text-sm font-mono">{stats.bytes}</span>
+      </div>
+      <div className="flex justify-between items-center">
+        <span className="text-sm text-muted-foreground">
+          <Trans>Words</Trans>
+        </span>
+        <span className="text-sm font-mono">{stats.words}</span>
+      </div>
+      <div className="flex justify-between items-center">
+        <span className="text-sm text-muted-foreground">
+          <Trans>Lines</Trans>
+        </span>
+        <span className="text-sm font-mono">{stats.lines}</span>
+      </div>
 
       {/* Character Section */}
-      <Card>
-        <CardHeader className="pb-2">
-          <CardTitle className="text-sm font-medium">
-            <Trans>Character</Trans>
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-2">
-          <div className="flex justify-between items-center">
-            <span className="text-sm text-muted-foreground">ASCII</span>
-            <span className="text-sm font-mono">
-              {stats.ascii > 0 ? stats.ascii : '-'}
-            </span>
-          </div>
-          <div className="flex justify-between items-center">
-            <span className="text-sm text-muted-foreground">Unicode</span>
-            <span className="text-sm font-mono">
-              {stats.unicode > 0 ? stats.unicode : '-'}
-            </span>
-          </div>
-        </CardContent>
-      </Card>
+
+      <p className="text-sm font-medium">
+        <Trans>Character</Trans>
+      </p>
+
+      <div className="flex justify-between items-center">
+        <span className="text-sm text-muted-foreground">ASCII</span>
+        <span className="text-sm font-mono">
+          {stats.ascii > 0 ? stats.ascii : "-"}
+        </span>
+      </div>
+      <div className="flex justify-between items-center">
+        <span className="text-sm text-muted-foreground">Unicode</span>
+        <span className="text-sm font-mono">
+          {stats.unicode > 0 ? stats.unicode : "-"}
+        </span>
+      </div>
 
       {/* Selection Section */}
-      <Card>
-        <CardHeader className="pb-2">
-          <CardTitle className="text-sm font-medium">
-            <Trans>Selection</Trans>
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-2">
-          <div className="flex justify-between items-center">
-            <span className="text-sm text-muted-foreground">
-              <Trans>Location</Trans>
-            </span>
-            <span className="text-sm font-mono">{stats.selection.location}</span>
-          </div>
-          <div className="flex justify-between items-center">
-            <span className="text-sm text-muted-foreground">
-              <Trans>Current line</Trans>
-            </span>
-            <span className="text-sm font-mono">{stats.selection.currentLine}</span>
-          </div>
-          <div className="flex justify-between items-center">
-            <span className="text-sm text-muted-foreground">
-              <Trans>Column</Trans>
-            </span>
-            <span className="text-sm font-mono">{stats.selection.column}</span>
-          </div>
-        </CardContent>
-      </Card>
+
+      <p className="text-sm font-medium">
+        <Trans>Selection</Trans>
+      </p>
+
+      <div className="flex justify-between items-center">
+        <span className="text-sm text-muted-foreground">
+          <Trans>Location</Trans>
+        </span>
+        <span className="text-sm font-mono">{stats.selection.location}</span>
+      </div>
+      <div className="flex justify-between items-center">
+        <span className="text-sm text-muted-foreground">
+          <Trans>Current line</Trans>
+        </span>
+        <span className="text-sm font-mono">{stats.selection.currentLine}</span>
+      </div>
+      <div className="flex justify-between items-center">
+        <span className="text-sm text-muted-foreground">
+          <Trans>Column</Trans>
+        </span>
+        <span className="text-sm font-mono">{stats.selection.column}</span>
+      </div>
 
       {/* Word Distribution Section */}
-      <Card className="flex-1">
-        <CardHeader className="pb-2">
-          <div className="flex items-center justify-between">
-            <CardTitle className="text-sm font-medium">
-              <Trans>Word distribution</Trans>
-            </CardTitle>
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-7 px-2 text-xs"
+
+      <div className="flex items-center justify-between">
+        <p className="text-sm font-medium">
+          <Trans>Word distribution</Trans>
+        </p>
+        <Button variant="outline" size="sm" className="h-7 px-2 text-xs">
+          <FilterIcon size={12} className="mr-1" />
+          <Trans>Filter</Trans>
+        </Button>
+      </div>
+      <div className="flex items-center gap-2 mt-2">
+        <Checkbox
+          id="case-sensitive"
+          checked={caseSensitive}
+          onCheckedChange={(checked) => setCaseSensitive(!!checked)}
+        />
+        <Label htmlFor="case-sensitive" className="text-xs">
+          <Trans>Case sensitive</Trans>
+        </Label>
+      </div>
+
+      <Input
+        type="text"
+        placeholder={t(msg`Filter words...`)}
+        className="mb-2 h-8 text-xs"
+        value={wordFilter}
+        onChange={(e) => setWordFilter(e.target.value)}
+      />
+      <ScrollArea className="h-[200px]">
+        <div className="space-y-1">
+          {wordDistribution.slice(0, 50).map((item, index) => (
+            <div
+              key={`${item.word}-${index}`}
+              className="flex justify-between items-center py-0.5"
             >
-              <FilterIcon size={12} className="mr-1" />
-              <Trans>Filter</Trans>
-            </Button>
-          </div>
-          <div className="flex items-center gap-2 mt-2">
-            <Checkbox
-              id="case-sensitive"
-              checked={caseSensitive}
-              onCheckedChange={(checked) => setCaseSensitive(!!checked)}
-            />
-            <Label htmlFor="case-sensitive" className="text-xs">
-              <Trans>Case sensitive</Trans>
-            </Label>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <Input
-            type="text"
-            placeholder={t(msg`Filter words...`)}
-            className="mb-2 h-8 text-xs"
-            value={wordFilter}
-            onChange={(e) => setWordFilter(e.target.value)}
-          />
-          <ScrollArea className="h-[200px]">
-            <div className="space-y-1">
-              {wordDistribution.slice(0, 50).map((item, index) => (
-                <div
-                  key={`${item.word}-${index}`}
-                  className="flex justify-between items-center py-0.5"
-                >
-                  <span className="text-sm font-mono truncate flex-1">
-                    {item.word}:
-                  </span>
-                  <span className="text-sm font-mono ml-2">{item.count}</span>
-                </div>
-              ))}
+              <span className="text-sm font-mono truncate flex-1">
+                {item.word}:
+              </span>
+              <span className="text-sm font-mono ml-2">{item.count}</span>
             </div>
-          </ScrollArea>
-        </CardContent>
-      </Card>
+          ))}
+        </div>
+      </ScrollArea>
     </div>
   );
 
