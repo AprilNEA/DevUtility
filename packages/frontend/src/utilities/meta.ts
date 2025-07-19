@@ -34,6 +34,7 @@ import { lazy } from "react";
 import type { RouteComponentProps } from "wouter";
 import FIDOPasskeyMarkA from "@/assets/fido-passkey-mark-a";
 import NumberCasePage from "./converter/number-case";
+import StringInspectorPage from "./converter/string-inspector";
 import Fido2Page from "./cryptography/fido/fido2";
 import IpPage from "./network/ip";
 
@@ -154,6 +155,12 @@ const utilities: UtilityMeta[] = [
         icon: HashIcon,
         title: msg`Number Base Converter`,
         page: NumberCaseConverterPage,
+      },
+      {
+        key: "string-inspector",
+        icon: FileTextIcon,
+        title: msg`String Inspector`,
+        page: StringInspectorPage,
       },
     ],
   },
