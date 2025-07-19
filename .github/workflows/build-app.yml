@@ -120,8 +120,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - uses: orhun/git-cliff-action@v3
+        with:
+          fetch-depth: 0
+          
+      - uses: orhun/git-cliff-action@v4
         id: git-cliff
         with:
           args: --latest --strip header
