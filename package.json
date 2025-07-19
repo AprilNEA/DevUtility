@@ -1,12 +1,13 @@
 {
   "name": "dev-utility",
   "private": true,
-  "version": "0.1.9",
+  "version": "1.0.0-alpha.2",
   "type": "module",
   "scripts": {
     "tauri": "tauri",
     "dev": "pnpm tauri dev",
-    "web": "pnpm --filter @dev-utility/frontend dev:wasm"
+    "web": "pnpm --filter @dev-utility/frontend dev:wasm",
+    "bump-version": "pnpm tsx scripts/bump-version.ts"
   },
   "dependencies": {
     "react": "^19.1.0",

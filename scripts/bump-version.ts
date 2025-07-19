@@ -47,29 +47,132 @@ const files = [
   },
 ];
 
-function bumpVersion(versionType: "patch" | "minor" | "major" = "patch") {
+type VersionType = "patch" | "minor" | "major" | "alpha" | "beta" | "rc";
+
+interface ParsedVersion {
+  major: number;
+  minor: number;
+  patch: number;
+  prerelease?: {
+    type: "alpha" | "beta" | "rc";
+    version: number;
+  };
+}
+
+function parseVersion(version: string): ParsedVersion {
+  const match = version.match(/^(\d+)\.(\d+)\.(\d+)(?:-(alpha|beta|rc)\.(\d+))?$/);
+  if (!match) {
+    throw new Error(`Invalid version format: ${version}`);
+  }
+
+  const [, major, minor, patch, prereleaseType, prereleaseVersion] = match;
+  const result: ParsedVersion = {
+    major: parseInt(major),
+    minor: parseInt(minor),
+    patch: parseInt(patch),
+  };
+
+  if (prereleaseType && prereleaseVersion) {
+    result.prerelease = {
+      type: prereleaseType as "alpha" | "beta" | "rc",
+      version: parseInt(prereleaseVersion),
+    };
+  }
+
+  return result;
+}
+
+function formatVersion(parsed: ParsedVersion): string {
+  let version = `${parsed.major}.${parsed.minor}.${parsed.patch}`;
+  if (parsed.prerelease) {
+    version += `-${parsed.prerelease.type}.${parsed.prerelease.version}`;
+  }
+  return version;
+}
+
+function bumpVersion(versionType: VersionType = "patch") {
   // Read current version from package.json
   const packageJsonPath = "package.json";
   const packageJson = JSON.parse(readFileSync(packageJsonPath, "utf-8"));
   const currentVersion = packageJson.version;
 
   // Parse current version
-  const [major, minor, patch] = currentVersion.split(".").map(Number);
-
-  // Calculate new version
+  const parsed = parseVersion(currentVersion);
   let newVersion: string;
+
   switch (versionType) {
     case "major":
-      newVersion = `${major + 1}.0.0`;
+      parsed.major += 1;
+      parsed.minor = 0;
+      parsed.patch = 0;
+      parsed.prerelease = undefined;
       break;
+    
     case "minor":
-      newVersion = `${major}.${minor + 1}.0`;
+      parsed.minor += 1;
+      parsed.patch = 0;
+      parsed.prerelease = undefined;
       break;
-    default:
-      newVersion = `${major}.${minor}.${patch + 1}`;
+    
+    case "patch":
+      if (parsed.prerelease) {
+        // If current version is a prerelease, patch removes the prerelease tag
+        parsed.prerelease = undefined;
+      } else {
+        parsed.patch += 1;
+      }
+      break;
+    
+    case "alpha":
+      if (parsed.prerelease?.type === "alpha") {
+        // Increment alpha version
+        parsed.prerelease.version += 1;
+      } else {
+        // Start new alpha version
+        if (!parsed.prerelease) {
+          // If stable version, increment patch for next alpha
+          parsed.patch += 1;
+        }
+        parsed.prerelease = { type: "alpha", version: 1 };
+      }
+      break;
+    
+    case "beta":
+      if (parsed.prerelease?.type === "beta") {
+        // Increment beta version
+        parsed.prerelease.version += 1;
+      } else if (parsed.prerelease?.type === "alpha") {
+        // Promote from alpha to beta
+        parsed.prerelease = { type: "beta", version: 1 };
+      } else {
+        // Start new beta version
+        if (!parsed.prerelease) {
+          // If stable version, increment patch for next beta
+          parsed.patch += 1;
+        }
+        parsed.prerelease = { type: "beta", version: 1 };
+      }
+      break;
+    
+    case "rc":
+      if (parsed.prerelease?.type === "rc") {
+        // Increment rc version
+        parsed.prerelease.version += 1;
+      } else if (parsed.prerelease?.type === "alpha" || parsed.prerelease?.type === "beta") {
+        // Promote from alpha/beta to rc
+        parsed.prerelease = { type: "rc", version: 1 };
+      } else {
+        // Start new rc version
+        if (!parsed.prerelease) {
+          // If stable version, increment patch for next rc
+          parsed.patch += 1;
+        }
+        parsed.prerelease = { type: "rc", version: 1 };
+      }
       break;
   }
 
+  newVersion = formatVersion(parsed);
   console.log(`Bumping version from ${currentVersion} to ${newVersion}`);
 
   // Update all files
@@ -88,5 +191,19 @@ function bumpVersion(versionType: "patch" | "minor" | "major" = "patch") {
 }
 
 // Get version type from command line arguments
-const versionType = process.argv[2] as "patch" | "minor" | "major";
+const versionType = process.argv[2] as VersionType;
+const validTypes: VersionType[] = ["patch", "minor", "major", "alpha", "beta", "rc"];
+
+if (!versionType || !validTypes.includes(versionType)) {
+  console.error(`Usage: npm run bump-version <${validTypes.join("|")}>`);
+  console.error("\nExamples:");
+  console.error("  npm run bump-version patch   # 1.0.0 -> 1.0.1");
+  console.error("  npm run bump-version minor   # 1.0.0 -> 1.1.0");
+  console.error("  npm run bump-version major   # 1.0.0 -> 2.0.0");
+  console.error("  npm run bump-version alpha   # 1.0.0 -> 1.0.1-alpha.1");
+  console.error("  npm run bump-version beta    # 1.0.1-alpha.1 -> 1.0.1-beta.1");
+  console.error("  npm run bump-version rc      # 1.0.1-beta.1 -> 1.0.1-rc.1");
+  process.exit(1);
+}
+
 bumpVersion(versionType);
