@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: devutility\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-06-30 12:45\n"
+"PO-Revision-Date: 2025-07-19 04:52\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -19,8 +19,7 @@ msgstr ""
 "X-Crowdin-File-ID: 34\n"
 
 #: src/utilities/generators/hash.tsx:73
-msgid ""
-"- Enter Your Text\n"
+msgid "- Enter Your Text\n"
 "- Drag/Drop Files\n"
 "- Right Click • Load from File...\n"
 "- ⌘ + F to Search\n"
@@ -503,7 +502,7 @@ msgstr "签发者，例如您的服务名称 ……"
 
 #: src/utilities/meta.ts:105
 #~ msgid "JS Beautify/Minify"
-#~ msgstr "JS 美化/压缩"
+#~ msgstr "JS Beautify/Minify"
 
 #: src/utilities/meta.ts:94
 msgid "JSON Format/Validate"
@@ -892,3 +891,4 @@ msgstr ""
 #: src/utilities/cryptography/oath/totp.tsx:224
 msgid "You must verify that the algorithm you want to use is supported by the application your clients might be using."
 msgstr ""
+
