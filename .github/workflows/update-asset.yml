@@ -1,8 +1,9 @@
-name: Upload Release Assets
+name: Upload Assets
 
 on:
   release:
-    types: [published]
+    types: [released]
+  # Only for testing or missing release
   workflow_dispatch:
     inputs:
       tag:
@@ -22,7 +23,9 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Download all assets from release
         env:
