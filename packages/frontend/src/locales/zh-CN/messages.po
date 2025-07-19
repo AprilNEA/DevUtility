@@ -35,6 +35,10 @@ msgstr "💡 服务中最常用的参数<0>包括30秒的验证间隔</0>、<1>S
 msgid "AAGUID"
 msgstr ""
 
+#: src/pages/settings.tsx:399
+msgid "About"
+msgstr "关于"
+
 #: src/utilities/cryptography/fido/fido2.tsx:860
 msgid "About FIDO2"
 msgstr ""
@@ -69,6 +73,10 @@ msgstr "算法："
 #: src/utilities/cryptography/fido/fido2.tsx:810
 msgid "Allow storing credentials on device"
 msgstr ""
+
+#: src/pages/settings.tsx:206
+msgid "Appearance"
+msgstr "外观"
 
 #: src/utilities/cryptography/fido/fido2.tsx:369
 msgid "Attestation"
@@ -154,6 +162,10 @@ msgstr "基于您的密钥"
 msgid "Broadcast Address"
 msgstr ""
 
+#: src/pages/settings.tsx:432
+msgid "Bug Reports and Feature Requests"
+msgstr "错误报告和功能请求"
+
 #: src/utilities/cryptography/oath/totp.tsx:165
 msgid "By default and to be compatible with Google Authenticator, the issuer is set in the query parameters and as the label prefix."
 msgstr "默认情况下，为了与 Google Authenticator 兼容，发行者在查询参数中设置，并作为标签前缀。"
@@ -171,6 +183,10 @@ msgstr ""
 msgid "Challenge"
 msgstr ""
 
+#: src/pages/settings.tsx:419
+msgid "Change Log"
+msgstr "更新记录"
+
 #: src/utilities/cryptography/oath/totp.tsx:883
 msgid "Check Code"
 msgstr "检查验证码"
@@ -182,6 +198,10 @@ msgstr "验证 TOTP 代码"
 #: src/utilities/cryptography/oath/totp.tsx:714
 msgid "CHECK TOTP CODE"
 msgstr "验证 TOTP 代码"
+
+#: src/pages/settings.tsx:156
+msgid "Checking for updates"
+msgstr "检查更新中"
 
 #: src/utilities/cryptography/oath/totp.tsx:714
 msgid "Checking..."
@@ -266,7 +286,7 @@ msgstr "创建密钥"
 msgid "Create TOTP Secret"
 msgstr "创建 TOTP 密钥"
 
-#: src/utilities/cryptography/oath/totp.tsx:289
+#: src/utilities/cryptography/totp.tsx:289
 msgid "CREATE TOTP SECRET"
 msgstr "创建 TOTP 密钥"
 
@@ -345,6 +365,10 @@ msgstr "验证码长度"
 msgid "Digits:"
 msgstr "验证码长度："
 
+#: src/pages/settings.tsx:235
+msgid "Display Language"
+msgstr "显示语言"
+
 #: src/utilities/cryptography/fido/fido2.tsx:326
 msgid "Display Name"
 msgstr ""
@@ -406,6 +430,10 @@ msgstr ""
 msgid "FIDO2 is a standard for passwordless authentication using public-key cryptography."
 msgstr ""
 
+#: src/pages/settings.tsx:448
+msgid "Follow DevUtility"
+msgstr "关注 DevUtility"
+
 #: src/utilities/cryptography/oath/totp.tsx:148
 msgid "For e.g the users email address. You must set label before to generate ProvisioningURI/QR code"
 msgstr "例如用户的电子邮件地址。在生成 ProvisioningURI/QR 码之前，必须先设置标签"
@@ -417,6 +445,10 @@ msgstr ""
 #: src/utilities/meta.ts:89
 msgid "Format / Validate / Minify"
 msgstr "格式化 / 验证 / 压缩"
+
+#: src/pages/settings.tsx:203
+msgid "General"
+msgstr "通用"
 
 #: src/utilities/cryptography/oath/totp.tsx:872
 msgid "Generate Code"
@@ -817,6 +849,22 @@ msgstr ""
 msgid "Unknown"
 msgstr ""
 
+#: src/pages/settings.tsx:161
+msgid "Up to date"
+msgstr "已是最新"
+
+#: src/pages/settings.tsx:147
+msgid "Update"
+msgstr "更新"
+
+#: src/pages/settings.tsx:171
+msgid "Update Now"
+msgstr "立刻更新"
+
+#: src/pages/settings.tsx:151
+msgid "Updating"
+msgstr "正在更新中"
+
 #: src/utilities/network/ip.tsx:306
 msgid "Usable Host Range"
 msgstr ""
@@ -892,3 +940,7 @@ msgstr ""
 #: src/utilities/cryptography/oath/totp.tsx:224
 msgid "You must verify that the algorithm you want to use is supported by the application your clients might be using."
 msgstr ""
+
+#: src/pages/settings.tsx:251
+msgid "Zoom"
+msgstr "缩放"

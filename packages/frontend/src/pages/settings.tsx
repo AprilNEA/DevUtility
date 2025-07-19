@@ -13,6 +13,7 @@
  * See LICENSE file for details or contact admin@aprilnea.com
  */
 
+import { Trans } from "@lingui/react/macro";
 import { relaunch } from "@tauri-apps/plugin-process";
 import { check } from "@tauri-apps/plugin-updater";
 import {
@@ -45,7 +46,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 
 interface SettingItemProps {
-  title: string;
+  title: React.ReactNode;
   description?: string;
   children: React.ReactNode;
 }
@@ -143,21 +144,21 @@ const UpdateItem = () => {
   );
 
   return (
-    <SettingItem title="更新">
+    <SettingItem title={<Trans>Update</Trans>}>
       <div className="flex items-center gap-3">
         {isUpdating ? (
           <Badge variant="secondary" className="text-xs">
-            正在更新中
+            <Trans>Updating</Trans>
             <Loader2Icon className="h-3 w-3 animate-spin" />
           </Badge>
         ) : isLoading ? (
           <Badge variant="secondary" className="text-xs">
-            检查更新中
+            <Trans>Checking for updates</Trans>
             <Loader2Icon className="h-3 w-3 animate-spin" />
           </Badge>
         ) : update === null ? (
           <Badge variant="secondary" className="text-xs">
-            已是最新
+            <Trans>Up to date</Trans>
           </Badge>
         ) : (
           <Button
@@ -167,7 +168,7 @@ const UpdateItem = () => {
               setIsUpdating(true);
             }}
           >
-            立刻更新
+            <Trans>Update Now</Trans>
           </Button>
         )}
       </div>
@@ -199,10 +200,10 @@ export default function SettingsPage() {
         {/* 通用设置 */}
         <Card>
           <CardHeader className="pb-4">
-            <CardTitle className="text-base font-medium">通用</CardTitle>
+            <CardTitle className="text-base font-medium"><Trans>General</Trans></CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
-            <SettingItem title="外观">
+            <SettingItem title={<Trans>Appearance</Trans>}>
               <div className="flex items-center gap-1 rounded-lg border p-1">
                 <Button
                   variant={settings.theme === "system" ? "secondary" : "ghost"}
@@ -231,7 +232,7 @@ export default function SettingsPage() {
               </div>
             </SettingItem>
 
-            <SettingItem title="显示语言">
+            <SettingItem title={<Trans>Display Language</Trans>}>
               <Select
                 value={settings.language}
                 onValueChange={(value) => updateSetting("language", value)}
@@ -247,7 +248,7 @@ export default function SettingsPage() {
               </Select>
             </SettingItem>
 
-            <SettingItem title="缩放">
+            <SettingItem title={<Trans>Zoom</Trans>}>
               <div className="flex items-center gap-2">
                 <Button
                   variant="outline"
@@ -395,7 +396,7 @@ export default function SettingsPage() {
         {/* 关于 */}
         <Card>
           <CardHeader className="pb-4">
-            <CardTitle className="text-base font-medium">关于</CardTitle>
+            <CardTitle className="text-base font-medium"><Trans>About</Trans></CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
             <UpdateItem />
@@ -415,7 +416,7 @@ export default function SettingsPage() {
                   className="flex items-center gap-1 hover:text-foreground transition-colors"
                 >
                   <DownloadIcon className="h-3.5 w-3.5" />
-                  更新记录
+                  <Trans>Change Log</Trans>
                 </button>
                 <button
                   type="button"
@@ -428,7 +429,7 @@ export default function SettingsPage() {
                   className="flex items-center gap-1 hover:text-foreground transition-colors"
                 >
                   <InfoIcon className="h-3.5 w-3.5" />
-                  错误报告和功能请求
+                  <Trans>Bug Reports and Feature Requests</Trans>
                 </button>
                 {/* <button
                   type="button"
@@ -444,7 +445,7 @@ export default function SettingsPage() {
 
             <div className="flex items-center justify-between text-sm text-muted-foreground">
               <div className="flex items-center gap-6">
-                <span>关注 DevUtility</span>
+                <span><Trans>Follow DevUtility</Trans></span>
                 {/* <span>隐私政策</span> */}
               </div>
               <div className="flex items-center gap-4">

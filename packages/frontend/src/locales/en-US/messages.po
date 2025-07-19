@@ -35,6 +35,10 @@ msgstr "💡 The most common parameters used by services is a <0>period of 30 se
 msgid "AAGUID"
 msgstr "AAGUID"
 
+#: src/pages/settings.tsx:399
+msgid "About"
+msgstr "About"
+
 #: src/utilities/cryptography/fido/fido2.tsx:860
 msgid "About FIDO2"
 msgstr "About FIDO2"
@@ -69,6 +73,10 @@ msgstr "Algorithm:"
 #: src/utilities/cryptography/fido/fido2.tsx:810
 msgid "Allow storing credentials on device"
 msgstr "Allow storing credentials on device"
+
+#: src/pages/settings.tsx:206
+msgid "Appearance"
+msgstr "Appearance"
 
 #: src/utilities/cryptography/fido/fido2.tsx:369
 msgid "Attestation"
@@ -154,6 +162,10 @@ msgstr "Based on your secret"
 msgid "Broadcast Address"
 msgstr "Broadcast Address"
 
+#: src/pages/settings.tsx:432
+msgid "Bug Reports and Feature Requests"
+msgstr "Bug Reports and Feature Requests"
+
 #: src/utilities/cryptography/oath/totp.tsx:165
 msgid "By default and to be compatible with Google Authenticator, the issuer is set in the query parameters and as the label prefix."
 msgstr "By default and to be compatible with Google Authenticator, the issuer is set in the query parameters and as the label prefix."
@@ -171,6 +183,10 @@ msgstr "Calculation Results"
 msgid "Challenge"
 msgstr "Challenge"
 
+#: src/pages/settings.tsx:419
+msgid "Change Log"
+msgstr "Change Log"
+
 #: src/utilities/cryptography/oath/totp.tsx:883
 msgid "Check Code"
 msgstr "Check Code"
@@ -182,6 +198,10 @@ msgstr "Check TOTP Code"
 #: src/utilities/cryptography/oath/totp.tsx:714
 msgid "CHECK TOTP CODE"
 msgstr "CHECK TOTP CODE"
+
+#: src/pages/settings.tsx:156
+msgid "Checking for updates"
+msgstr "Checking for updates"
 
 #: src/utilities/cryptography/oath/totp.tsx:714
 msgid "Checking..."
@@ -345,6 +365,10 @@ msgstr "Digits"
 msgid "Digits:"
 msgstr "Digits:"
 
+#: src/pages/settings.tsx:235
+msgid "Display Language"
+msgstr "Display Language"
+
 #: src/utilities/cryptography/fido/fido2.tsx:326
 msgid "Display Name"
 msgstr "Display Name"
@@ -406,6 +430,10 @@ msgstr "FIDO2 Authenticator"
 msgid "FIDO2 is a standard for passwordless authentication using public-key cryptography."
 msgstr "FIDO2 is a standard for passwordless authentication using public-key cryptography."
 
+#: src/pages/settings.tsx:448
+msgid "Follow DevUtility"
+msgstr "Follow DevUtility"
+
 #: src/utilities/cryptography/oath/totp.tsx:148
 msgid "For e.g the users email address. You must set label before to generate ProvisioningURI/QR code"
 msgstr "For e.g the users email address. You must set label before to generate ProvisioningURI/QR code"
@@ -417,6 +445,10 @@ msgstr "For subnetting and CIDR conversion. Enter data on the left, view results
 #: src/utilities/meta.ts:89
 msgid "Format / Validate / Minify"
 msgstr "Format / Validate / Minify"
+
+#: src/pages/settings.tsx:203
+msgid "General"
+msgstr "General"
 
 #: src/utilities/cryptography/oath/totp.tsx:872
 msgid "Generate Code"
@@ -817,6 +849,22 @@ msgstr "TOTP QR Code"
 msgid "Unknown"
 msgstr "Unknown"
 
+#: src/pages/settings.tsx:161
+msgid "Up to date"
+msgstr "Up to date"
+
+#: src/pages/settings.tsx:147
+msgid "Update"
+msgstr "Update"
+
+#: src/pages/settings.tsx:171
+msgid "Update Now"
+msgstr "Update Now"
+
+#: src/pages/settings.tsx:151
+msgid "Updating"
+msgstr "Updating"
+
 #: src/utilities/network/ip.tsx:306
 msgid "Usable Host Range"
 msgstr "Usable Host Range"
@@ -892,3 +940,7 @@ msgstr "windows"
 #: src/utilities/cryptography/oath/totp.tsx:224
 msgid "You must verify that the algorithm you want to use is supported by the application your clients might be using."
 msgstr "You must verify that the algorithm you want to use is supported by the application your clients might be using."
+
+#: src/pages/settings.tsx:251
+msgid "Zoom"
+msgstr "Zoom"
