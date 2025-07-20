@@ -32,17 +32,15 @@ const files = [
     },
   },
   {
-    path: "dev-utility-workers/Cargo.toml",
+    path: "dev-utility-tauri/Cargo.toml",
     updateVersion: (content: string, newVersion: string) => {
       return content.replace(/^version = ".*"$/m, `version = "${newVersion}"`);
     },
   },
   {
-    path: "dev-utility-tauri/tauri.conf.json",
+    path: "dev-utility-workers/Cargo.toml",
     updateVersion: (content: string, newVersion: string) => {
-      const config = JSON.parse(content);
-      config.version = newVersion;
-      return JSON.stringify(config, null, 2);
+      return content.replace(/^version = ".*"$/m, `version = "${newVersion}"`);
     },
   },
 ];
@@ -60,7 +58,9 @@ interface ParsedVersion {
 }
 
 function parseVersion(version: string): ParsedVersion {
-  const match = version.match(/^(\d+)\.(\d+)\.(\d+)(?:-(alpha|beta|rc)\.(\d+))?$/);
+  const match = version.match(
+    /^(\d+)\.(\d+)\.(\d+)(?:-(alpha|beta|rc)\.(\d+))?$/
+  );
   if (!match) {
     throw new Error(`Invalid version format: ${version}`);
   }
@@ -107,13 +107,13 @@ function bumpVersion(versionType: VersionType = "patch") {
       parsed.patch = 0;
       parsed.prerelease = undefined;
       break;
-    
+
     case "minor":
       parsed.minor += 1;
       parsed.patch = 0;
       parsed.prerelease = undefined;
       break;
-    
+
     case "patch":
       if (parsed.prerelease) {
         // If current version is a prerelease, patch removes the prerelease tag
@@ -122,7 +122,7 @@ function bumpVersion(versionType: VersionType = "patch") {
         parsed.patch += 1;
       }
       break;
-    
+
     case "alpha":
       if (parsed.prerelease?.type === "alpha") {
         // Increment alpha version
@@ -136,7 +136,7 @@ function bumpVersion(versionType: VersionType = "patch") {
         parsed.prerelease = { type: "alpha", version: 1 };
       }
       break;
-    
+
     case "beta":
       if (parsed.prerelease?.type === "beta") {
         // Increment beta version
@@ -153,12 +153,15 @@ function bumpVersion(versionType: VersionType = "patch") {
         parsed.prerelease = { type: "beta", version: 1 };
       }
       break;
-    
+
     case "rc":
       if (parsed.prerelease?.type === "rc") {
         // Increment rc version
         parsed.prerelease.version += 1;
-      } else if (parsed.prerelease?.type === "alpha" || parsed.prerelease?.type === "beta") {
+      } else if (
+        parsed.prerelease?.type === "alpha" ||
+        parsed.prerelease?.type === "beta"
+      ) {
         // Promote from alpha/beta to rc
         parsed.prerelease = { type: "rc", version: 1 };
       } else {
@@ -192,7 +195,14 @@ function bumpVersion(versionType: VersionType = "patch") {
 
 // Get version type from command line arguments
 const versionType = process.argv[2] as VersionType;
-const validTypes: VersionType[] = ["patch", "minor", "major", "alpha", "beta", "rc"];
+const validTypes: VersionType[] = [
+  "patch",
+  "minor",
+  "major",
+  "alpha",
+  "beta",
+  "rc",
+];
 
 if (!versionType || !validTypes.includes(versionType)) {
   console.error(`Usage: npm run bump-version <${validTypes.join("|")}>`);
@@ -201,7 +211,9 @@ if (!versionType || !validTypes.includes(versionType)) {
   console.error("  npm run bump-version minor   # 1.0.0 -> 1.1.0");
   console.error("  npm run bump-version major   # 1.0.0 -> 2.0.0");
   console.error("  npm run bump-version alpha   # 1.0.0 -> 1.0.1-alpha.1");
-  console.error("  npm run bump-version beta    # 1.0.1-alpha.1 -> 1.0.1-beta.1");
+  console.error(
+    "  npm run bump-version beta    # 1.0.1-alpha.1 -> 1.0.1-beta.1"
+  );
   console.error("  npm run bump-version rc      # 1.0.1-beta.1 -> 1.0.1-rc.1");
   process.exit(1);
 }
