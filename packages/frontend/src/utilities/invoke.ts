@@ -31,10 +31,13 @@ import type {
   TotpValidationResult,
 } from "./cryptography/oath/types";
 import {
+  type Base64Engine,
   type HashResult,
   type HidDeviceInfo,
   type IndentStyle,
   InvokeFunction,
+  type JwtAlgorithm,
+  type JwtDecodeResult,
   type RsaKeyAnalysis,
   type RsaKeyPair,
 } from "./types";
@@ -50,7 +53,12 @@ export interface UtilitiesArgs {
   [InvokeFunction.FormatCss]: { input: string };
   [InvokeFunction.GenerateHashes]: { input: string };
   [InvokeFunction.EncodeBase64]: { input: string };
-  [InvokeFunction.DecodeBase64]: { input: string };
+  [InvokeFunction.DecodeBase64]: { input: string; engine: Base64Engine };
+  [InvokeFunction.DecodeJwt]: {
+    input: string;
+    algorithm: JwtAlgorithm;
+    secret?: string;
+  };
   [InvokeFunction.GenerateRsaKey]: { bits: number };
   [InvokeFunction.AnalyzeRsaKey]: { key: string };
   [InvokeFunction.GenerateTotpSecret]: TotpGenerateSecretParams;
@@ -69,6 +77,7 @@ export interface UtilitiesReturns {
   [InvokeFunction.GenerateHashes]: HashResult;
   [InvokeFunction.EncodeBase64]: string;
   [InvokeFunction.DecodeBase64]: string;
+  [InvokeFunction.DecodeJwt]: JwtDecodeResult;
   [InvokeFunction.GenerateRsaKey]: RsaKeyPair;
   [InvokeFunction.AnalyzeRsaKey]: RsaKeyAnalysis;
   [InvokeFunction.GenerateTotpSecret]: TotpSecretResult;
