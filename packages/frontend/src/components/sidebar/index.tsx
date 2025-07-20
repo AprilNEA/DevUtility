@@ -58,7 +58,7 @@ import { SearchForm } from "./search-form";
 import { ThemeSwitcher } from "./theme-switcher";
 
 const InsetHeader: React.FC<{ title: string }> = ({ title }) => {
-  const { open } = useSidebar();
+  const { open, isMobile } = useSidebar();
 
   const setOnTop = async () => {
     await getCurrentWindow().setAlwaysOnTop(!isOnTop);
@@ -71,7 +71,9 @@ const InsetHeader: React.FC<{ title: string }> = ({ title }) => {
       data-tauri-drag-region
       className="flex h-9 shrink-0 items-center gap-2 px-4"
     >
-      <SidebarTrigger className={cn("-ml-1", !open && "ml-16")} />
+      <SidebarTrigger
+        className={cn("-ml-1", !open && "ml-16", isMobile && "ml-16")}
+      />
       <Separator
         orientation="vertical"
         className="mr-2 data-[orientation=vertical]:h-4"
@@ -91,6 +93,23 @@ const InsetHeader: React.FC<{ title: string }> = ({ title }) => {
         {isOnTop ? <PinOffIcon /> : <PinIcon />}
       </Button>
     </header>
+  );
+};
+
+const InsetContent: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  const { isMobile } = useSidebar();
+
+  return (
+    <SidebarInset
+      className={cn(
+        "bg-background rounded-lg m-2 overflow-hidden",
+        isMobile && "m-0",
+      )}
+    >
+      {children}
+    </SidebarInset>
   );
 };
 
@@ -241,12 +260,12 @@ export default function AppSidebar({
         </SidebarFooter>
         <SidebarRail />
       </Sidebar>
-      <SidebarInset className="bg-background rounded-lg m-2 overflow-hidden">
+      <InsetContent>
         <InsetHeader title={title} />
         <main className="@container/main flex-1 max-h-[calc(100vh-3rem)] px-4 pb-2 overflow-hidden">
           {children}
         </main>
-      </SidebarInset>
+      </InsetContent>
     </SidebarProvider>
   );
 }
