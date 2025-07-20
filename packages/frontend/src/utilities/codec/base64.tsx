@@ -40,7 +40,7 @@ export default function Base64CodecPage() {
       setOutput(data);
     },
     onError: (error) => {
-      setError(error.message);
+      setError(error);
     },
   });
   const decode = useUtilityInvoke(InvokeFunction.DecodeBase64, {
@@ -48,7 +48,7 @@ export default function Base64CodecPage() {
       setOutput(data);
     },
     onError: (error) => {
-      setError(error.toString());
+      setError(error);
     },
   });
 

@@ -89,7 +89,7 @@ export interface UtilitiesReturns {
 export async function utilityInvoke<T extends InvokeFunction>(
   cmd: T,
   args: UtilitiesArgs[T],
-  options?: InvokeOptions,
+  options?: InvokeOptions
 ): Promise<UtilitiesReturns[T]> {
   if (IS_TAURI) {
     return invokeCore(cmd, args, options);
@@ -106,20 +106,31 @@ export async function utilityInvoke<T extends InvokeFunction>(
   throw new Error(`Function ${cmd} not found`);
 }
 
+export type UtilityInvokeError = string;
 export function useUtilityInvoke<T extends InvokeFunction>(
   cmd: T,
   options?: SWRMutationConfiguration<
     UtilitiesReturns[T],
-    Error,
+    UtilityInvokeError,
     T,
     UtilitiesArgs[T],
     UtilitiesReturns[T]
-  >,
-): SWRMutationResponse<UtilitiesReturns[T], Error, T, UtilitiesArgs[T]> {
-  return useSWRMutation<UtilitiesReturns[T], Error, T, UtilitiesArgs[T]>(
+  >
+): SWRMutationResponse<
+  UtilitiesReturns[T],
+  UtilityInvokeError,
+  T,
+  UtilitiesArgs[T]
+> {
+  return useSWRMutation<
+    UtilitiesReturns[T],
+    UtilityInvokeError,
+    T,
+    UtilitiesArgs[T]
+  >(
     cmd,
     // @ts-expect-error
     (_, { arg }) => utilityInvoke(cmd, arg),
-    options,
+    options
   );
 }
