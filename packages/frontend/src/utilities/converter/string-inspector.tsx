@@ -19,11 +19,10 @@ import { useDebouncedValue } from "foxact/use-debounced-value";
 import { FilterIcon, ScanTextIcon } from "lucide-react";
 import { useMemo, useState } from "react";
 import TwoSectionLayout from "@/components/layout/two-section";
-import { ClearTool, LoadFileTool, PasteTool } from "@/components/tools";
+import { ClearTool, PasteTool } from "@/components/tools";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
+// import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
@@ -124,7 +123,7 @@ export default function StringInspectorPage() {
     if (wordFilter) {
       const filterLower = wordFilter.toLowerCase();
       return distribution.filter((item) =>
-        item.word.toLowerCase().includes(filterLower)
+        item.word.toLowerCase().includes(filterLower),
       );
     }
 
@@ -143,11 +142,6 @@ export default function StringInspectorPage() {
 
   const inputToolbar = (
     <>
-      <PasteTool
-        onPaste={(text) => {
-          setInput(text);
-        }}
-      />
       <Button
         variant="outline"
         size="sm"
@@ -157,6 +151,12 @@ export default function StringInspectorPage() {
         <ScanTextIcon size={14} className="mr-1.5" />
         <Trans>Sample</Trans>
       </Button>
+      <PasteTool
+        onPaste={(text) => {
+          setInput(text);
+        }}
+      />
+
       <ClearTool
         button={{
           onClick: () => {
@@ -168,140 +168,155 @@ export default function StringInspectorPage() {
   );
 
   const inputContent = (
-    <ScrollArea className="flex-1 min-h-[400px]">
-      <Textarea
-        className="h-[400px] resize-none font-mono text-sm rounded-md"
-        placeholder={t(msg`Enter or paste your text here...`)}
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        onSelect={handleTextSelect}
-        onClick={handleTextSelect}
-        onKeyUp={handleTextSelect}
-      />
-    </ScrollArea>
+    <Textarea
+      className="h-64 grow resize-none font-mono text-sm rounded-md"
+      placeholder={t(msg`Enter or paste your text here...`)}
+      value={input}
+      onChange={(e) => setInput(e.target.value)}
+      onSelect={handleTextSelect}
+      onClick={handleTextSelect}
+      onKeyUp={handleTextSelect}
+    />
   );
 
   const statsContent = (
-    <div className="space-y-2">
+    <div className="flex flex-col gap-2 flex-1">
       {/* Count Section */}
+      <div className="flex flex-col gap-1">
+        <p className="text-sm font-medium">
+          <Trans>Count</Trans>
+        </p>
 
-      <p className="text-sm font-medium">
-        <Trans>Count</Trans>
-      </p>
-
-      <div className="flex justify-between items-center">
-        <span className="text-sm text-muted-foreground">
-          <Trans>Characters</Trans>
-        </span>
-        <span className="text-sm font-mono">{stats.characters}</span>
+        <div className="flex justify-between items-center">
+          <span className="text-sm text-muted-foreground">
+            <Trans>Characters</Trans>
+          </span>
+          <span className="text-sm font-mono">{stats.characters}</span>
+        </div>
+        <div className="flex justify-between items-center">
+          <span className="text-sm text-muted-foreground">
+            <Trans>Bytes</Trans>
+          </span>
+          <span className="text-sm font-mono">{stats.bytes}</span>
+        </div>
+        <div className="flex justify-between items-center">
+          <span className="text-sm text-muted-foreground">
+            <Trans>Words</Trans>
+          </span>
+          <span className="text-sm font-mono">{stats.words}</span>
+        </div>
+        <div className="flex justify-between items-center">
+          <span className="text-sm text-muted-foreground">
+            <Trans>Lines</Trans>
+          </span>
+          <span className="text-sm font-mono">{stats.lines}</span>
+        </div>
       </div>
-      <div className="flex justify-between items-center">
-        <span className="text-sm text-muted-foreground">
-          <Trans>Bytes</Trans>
-        </span>
-        <span className="text-sm font-mono">{stats.bytes}</span>
-      </div>
-      <div className="flex justify-between items-center">
-        <span className="text-sm text-muted-foreground">
-          <Trans>Words</Trans>
-        </span>
-        <span className="text-sm font-mono">{stats.words}</span>
-      </div>
-      <div className="flex justify-between items-center">
-        <span className="text-sm text-muted-foreground">
-          <Trans>Lines</Trans>
-        </span>
-        <span className="text-sm font-mono">{stats.lines}</span>
-      </div>
+      <Separator />
 
       {/* Character Section */}
+      <div className="flex flex-col gap-1">
+        <p className="text-sm font-medium">
+          <Trans>Character</Trans>
+        </p>
 
-      <p className="text-sm font-medium">
-        <Trans>Character</Trans>
-      </p>
-
-      <div className="flex justify-between items-center">
-        <span className="text-sm text-muted-foreground">ASCII</span>
-        <span className="text-sm font-mono">
-          {stats.ascii > 0 ? stats.ascii : "-"}
-        </span>
+        <div className="flex justify-between items-center">
+          <span className="text-sm text-muted-foreground">ASCII</span>
+          <span className="text-sm font-mono">
+            {stats.ascii > 0 ? stats.ascii : "-"}
+          </span>
+        </div>
+        <div className="flex justify-between items-center">
+          <span className="text-sm text-muted-foreground">Unicode</span>
+          <span className="text-sm font-mono">
+            {stats.unicode > 0 ? stats.unicode : "-"}
+          </span>
+        </div>
       </div>
-      <div className="flex justify-between items-center">
-        <span className="text-sm text-muted-foreground">Unicode</span>
-        <span className="text-sm font-mono">
-          {stats.unicode > 0 ? stats.unicode : "-"}
-        </span>
-      </div>
+      <Separator />
 
       {/* Selection Section */}
+      <div className="flex flex-col gap-1">
+        <p className="text-sm font-medium">
+          <Trans>Selection</Trans>
+        </p>
 
-      <p className="text-sm font-medium">
-        <Trans>Selection</Trans>
-      </p>
-
-      <div className="flex justify-between items-center">
-        <span className="text-sm text-muted-foreground">
-          <Trans>Location</Trans>
-        </span>
-        <span className="text-sm font-mono">{stats.selection.location}</span>
+        <div className="flex justify-between items-center">
+          <span className="text-sm text-muted-foreground">
+            <Trans>Location</Trans>
+          </span>
+          <span className="text-sm font-mono">{stats.selection.location}</span>
+        </div>
+        <div className="flex justify-between items-center">
+          <span className="text-sm text-muted-foreground">
+            <Trans>Current line</Trans>
+          </span>
+          <span className="text-sm font-mono">
+            {stats.selection.currentLine}
+          </span>
+        </div>
+        <div className="flex justify-between items-center">
+          <span className="text-sm text-muted-foreground">
+            <Trans>Column</Trans>
+          </span>
+          <span className="text-sm font-mono">{stats.selection.column}</span>
+        </div>
       </div>
-      <div className="flex justify-between items-center">
-        <span className="text-sm text-muted-foreground">
-          <Trans>Current line</Trans>
-        </span>
-        <span className="text-sm font-mono">{stats.selection.currentLine}</span>
-      </div>
-      <div className="flex justify-between items-center">
-        <span className="text-sm text-muted-foreground">
-          <Trans>Column</Trans>
-        </span>
-        <span className="text-sm font-mono">{stats.selection.column}</span>
-      </div>
+      <Separator />
 
       {/* Word Distribution Section */}
-
-      <div className="flex items-center justify-between">
-        <p className="text-sm font-medium">
-          <Trans>Word distribution</Trans>
-        </p>
-        <Button variant="outline" size="sm" className="h-7 px-2 text-xs">
-          <FilterIcon size={12} className="mr-1" />
-          <Trans>Filter</Trans>
-        </Button>
-      </div>
-      <div className="flex items-center gap-2 mt-2">
-        <Checkbox
-          id="case-sensitive"
-          checked={caseSensitive}
-          onCheckedChange={(checked) => setCaseSensitive(!!checked)}
-        />
-        <Label htmlFor="case-sensitive" className="text-xs">
-          <Trans>Case sensitive</Trans>
-        </Label>
-      </div>
-
-      <Input
-        type="text"
-        placeholder={t(msg`Filter words...`)}
-        className="mb-2 h-8 text-xs"
-        value={wordFilter}
-        onChange={(e) => setWordFilter(e.target.value)}
-      />
-      <ScrollArea className="h-[200px]">
-        <div className="space-y-1">
-          {wordDistribution.slice(0, 50).map((item, index) => (
-            <div
-              key={`${item.word}-${index}`}
-              className="flex justify-between items-center py-0.5"
-            >
-              <span className="text-sm font-mono truncate flex-1">
-                {item.word}:
-              </span>
-              <span className="text-sm font-mono ml-2">{item.count}</span>
-            </div>
-          ))}
+      <div className="flex flex-col gap-2 grow">
+        <div className="flex overflow-visible justify-between">
+          <p className="text-sm font-medium">
+            <Trans>Word distribution</Trans>
+          </p>
+          <Button variant="ghost" size="sm" className="h-5 px-2 text-xs">
+            <FilterIcon size={12} className="mr-1" />
+            <Trans>Filter</Trans>
+          </Button>
         </div>
-      </ScrollArea>
+        <div className="flex items-center gap-2">
+          <Checkbox
+            id="case-sensitive"
+            className="size-3.5" // FIX ICON SIZE INSIDE CHECKBOX
+            checked={caseSensitive}
+            onCheckedChange={(checked) => setCaseSensitive(!!checked)}
+          />
+          <Label htmlFor="case-sensitive" className="text-xs">
+            <Trans>Case sensitive</Trans>
+          </Label>
+        </div>
+
+        {/* <Input
+          type="text"
+          placeholder={t(msg`Filter words...`)}
+          className="mb-2 h-8 text-xs"
+          value={wordFilter}
+          onChange={(e) => setWordFilter(e.target.value)}
+        /> */}
+        <ScrollArea className="h-32 grow border rounded-md">
+          <div className="p-2">
+            {wordDistribution.map((item, index) => (
+              <div
+                key={`${item.word}-${index}`}
+                className="flex justify-between items-center py-1.5 px-2 rounded-sm hover:bg-muted/50 transition-colors border-b border-border/30 last:border-b-0"
+              >
+                <span className="text-sm font-mono truncate flex-1 text-foreground/90">
+                  {item.word}:
+                </span>
+                <span className="text-sm font-mono ml-3 font-medium bg-secondary/50 px-2 py-0.5 rounded text-secondary-foreground">
+                  {item.count}
+                </span>
+              </div>
+            ))}
+            {wordDistribution.length === 0 && (
+              <div className="flex items-center justify-center py-8 text-muted-foreground">
+                <span className="text-sm">No words found</span>
+              </div>
+            )}
+          </div>
+        </ScrollArea>
+      </div>
     </div>
   );
 
