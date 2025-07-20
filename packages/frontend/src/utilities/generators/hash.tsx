@@ -67,18 +67,16 @@ export default function HashGeneratorPage() {
   );
 
   const inputContent = (
-    <ScrollArea className="flex-1 min-h-[300px]">
-      <Textarea
-        className="h-[300px] resize-none font-mono text-xs rounded-md"
-        placeholder={t(msg`- Enter Your Text
+    <Textarea
+      className="h-64 grow resize-none font-mono text-xs rounded-md"
+      placeholder={t(msg`- Enter Your Text
 - Drag/Drop Files
 - Right Click • Load from File...
 - ⌘ + F to Search
 - ⌘ + ⌥ + F to Replace`)}
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-      />
-    </ScrollArea>
+      value={input}
+      onChange={(e) => setInput(e.target.value)}
+    />
   );
 
   const outputToolbar = (
@@ -100,39 +98,37 @@ export default function HashGeneratorPage() {
   );
 
   const outputContent = (
-    <Card className="p-0 rounded-md">
-      <CardContent className="px-4 py-2 space-y-2">
-        {Object.values(HashAlgorithm).map((algo) => (
-          <div key={algo} className="flex flex-col items-start gap-0.5">
-            <Label
-              htmlFor={`hash-${algo}`}
-              className="text-sm text-muted-foreground"
+    <div className="flex flex-col gap-2">
+      {Object.values(HashAlgorithm).map((algo) => (
+        <div key={algo} className="flex flex-col items-start gap-1">
+          <Label
+            htmlFor={`hash-${algo}`}
+            className="text-sm text-muted-foreground"
+          >
+            {algo}
+          </Label>
+          <div className="w-full flex flex-row gap-2 items-center">
+            <Input
+              id={`hash-${algo}`}
+              className="flex-1"
+              value={getResult(algo)}
+              readOnly
+              placeholder=""
+            />
+            <Button
+              size="icon"
+              variant="ghost"
+              type="button"
+              onClick={() => {
+                copyToClipboard(getResult(algo));
+              }}
             >
-              {algo}:
-            </Label>
-            <div className="w-full flex flex-row gap-2 items-center">
-              <Input
-                id={`hash-${algo}`}
-                className="flex-1 text-xs px-2 py-0.5 h-7"
-                value={getResult(algo)}
-                readOnly
-                placeholder=""
-              />
-              <Button
-                size="icon"
-                variant="ghost"
-                type="button"
-                onClick={() => {
-                  copyToClipboard(getResult(algo));
-                }}
-              >
-                <CopyIcon />
-              </Button>
-            </div>
+              <CopyIcon />
+            </Button>
           </div>
-        ))}
-      </CardContent>
-    </Card>
+        </div>
+      ))}
+    </div>
   );
 
   return (
