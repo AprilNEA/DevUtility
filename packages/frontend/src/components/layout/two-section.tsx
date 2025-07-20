@@ -91,19 +91,21 @@ const TwoSectionLayout = ({
             classNames?.secondSection,
           )}
         >
-          <div
-            className={cn(
-              "flex items-center justify-between gap-2 mb-2",
-              classNames?.secondSectionToolbar,
-            )}
-          >
-            {secondLabel && (
-              <Label className="text-sm font-medium text-foreground/80">
-                {t(secondLabel)}
-              </Label>
-            )}
-            <div className="flex items-center gap-1">{secondToolbar}</div>
-          </div>
+          {secondToolbar && (
+            <div
+              className={cn(
+                "flex items-center justify-between gap-2 mb-2",
+                classNames?.secondSectionToolbar,
+              )}
+            >
+              {secondLabel && (
+                <Label className="text-sm font-medium text-foreground/80">
+                  {t(secondLabel)}
+                </Label>
+              )}
+              <div className="flex items-center gap-1">{secondToolbar}</div>
+            </div>
+          )}
           {secondContent}
         </div>
       </div>
