@@ -23,6 +23,7 @@ getrandom = { version = "0.3", features = ["wasm_js"] }
 
 # Codec
 base64 = "0.22.1"
+jsonwebtoken = "9"
 
 # Cryptography
 rsa = "0.9.8"

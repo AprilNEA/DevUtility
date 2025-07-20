@@ -23,6 +23,7 @@ export enum InvokeFunction {
   FormatCss = "format_css",
   EncodeBase64 = "encode_base64",
   DecodeBase64 = "decode_base64",
+  DecodeJwt = "decode_jwt",
   GenerateRsaKey = "generate_rsa_key",
   AnalyzeRsaKey = "analyze_rsa_key",
   // TOTP Functions
@@ -31,6 +32,10 @@ export enum InvokeFunction {
   ValidateTotpCode = "validate_totp_code",
   // Hardware Functions
   ListHidDevices = "list_hid_devices",
+}
+export enum Base64Engine {
+  Standard = "standard",
+  UrlSafe = "url_safe",
 }
 
 export enum HashAlgorithm {
@@ -147,3 +152,25 @@ export type HidDeviceInfo = {
   usagePage: number;
   usage: number;
 };
+
+export type JwtDecodeResult = {
+  header: string;
+  payload: string;
+  signature: string;
+  verified: "invalid" | "valid" | "unverified";
+};
+
+export enum JwtAlgorithm {
+  HS256 = "HS256",
+  // HS384 = "HS384",
+  // HS512 = "HS512",
+  // RS256 = "RS256",
+  // RS384 = "RS384",
+  // RS512 = "RS512",
+  // ES256 = "ES256",
+  // ES384 = "ES384",
+  // ES512 = "ES512",
+  // PS256 = "PS256",
+  // PS384 = "PS384",
+  // PS512 = "PS512",
+}

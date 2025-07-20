@@ -27,7 +27,7 @@ import {
 } from "@/components/tools";
 import { Button } from "@/components/ui/button";
 import { useUtilityInvoke } from "../invoke";
-import { InvokeFunction } from "../types";
+import { Base64Engine, InvokeFunction } from "../types";
 
 export default function Base64CodecPage() {
   const [mode, setMode] = useState<CodecMode>(CodecMode.Encode);
@@ -56,7 +56,7 @@ export default function Base64CodecPage() {
     (input: string, mode: CodecMode) => {
       setError("");
       if (mode === CodecMode.Decode) {
-        decode.trigger({ input });
+        decode.trigger({ input, engine: Base64Engine.Standard });
       } else {
         encode.trigger({ input });
       }
