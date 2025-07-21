@@ -83,7 +83,7 @@ const UpdateItem = () => {
           contentLength?: number;
         },
         Error
-      >
+      >,
     ) => {
       next(null, {
         status: "pending",
@@ -100,7 +100,7 @@ const UpdateItem = () => {
               }));
             }
             console.log(
-              `started downloading ${event.data.contentLength} bytes`
+              `started downloading ${event.data.contentLength} bytes`,
             );
             break;
           }
@@ -137,7 +137,7 @@ const UpdateItem = () => {
       fallbackData: {
         status: "pending",
       },
-    }
+    },
   );
 
   return (
@@ -411,7 +411,7 @@ export default function SettingsPage() {
                   onClick={() => {
                     window.open(
                       "https://github.com/aprilnea/devutility/releases",
-                      "_blank"
+                      "_blank",
                     );
                   }}
                   className="flex items-center gap-1 hover:text-foreground transition-colors"
@@ -424,7 +424,7 @@ export default function SettingsPage() {
                   onClick={() => {
                     window.open(
                       "https://github.com/aprilnea/devutility/issues",
-                      "_blank"
+                      "_blank",
                     );
                   }}
                   className="flex items-center gap-1 hover:text-foreground transition-colors"

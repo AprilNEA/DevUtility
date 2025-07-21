@@ -59,7 +59,7 @@ interface ParsedVersion {
 
 function parseVersion(version: string): ParsedVersion {
   const match = version.match(
-    /^(\d+)\.(\d+)\.(\d+)(?:-(alpha|beta|rc)\.(\d+))?$/
+    /^(\d+)\.(\d+)\.(\d+)(?:-(alpha|beta|rc)\.(\d+))?$/,
   );
   if (!match) {
     throw new Error(`Invalid version format: ${version}`);
@@ -212,7 +212,7 @@ if (!versionType || !validTypes.includes(versionType)) {
   console.error("  npm run bump-version major   # 1.0.0 -> 2.0.0");
   console.error("  npm run bump-version alpha   # 1.0.0 -> 1.0.1-alpha.1");
   console.error(
-    "  npm run bump-version beta    # 1.0.1-alpha.1 -> 1.0.1-beta.1"
+    "  npm run bump-version beta    # 1.0.1-alpha.1 -> 1.0.1-beta.1",
   );
   console.error("  npm run bump-version rc      # 1.0.1-beta.1 -> 1.0.1-rc.1");
   process.exit(1);

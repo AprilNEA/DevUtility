@@ -175,7 +175,7 @@ export default function UnixTimePage() {
         const parts = debouncedInput
           .toLowerCase()
           .match(
-            /(\d+)\s*(second|minute|hour|day|week|month|year)s?\s*(ago|from now)?/
+            /(\d+)\s*(second|minute|hour|day|week|month|year)s?\s*(ago|from now)?/,
           );
         if (!parts) return null;
 
@@ -231,7 +231,7 @@ export default function UnixTimePage() {
       // Calculate day of year
       const start = new Date(date.getFullYear(), 0, 0);
       const dayOfYear = Math.floor(
-        (date.getTime() - start.getTime()) / (24 * 60 * 60 * 1000)
+        (date.getTime() - start.getTime()) / (24 * 60 * 60 * 1000),
       );
 
       // Calculate week of year
@@ -240,7 +240,7 @@ export default function UnixTimePage() {
         ((date.getTime() - firstDay.getTime()) / 86400000 +
           firstDay.getDay() +
           1) /
-          7
+          7,
       );
 
       // Check if leap year
@@ -304,7 +304,7 @@ export default function UnixTimePage() {
     setInput(
       inputFormat === "milliseconds"
         ? now.toString()
-        : Math.floor(now / 1000).toString()
+        : Math.floor(now / 1000).toString(),
     );
   };
 
