@@ -60,101 +60,41 @@ interface TimeData {
   };
 }
 
-interface Timezone {
-  id: string;
-  name: string;
-  offset: string;
-  time: string;
-}
-
-// Get all available timezones
-const getAllTimezones = () => {
-  const timezones: string[] = [];
-  const regions = [
-    "Africa",
-    "America",
-    "Antarctica",
-    "Arctic",
-    "Asia",
-    "Atlantic",
-    "Australia",
-    "Europe",
-    "Indian",
-    "Pacific",
-  ];
-
-  // Common timezone identifiers
-  const commonZones = ["UTC", "GMT"];
-
-  timezones.push(...commonZones);
-
-  // Generate timezone list based on common patterns
-  regions.forEach((region) => {
-    // Add some common cities for each region
-    const cities = {
-      Africa: [
-        "Cairo",
-        "Lagos",
-        "Nairobi",
-        "Johannesburg",
-        "Algiers",
-        "Accra",
-        "Addis_Ababa",
-        "Casablanca",
-      ],
-      America: [
-        "New_York",
-        "Chicago",
-        "Denver",
-        "Los_Angeles",
-        "Toronto",
-        "Mexico_City",
-        "Sao_Paulo",
-        "Buenos_Aires",
-      ],
-      Asia: [
-        "Shanghai",
-        "Tokyo",
-        "Hong_Kong",
-        "Singapore",
-        "Dubai",
-        "Kolkata",
-        "Bangkok",
-        "Seoul",
-      ],
-      Europe: [
-        "London",
-        "Paris",
-        "Berlin",
-        "Madrid",
-        "Rome",
-        "Moscow",
-        "Istanbul",
-        "Athens",
-      ],
-      Australia: ["Sydney", "Melbourne", "Perth", "Brisbane"],
-      Pacific: ["Auckland", "Fiji", "Guam", "Honolulu"],
-      Atlantic: ["Azores", "Bermuda", "Canary", "Cape_Verde"],
-      Indian: ["Maldives", "Mauritius", "Reunion"],
-      Antarctica: ["Casey", "Davis", "Mawson"],
-      Arctic: ["Longyearbyen"],
-    };
-
-    const cityList = cities[region as keyof typeof cities] || [];
-    cityList.forEach((city) => {
-      timezones.push(`${region}/${city}`);
-    });
-  });
-
-  return timezones.sort();
+const OutputRow: React.FC<{
+  label: string;
+  value: string | number | boolean;
+  className?: string;
+}> = ({ label, value, className }) => {
+  const { t } = useLingui();
+  return (
+    <div className="flex items-center justify-between gap-2">
+      <span className="text-sm text-muted-foreground">{label}:</span>
+      <div className="flex items-center gap-1">
+        <span className={cn("text-sm font-mono", className)}>
+          {typeof value === "boolean"
+            ? value
+              ? t(msg`Yes`)
+              : t(msg`No`)
+            : value || "-"}
+        </span>
+        <Button
+          variant="ghost"
+          size="sm"
+          className="h-7 w-7 p-0"
+          onClick={() => copyToClipboard(value.toString())}
+          disabled={!value}
+        >
+          <CopyIcon className="h-3.5 w-3.5" />
+        </Button>
+      </div>
+    </div>
+  );
 };
 
 export default function UnixTimePage() {
   const { t } = useLingui();
   const [input, setInput] = useState("");
   const [inputFormat, setInputFormat] = useState<TimeFormat>("seconds");
-  const [selectedTimezones, setSelectedTimezones] = useState<string[]>([]);
-  const [timezoneToAdd, setTimezoneToAdd] = useState("");
 
   const debouncedInput = useDebouncedValue(input, 300, false);
 
@@ -168,7 +108,7 @@ export default function UnixTimePage() {
       // Parse input based on format
       if (inputFormat === "iso8601") {
         unix = new Date(debouncedInput).getTime();
-        if (isNaN(unix)) return null;
+        if (Number.isNaN(unix)) return null;
       } else if (inputFormat === "relative") {
         // Parse relative time like "2 hours ago", "in 3 days"
         const now = Date.now();
@@ -196,13 +136,14 @@ export default function UnixTimePage() {
         unix = now + value * multipliers[unit] * direction;
       } else {
         // Handle mathematical expressions
+        // biome-ignore lint/security/noGlobalEval: TOBEFIX
         const evaluated = eval(debouncedInput);
         unix = inputFormat === "milliseconds" ? evaluated : evaluated * 1000;
-        if (isNaN(unix)) return null;
+        if (Number.isNaN(unix)) return null;
       }
 
       const date = new Date(unix);
-      if (isNaN(date.getTime())) return null;
+      if (Number.isNaN(date.getTime())) return null;
 
       // Calculate relative time
       const now = Date.now();
@@ -262,42 +203,10 @@ export default function UnixTimePage() {
           full: date.toString(),
         },
       };
-    } catch (error) {
+    } catch {
       return null;
     }
   }, [debouncedInput, inputFormat, t])();
-
-  // Calculate timezone data
-  const timezoneData: Timezone[] = selectedTimezones.map((tz) => {
-    if (!timeData) return { id: tz, name: tz, offset: "", time: "" };
-
-    try {
-      const date = new Date(timeData.unix * 1000);
-      const formatter = new Intl.DateTimeFormat("en-US", {
-        timeZone: tz,
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: false,
-        timeZoneName: "short",
-      });
-
-      const parts = formatter.formatToParts(date);
-      const offset = parts.find((p) => p.type === "timeZoneName")?.value || "";
-
-      return {
-        id: tz,
-        name: tz.split("/").pop()?.replace(/_/g, " ") || tz,
-        offset,
-        time: formatter.format(date).replace(/,/g, ""),
-      };
-    } catch {
-      return { id: tz, name: tz, offset: "", time: "" };
-    }
-  });
 
   const handleNow = () => {
     const now = Date.now();
@@ -317,273 +226,139 @@ export default function UnixTimePage() {
     setInput("");
   };
 
-  const handleAddTimezone = () => {
-    if (timezoneToAdd && !selectedTimezones.includes(timezoneToAdd)) {
-      setSelectedTimezones([...selectedTimezones, timezoneToAdd]);
-      setTimezoneToAdd("");
-    }
-  };
-
-  const handleRemoveTimezone = (tz: string) => {
-    setSelectedTimezones(selectedTimezones.filter((t) => t !== tz));
-  };
-
-  const OutputRow = ({
-    label,
-    value,
-    className,
-  }: {
-    label: string;
-    value: string | number | boolean;
-    className?: string;
-  }) => (
-    <div className="flex items-center justify-between gap-2">
-      <span className="text-sm text-muted-foreground">{label}:</span>
-      <div className="flex items-center gap-1">
-        <span className={cn("text-sm font-mono", className)}>
-          {typeof value === "boolean"
-            ? value
-              ? t(msg`Yes`)
-              : t(msg`No`)
-            : value || "-"}
-        </span>
-        <Button
-          variant="ghost"
-          size="sm"
-          className="h-7 w-7 p-0"
-          onClick={() => copyToClipboard(value.toString())}
-          disabled={!value}
-        >
-          <CopyIcon className="h-3.5 w-3.5" />
-        </Button>
-      </div>
-    </div>
-  );
-
-  const allTimezones = getAllTimezones();
+  // const allTimezones = getAllTimezones();
 
   return (
     <div className="flex flex-col h-full gap-4 p-4">
       {/* Input Section */}
-      <Card>
-        <CardContent className="p-4">
-          <div className="space-y-3">
-            <div className="flex items-center justify-between gap-2">
-              <Label className="text-sm font-medium">
-                <Trans>Input</Trans>:
-              </Label>
-              <div className="flex items-center gap-1">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="h-8 px-3"
-                  onClick={handleNow}
-                >
-                  <Trans>Now</Trans>
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="h-8 px-3"
-                  onClick={handlePaste}
-                >
-                  <Trans>Clipboard</Trans>
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="h-8 px-3"
-                  onClick={handleClear}
-                >
-                  <Trans>Clear</Trans>
-                </Button>
-                <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-                  <SettingsIcon className="h-4 w-4" />
-                </Button>
-              </div>
-            </div>
 
-            <div className="flex items-center gap-2">
-              <Input
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder={t(msg`Enter unix timestamp or expression...`)}
-                className="flex-1 font-mono"
-              />
-              <Select
-                value={inputFormat}
-                onValueChange={(v) => setInputFormat(v as TimeFormat)}
-              >
-                <SelectTrigger className="w-[220px]">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="seconds">
-                    <Trans>Unix time (seconds since epoch)</Trans>
-                  </SelectItem>
-                  <SelectItem value="milliseconds">
-                    <Trans>Unix time (milliseconds)</Trans>
-                  </SelectItem>
-                  <SelectItem value="iso8601">
-                    <Trans>ISO 8601 format</Trans>
-                  </SelectItem>
-                  <SelectItem value="relative">
-                    <Trans>Relative time</Trans>
-                  </SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <p className="text-xs text-muted-foreground">
-              <Trans>Tips: Mathematical operators + - * / are supported</Trans>
-            </p>
+      <div className="space-y-3">
+        <div className="flex items-center justify-between gap-2">
+          <Label className="text-sm font-medium">
+            <Trans>Input</Trans>:
+          </Label>
+          <div className="flex items-center gap-1">
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-8 px-3"
+              onClick={handleNow}
+            >
+              <Trans>Now</Trans>
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-8 px-3"
+              onClick={handlePaste}
+            >
+              <Trans>Clipboard</Trans>
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-8 px-3"
+              onClick={handleClear}
+            >
+              <Trans>Clear</Trans>
+            </Button>
+            <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+              <SettingsIcon className="h-4 w-4" />
+            </Button>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <Input
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder={t(msg`Enter unix timestamp or expression...`)}
+            className="flex-1 font-mono"
+          />
+          <Select
+            value={inputFormat}
+            onValueChange={(v) => setInputFormat(v as TimeFormat)}
+          >
+            <SelectTrigger className="w-[220px]">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="seconds">
+                <Trans>Unix time (seconds since epoch)</Trans>
+              </SelectItem>
+              <SelectItem value="milliseconds">
+                <Trans>Unix time (milliseconds)</Trans>
+              </SelectItem>
+              <SelectItem value="iso8601">
+                <Trans>ISO 8601 format</Trans>
+              </SelectItem>
+              <SelectItem value="relative">
+                <Trans>Relative time</Trans>
+              </SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        <p className="text-xs text-muted-foreground">
+          <Trans>Tips: Mathematical operators + - * / are supported</Trans>
+        </p>
+      </div>
+      <Separator />
 
       {/* Output Section */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 flex-1">
         {/* Time outputs */}
-        <div className="space-y-4">
-          <Card>
-            <CardContent className="p-4 space-y-2">
-              <OutputRow label={t(msg`Local`)} value={timeData?.local || ""} />
-              <Separator />
-              <OutputRow
-                label={t(msg`UTC (ISO 8601)`)}
-                value={timeData?.utc || ""}
-              />
-              <Separator />
-              <OutputRow
-                label={t(msg`Relative`)}
-                value={timeData?.relative || ""}
-              />
-              <Separator />
-              <OutputRow
-                label={t(msg`Unix time`)}
-                value={timeData?.unix || ""}
-              />
-            </CardContent>
-          </Card>
+        <div className="space-y-2">
+          <OutputRow label={t(msg`Local`)} value={timeData?.local || ""} />
 
-          {/* Other timezones */}
-          {selectedTimezones.length > 0 && (
-            <Card>
-              <CardContent className="p-4">
-                <Label className="text-sm font-medium mb-2 block">
-                  <Trans>Other timezones</Trans>:
-                </Label>
-                <div className="space-y-2">
-                  {timezoneData.map((tz) => (
-                    <div
-                      key={tz.id}
-                      className="flex items-center justify-between gap-2"
-                    >
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm font-medium">{tz.name}</span>
-                          <span className="text-xs text-muted-foreground">
-                            ({tz.offset})
-                          </span>
-                        </div>
-                        <span className="text-sm font-mono text-muted-foreground">
-                          {tz.time}
-                        </span>
-                      </div>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="h-7 w-7 p-0"
-                        onClick={() => handleRemoveTimezone(tz.id)}
-                      >
-                        <XIcon className="h-3.5 w-3.5" />
-                      </Button>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          )}
+          <OutputRow
+            label={t(msg`UTC (ISO 8601)`)}
+            value={timeData?.utc || ""}
+          />
+
+          <OutputRow
+            label={t(msg`Relative`)}
+            value={timeData?.relative || ""}
+          />
+
+          <OutputRow label={t(msg`Unix time`)} value={timeData?.unix || ""} />
+          <Separator />
         </div>
 
         {/* Additional info */}
-        <div className="space-y-4">
-          <Card>
-            <CardContent className="p-4 space-y-2">
-              <OutputRow
-                label={t(msg`Day of year`)}
-                value={timeData?.dayOfYear || ""}
-              />
-              <Separator />
-              <OutputRow
-                label={t(msg`Week of year`)}
-                value={timeData?.weekOfYear || ""}
-              />
-              <Separator />
-              <OutputRow
-                label={t(msg`Is leap year?`)}
-                value={timeData?.isLeapYear || false}
-              />
-            </CardContent>
-          </Card>
+        <div className="space-y-2">
+          <OutputRow
+            label={t(msg`Day of year`)}
+            value={timeData?.dayOfYear || ""}
+          />
 
-          <Card>
-            <CardContent className="p-4">
-              <Label className="text-sm font-medium mb-2 block">
-                <Trans>Other formats (local)</Trans>
-              </Label>
-              <div className="space-y-2">
-                <OutputRow
-                  label={t(msg`Date`)}
-                  value={timeData?.localFormats.date || ""}
-                />
-                <OutputRow
-                  label={t(msg`Time`)}
-                  value={timeData?.localFormats.time || ""}
-                />
-                <OutputRow
-                  label={t(msg`Full`)}
-                  value={timeData?.localFormats.full || ""}
-                />
-              </div>
-            </CardContent>
-          </Card>
+          <OutputRow
+            label={t(msg`Week of year`)}
+            value={timeData?.weekOfYear || ""}
+          />
 
-          {/* Add timezone */}
-          <Card>
-            <CardContent className="p-4">
-              <Label className="text-sm font-medium mb-2 block">
-                <Trans>Other timezones</Trans>:
-              </Label>
-              <div className="flex items-center gap-2">
-                <Select value={timezoneToAdd} onValueChange={setTimezoneToAdd}>
-                  <SelectTrigger className="flex-1">
-                    <SelectValue placeholder={t(msg`Add timezone...`)} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <ScrollArea className="h-[200px]">
-                      {allTimezones
-                        .filter((tz) => !selectedTimezones.includes(tz))
-                        .map((tz) => (
-                          <SelectItem key={tz} value={tz}>
-                            {tz}
-                          </SelectItem>
-                        ))}
-                    </ScrollArea>
-                  </SelectContent>
-                </Select>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="h-10 px-3"
-                  onClick={handleAddTimezone}
-                  disabled={!timezoneToAdd}
-                >
-                  <Trans>Add</Trans>
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
+          <OutputRow
+            label={t(msg`Is leap year?`)}
+            value={timeData?.isLeapYear || false}
+          />
+          <Separator />
+          <Label className="text-sm font-medium mb-2 block">
+            <Trans>Other formats (local)</Trans>
+          </Label>
+          <div className="space-y-2">
+            <OutputRow
+              label={t(msg`Date`)}
+              value={timeData?.localFormats.date || ""}
+            />
+            <OutputRow
+              label={t(msg`Time`)}
+              value={timeData?.localFormats.time || ""}
+            />
+            <OutputRow
+              label={t(msg`Full`)}
+              value={timeData?.localFormats.full || ""}
+            />
+          </div>
         </div>
       </div>
     </div>
