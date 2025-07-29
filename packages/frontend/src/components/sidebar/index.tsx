@@ -44,6 +44,7 @@ import {
   SidebarRail,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import { IS_TAURI } from "@/lib/tauri";
 import { cn } from "@/lib/utils";
 import utilities, { type UtilityMeta } from "@/utilities/meta";
 import { Button } from "../ui/button";
@@ -152,7 +153,10 @@ export default function AppSidebar({
   return (
     <SidebarProvider className="bg-sidebar overflow-hidden">
       <Sidebar {...props}>
-        <SidebarHeader data-tauri-drag-region className="pt-12">
+        <SidebarHeader
+          data-tauri-drag-region
+          className={IS_TAURI ? "pt-12" : ""}
+        >
           <SearchForm
             value={search}
             onChange={(e) => setSearch(e.target.value)}

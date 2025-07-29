@@ -22,6 +22,7 @@ import useSWRMutation, {
   type SWRMutationConfiguration,
   type SWRMutationResponse,
 } from "swr/mutation";
+import { IS_TAURI } from "@/lib/tauri";
 import type {
   TotpCodeResult,
   TotpGenerateCodeParams,
@@ -42,8 +43,6 @@ import {
   type RsaKeyAnalysis,
   type RsaKeyPair,
 } from "./types";
-
-export const IS_TAURI = "__TAURI__" in window;
 
 export interface UtilitiesArgs {
   [InvokeFunction.GenerateUlid]: { count: number };
