@@ -17,9 +17,6 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v4
     
-    - name: Build
-      run: cargo build --verbose
-      
     - name: Cache
       uses: actions/cache@v4
       with:
@@ -30,4 +27,4 @@ jobs:
         key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
     - name: Run tests
-      run: cargo test --verbose
+      run: cargo test
