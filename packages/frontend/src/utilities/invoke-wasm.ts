@@ -11,9 +11,15 @@ type WasmFunctions = {
 };
 const wasmFunctions: Partial<WasmFunctions> = {
   [InvokeFunction.GenerateUlid]: (args) => wasm.generate_ulid(args.count),
-  // [InvokeFunction.GenerateNanoid]: (args) => wasm.generate_nanoid(args.count),
+  [InvokeFunction.GenerateNanoid]: (args) => wasm.generate_nanoid(args.count),
+  [InvokeFunction.GenerateUuidV1]: (args) => wasm.generate_uuid_v1(args.count),
+  [InvokeFunction.GenerateUuidV3]: (args) =>
+    wasm.generate_uuid_v3(args.count, args.namespace, args.names),
   [InvokeFunction.GenerateUuidV4]: (args) => wasm.generate_uuid_v4(args.count),
+  [InvokeFunction.GenerateUuidV5]: (args) =>
+    wasm.generate_uuid_v5(args.count, args.namespace, args.names),
   [InvokeFunction.GenerateUuidV7]: (args) => wasm.generate_uuid_v7(args.count),
+  [InvokeFunction.AnalyzeUuid]: (args) => wasm.analyze_uuid(args.input),
   [InvokeFunction.FormatJson]: (args) =>
     wasm.format_json(args.input, args.style),
   [InvokeFunction.FormatCss]: (args) => wasm.format_css(args.input),
@@ -28,14 +34,14 @@ const wasmFunctions: Partial<WasmFunctions> = {
       args.digits,
       args.period,
       args.image,
-      args.add_issuer_prefix,
+      args.add_issuer_prefix
     ),
   [InvokeFunction.GenerateTotpCode]: (args) =>
     wasm.generate_totp_code(
       args.secret,
       args.algorithm,
       args.digits,
-      args.period,
+      args.period
     ),
   [InvokeFunction.ValidateTotpCode]: (args) =>
     wasm.validate_totp_code(
@@ -44,7 +50,7 @@ const wasmFunctions: Partial<WasmFunctions> = {
       args.algorithm,
       args.digits,
       args.period,
-      args.window,
+      args.window
     ),
 };
 
