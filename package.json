@@ -8,7 +8,9 @@
     "dev": "pnpm tauri dev",
     "web": "pnpm --filter @dev-utility/frontend dev:wasm",
     "format": "biome format --write",
-    "bump-version": "pnpm tsx scripts/bump-version.ts"
+    "bump-version": "pnpm tsx scripts/bump-version.ts",
+    "build-version": "pnpm tsx scripts/build-version.ts",
+    "copy-artifacts": "pnpm tsx scripts/copy-artifacts.ts"
   },
   "dependencies": {
     "react": "^19.1.0",

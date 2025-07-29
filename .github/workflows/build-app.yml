@@ -31,19 +31,6 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Set version for manual trigger
-        run: |
-          if [ -n "${{ github.event.inputs.version }}" ]; then
-            VERSION="${{ github.event.inputs.version }}"
-          else
-            # Get current version from package.json and add commit hash
-            CURRENT_VERSION=$(node -p "require('./package.json').version")
-            COMMIT_HASH=$(git rev-parse --short HEAD)
-            VERSION="${CURRENT_VERSION}-${COMMIT_HASH}"
-          fi
-          echo "CUSTOM_VERSION=$VERSION" >> $GITHUB_ENV
-          echo "Custom version set to: $VERSION"
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -68,15 +55,19 @@ jobs:
         # You can remove the one that doesn't apply to your app to speed up the workflow a bit.
 
       - name: Install Frontend Dependencies
-        run: pnpm install 
+        run: pnpm install
+        
+      - name: Set version for manual trigger
+        run: pnpm build-version 
 
       - name: Build the App (without signing)
         id: build
         uses: tauri-apps/tauri-action@v0
         with:
-          args: ${{ matrix.args }}
+          includeUpdaterJson: false
           includeDebug: true
-          
+          args: ${{ matrix.args }}
+
       - name: Upload build artifacts (macOS/Linux)
         if: matrix.platform != 'windows-latest'
         run: |
