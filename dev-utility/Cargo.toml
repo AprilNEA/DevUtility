@@ -26,7 +26,7 @@ base64 = "0.22.1"
 
 # Cryptography
 rsa = { version = "0.9.8" }
-rand = "0.8"
+rand = "0.9"
 pkcs8 = { version = "0.10", features = ["pem"] }
 pkcs1 = { version = "0.7", features = ["pem"] }
 
