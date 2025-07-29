@@ -1,12 +1,15 @@
-name: Build App
+name: Build App (Manual)
 
 on:
-  push:
-    tags:
-      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to build (leave empty to use current version with commit hash)'
+        required: false
+        type: string
 
 jobs:
-  release-app:
+  build-app:
     permissions:
       contents: write
     strategy:
@@ -27,6 +30,19 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+
+      - name: Set version for manual trigger
+        run: |
+          if [ -n "${{ github.event.inputs.version }}" ]; then
+            VERSION="${{ github.event.inputs.version }}"
+          else
+            # Get current version from package.json and add commit hash
+            CURRENT_VERSION=$(node -p "require('./package.json').version")
+            COMMIT_HASH=$(git rev-parse --short HEAD)
+            VERSION="${CURRENT_VERSION}-${COMMIT_HASH}"
+          fi
+          echo "CUSTOM_VERSION=$VERSION" >> $GITHUB_ENV
+          echo "Custom version set to: $VERSION"
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -54,81 +70,42 @@ jobs:
       - name: Install Frontend Dependencies
         run: pnpm install 
 
-      - name: Import Apple Developer Certificate
-        if: matrix.platform == 'macos-latest'
-        # Prevents keychain from locking automatically for 3600 seconds.
-        env:
-          APPLE_API_KEY_CONTENT: ${{ secrets.APPLE_API_KEY_CONTENT }}
-          APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
-          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
-          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
-        run: |
-          echo $APPLE_API_KEY_CONTENT | base64 --decode > authkey.p8  
-
-          echo $APPLE_CERTIFICATE | base64 --decode > certificate.p12
-          security create-keychain -p "$KEYCHAIN_PASSWORD" build.keychain
-          security default-keychain -s build.keychain
-          security unlock-keychain -p "$KEYCHAIN_PASSWORD" build.keychain
-          security set-keychain-settings -t 3600 -u build.keychain
-          security import certificate.p12 -k build.keychain -P "$APPLE_CERTIFICATE_PASSWORD" -T /usr/bin/codesign
-          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$KEYCHAIN_PASSWORD" build.keychain
-          security find-identity -v -p codesigning build.keychain
-
-      - name: Verify Apple Developer Certificate
-        if: matrix.platform == 'macos-latest'
-        run: |
-          CERT_INFO=$(security find-identity -v -p codesigning build.keychain | grep "Developer ID Application")
-          CERT_ID=$(echo "$CERT_INFO" | awk -F'"' '{print $2}')
-          echo "CERT_ID=$CERT_ID" >> $GITHUB_ENV
-          echo "Certificate imported."
-
-      - name: Build the App
+      - name: Build the App (without signing)
+        id: build
         uses: tauri-apps/tauri-action@v0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          APPLE_ID: ${{ secrets.APPLE_ID }}
-          APPLE_ID_PASSWORD: ${{ secrets.APPLE_ID_PASSWORD }}
-          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
-          APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
-          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
-          APPLE_SIGNING_IDENTITY: ${{ env.CERT_ID }}
-
-          APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
-          APPLE_API_ISSUER: ${{ secrets.APPLE_API_ISSUER }}
-          APPLE_API_KEY: ${{ secrets.APPLE_API_KEY }}
-          APPLE_API_KEY_PATH: authkey.p8
-
-          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
-          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
         with:
-          tagName: ${{ github.ref_name || 'v__VERSION__' }} # This only works if your workflow triggers on new tags.
-          releaseName: 'DevUtility v__VERSION__' # tauri-action replaces \_\_VERSION\_\_ with the app version.
-          releaseBody: 'See the assets to download and install this version.'
-          releaseDraft: true
-          prerelease: false
           args: ${{ matrix.args }}
-
-  update-changelog:
-    runs-on: ubuntu-latest
-
-    permissions:
-      contents: write
-
-    env:
-      RELEASE_TAG: ${{ github.ref_name }}
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+          includeDebug: true
           
-      - uses: orhun/git-cliff-action@v4
-        id: git-cliff
+      - name: Upload build artifacts (macOS/Linux)
+        if: matrix.platform != 'windows-latest'
+        run: |
+          mkdir -p artifacts
+          paths=$(echo '${{ steps.build.outputs.artifactPaths }}' | jq -c '.[]' | sed 's/"//g')
+          for fn in $paths; do
+            if [[ -f $fn ]]; then
+              echo "Copying $fn to artifacts/"
+              cp "$fn" artifacts/
+            fi
+          done
+          
+      - name: Upload build artifacts (Windows)
+        if: matrix.platform == 'windows-latest'
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path artifacts
+          $jsonString = '${{ steps.build.outputs.artifactPaths }}'
+          $filePaths = ConvertFrom-Json $jsonString
+          foreach ($path in $filePaths) {
+            if (Test-Path $path -PathType Leaf) {
+              Write-Host "Copying $path to artifacts/"
+              Copy-Item $path artifacts/
+            }
+          }
+          
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
         with:
-          args: --latest --strip header
-
-      - uses: softprops/action-gh-release@v1
-        with:
-          body: ${{ steps.git-cliff.outputs.content }}
-          tag_name: ${{ env.RELEASE_TAG }}
+          name: build-artifacts-${{ matrix.platform }}-${{ env.CUSTOM_VERSION }}
+          path: artifacts/
+          retention-days: 30
