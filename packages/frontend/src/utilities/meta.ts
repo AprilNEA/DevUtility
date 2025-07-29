@@ -34,6 +34,7 @@ import {
 import { lazy } from "react";
 import type { RouteComponentProps } from "wouter";
 import FIDOPasskeyMarkA from "@/assets/fido-passkey-mark-a";
+import UUIDIcon from "@/assets/uuid-icon";
 import JwtDecoderPage from "./codec/jwt";
 import NumberCasePage from "./converter/number-case";
 import StringInspectorPage from "./converter/string-inspector";
@@ -124,7 +125,7 @@ const utilities: UtilityMeta[] = [
     items: [
       {
         key: "id",
-        icon: HashIcon,
+        icon: UUIDIcon,
         title: msg`UUID/ULID Generate/Decode`,
         page: IdGeneratorPage,
       },
