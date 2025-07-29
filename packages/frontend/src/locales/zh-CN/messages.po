@@ -18,13 +18,25 @@ msgstr ""
 "X-Crowdin-File: /src/locales/en-US/messages.po\n"
 "X-Crowdin-File-ID: 34\n"
 
-#: src/utilities/generators/hash.tsx:73
+#: src/utilities/generators/hash.tsx:72
 msgid ""
 "- Enter Your Text\n"
 "- Drag/Drop Files\n"
 "- Right Click • Load from File...\n"
 "- ⌘ + F to Search\n"
 "- ⌘ + ⌥ + F to Replace"
+msgstr ""
+
+#: src/utilities/converter/unix-time.tsx:169
+msgid "{days} day(s) ago"
+msgstr ""
+
+#: src/utilities/converter/unix-time.tsx:166
+msgid "{hours} hour(s) ago"
+msgstr ""
+
+#: src/utilities/converter/unix-time.tsx:162
+msgid "{minutes} minute(s) ago"
 msgstr ""
 
 #: src/utilities/cryptography/oath/totp.tsx:210
@@ -55,7 +67,7 @@ msgstr ""
 msgid "Additionally add issuer as query parameter?"
 msgstr "在查询参数中添加发行者？"
 
-#: src/utilities/meta.ts:76
+#: src/utilities/meta.ts:80
 msgid "AI"
 msgstr "AI"
 
@@ -74,7 +86,7 @@ msgstr "算法："
 msgid "Allow storing credentials on device"
 msgstr ""
 
-#: src/pages/settings.tsx:206
+#: src/pages/settings.tsx:205
 msgid "Appearance"
 msgstr "外观"
 
@@ -146,7 +158,7 @@ msgstr ""
 msgid "Base 8 (Octal)"
 msgstr ""
 
-#: src/utilities/meta.ts:225
+#: src/utilities/meta.ts:234
 msgid "Base64 Encode/Decode"
 msgstr "Base64 编码/解码"
 
@@ -162,13 +174,17 @@ msgstr "基于您的密钥"
 msgid "Broadcast Address"
 msgstr ""
 
-#: src/pages/settings.tsx:432
+#: src/pages/settings.tsx:433
 msgid "Bug Reports and Feature Requests"
 msgstr "错误报告和功能请求"
 
 #: src/utilities/cryptography/oath/totp.tsx:165
 msgid "By default and to be compatible with Google Authenticator, the issuer is set in the query parameters and as the label prefix."
 msgstr "默认情况下，为了与 Google Authenticator 兼容，发行者在查询参数中设置，并作为标签前缀。"
+
+#: src/utilities/converter/string-inspector.tsx:198
+msgid "Bytes"
+msgstr ""
 
 #: src/utilities/network/ip.tsx:249
 #: src/utilities/network/ip.tsx:279
@@ -179,13 +195,25 @@ msgstr ""
 msgid "Calculation Results"
 msgstr ""
 
+#: src/utilities/converter/string-inspector.tsx:286
+msgid "Case sensitive"
+msgstr ""
+
 #: src/utilities/cryptography/fido/fido2.tsx:554
 msgid "Challenge"
 msgstr ""
 
-#: src/pages/settings.tsx:419
+#: src/pages/settings.tsx:420
 msgid "Change Log"
 msgstr "更新记录"
+
+#: src/utilities/converter/string-inspector.tsx:220
+msgid "Character"
+msgstr ""
+
+#: src/utilities/converter/string-inspector.tsx:192
+msgid "Characters"
+msgstr ""
 
 #: src/utilities/cryptography/oath/totp.tsx:883
 msgid "Check Code"
@@ -199,7 +227,7 @@ msgstr "验证 TOTP 代码"
 msgid "CHECK TOTP CODE"
 msgstr "验证 TOTP 代码"
 
-#: src/pages/settings.tsx:156
+#: src/pages/settings.tsx:153
 msgid "Checking for updates"
 msgstr "检查更新中"
 
@@ -215,18 +243,28 @@ msgstr ""
 msgid "CIDR Notation"
 msgstr ""
 
+#: src/utilities/generators/id.tsx:224
+#: src/utilities/generators/id.tsx:430
+#: src/utilities/converter/unix-time.tsx:261
 #: src/utilities/converter/number-case.tsx:221
 #: src/utilities/converter/number-case.tsx:292
 msgid "Clear"
 msgstr ""
 
+#: src/utilities/generators/id.tsx:228
 #: src/components/tools.tsx:164
 msgid "Clear Input"
 msgstr "清除输入"
 
+#: src/utilities/generators/id.tsx:194
+#: src/utilities/converter/unix-time.tsx:253
 #: src/utilities/converter/number-case.tsx:213
 #: src/utilities/converter/number-case.tsx:273
 msgid "Clipboard"
+msgstr ""
+
+#: src/utilities/generators/id.tsx:279
+msgid "Clock Sequence"
 msgstr ""
 
 #: src/utilities/cryptography/oath/totp.tsx:626
@@ -240,6 +278,10 @@ msgstr "验证码无效！"
 #: src/utilities/cryptography/oath/totp.tsx:754
 msgid "Code is Valid!"
 msgstr "验证码有效！"
+
+#: src/utilities/converter/string-inspector.tsx:260
+msgid "Column"
+msgstr ""
 
 #: src/utilities/cryptography/fido/fido2.tsx:506
 msgid "Configure FIDO2 authentication options"
@@ -261,10 +303,12 @@ msgstr "继续校验验证码"
 msgid "Continuous Mode"
 msgstr "连续模式"
 
-#: src/utilities/meta.ts:150
+#: src/utilities/meta.ts:141
 msgid "Converter"
 msgstr ""
 
+#: src/utilities/generators/id.tsx:156
+#: src/utilities/generators/id.tsx:418
 #: src/utilities/converter/number-case.tsx:239
 #: src/utilities/converter/number-case.tsx:310
 msgid "Copy"
@@ -278,6 +322,10 @@ msgstr "复制验证码"
 msgid "Copy Output"
 msgstr "复制输出"
 
+#: src/utilities/converter/string-inspector.tsx:187
+msgid "Count"
+msgstr ""
+
 #: src/utilities/cryptography/oath/totp.tsx:861
 msgid "Create Secret"
 msgstr "创建密钥"
@@ -286,7 +334,7 @@ msgstr "创建密钥"
 msgid "Create TOTP Secret"
 msgstr "创建 TOTP 密钥"
 
-#: src/utilities/cryptography/totp.tsx:289
+#: src/utilities/cryptography/oath/totp.tsx:289
 msgid "CREATE TOTP SECRET"
 msgstr "创建 TOTP 密钥"
 
@@ -319,13 +367,17 @@ msgstr ""
 msgid "Cross-platform compatibility"
 msgstr ""
 
-#: src/utilities/meta.ts:163
+#: src/utilities/meta.ts:172
 msgid "Cryptography & Security"
 msgstr "密码学"
 
-#: src/utilities/meta.ts:106
+#: src/utilities/meta.ts:110
 msgid "CSS Beautify/Minify"
 msgstr "CSS 美化/压缩"
+
+#: src/utilities/converter/string-inspector.tsx:252
+msgid "Current line"
+msgstr ""
 
 #: src/utilities/cryptography/oath/totp.tsx:491
 msgid "Current TOTP Code"
@@ -334,6 +386,14 @@ msgstr "当前 TOTP 代码"
 #: src/utilities/cryptography/oath/totp.tsx:807
 msgid "Current Window:"
 msgstr "当前窗口："
+
+#: src/utilities/converter/unix-time.tsx:348
+msgid "Date"
+msgstr ""
+
+#: src/utilities/converter/unix-time.tsx:329
+msgid "Day of year"
+msgstr ""
 
 #: src/utilities/cryptography/fido/fido2.tsx:136
 msgid "Deactivate"
@@ -365,7 +425,7 @@ msgstr "验证码长度"
 msgid "Digits:"
 msgstr "验证码长度："
 
-#: src/pages/settings.tsx:235
+#: src/pages/settings.tsx:234
 msgid "Display Language"
 msgstr "显示语言"
 
@@ -381,7 +441,7 @@ msgstr ""
 msgid "Encode"
 msgstr "编码"
 
-#: src/utilities/meta.ts:220
+#: src/utilities/meta.ts:229
 msgid "Encoder, Decoder"
 msgstr "编码器，解码器"
 
@@ -398,6 +458,10 @@ msgstr "输入生成的 TOTP（基于时间）密钥"
 msgid "Enter base {customBase} number"
 msgstr ""
 
+#: src/utilities/converter/string-inspector.tsx:173
+msgid "Enter or paste your text here..."
+msgstr ""
+
 #: src/utilities/cryptography/fido/fido2.tsx:149
 msgid "Enter PIN (4-8 digits)"
 msgstr ""
@@ -410,6 +474,23 @@ msgstr "输入在步骤 1 中生成的 base32 编码的密钥"
 msgid "Enter the credential ID from registration"
 msgstr ""
 
+#: src/utilities/converter/unix-time.tsx:273
+msgid "Enter unix timestamp or expression..."
+msgstr ""
+
+#: src/utilities/generators/id.tsx:259
+msgid "Enter UUID or trigger generation"
+msgstr ""
+
+#: src/utilities/codec/jwt.tsx:133
+msgid ""
+"Enter Your JWT Token\n"
+"Drag/Drop Files\n"
+"Right Click → Load from File...\n"
+"⌘ + F to Search\n"
+"⌘ + ⌥ + F to Replace"
+msgstr ""
+
 #: src/utilities/converter/number-case.tsx:195
 msgid "Enter your number in any of the text field. The other text fields will automatically calculated."
 msgstr ""
@@ -418,7 +499,7 @@ msgstr ""
 msgid "Export All"
 msgstr ""
 
-#: src/utilities/meta.ts:168
+#: src/utilities/meta.ts:177
 msgid "FIDO Debugger"
 msgstr ""
 
@@ -430,7 +511,11 @@ msgstr ""
 msgid "FIDO2 is a standard for passwordless authentication using public-key cryptography."
 msgstr ""
 
-#: src/pages/settings.tsx:448
+#: src/utilities/converter/string-inspector.tsx:275
+msgid "Filter"
+msgstr ""
+
+#: src/pages/settings.tsx:450
 msgid "Follow DevUtility"
 msgstr "关注 DevUtility"
 
@@ -442,17 +527,29 @@ msgstr "例如用户的电子邮件地址。在生成 ProvisioningURI/QR 码之�
 msgid "For subnetting and CIDR conversion. Enter data on the left, view results on the right."
 msgstr ""
 
-#: src/utilities/meta.ts:89
+#: src/utilities/meta.ts:93
 msgid "Format / Validate / Minify"
 msgstr "格式化 / 验证 / 压缩"
 
-#: src/pages/settings.tsx:203
+#: src/utilities/converter/unix-time.tsx:356
+msgid "Full"
+msgstr ""
+
+#: src/pages/settings.tsx:201
 msgid "General"
 msgstr "通用"
+
+#: src/utilities/generators/id.tsx:410
+msgid "Generate"
+msgstr ""
 
 #: src/utilities/cryptography/oath/totp.tsx:872
 msgid "Generate Code"
 msgstr "获取验证码"
+
+#: src/utilities/generators/id.tsx:405
+msgid "Generate new IDs"
+msgstr ""
 
 #: src/utilities/cryptography/oath/totp.tsx:394
 msgid "Generate TOTP Code"
@@ -461,6 +558,10 @@ msgstr "生成 TOTP 验证码"
 #: src/utilities/cryptography/oath/totp.tsx:480
 msgid "GENERATE TOTP CODE"
 msgstr "生成 TOTP 代码"
+
+#: src/utilities/generators/id.tsx:481
+msgid "Generated IDs will appear here"
+msgstr ""
 
 #: src/utilities/cryptography/oath/totp.tsx:299
 msgid "Generated Secret"
@@ -474,11 +575,11 @@ msgstr "生成的 TOTP 验证码用于身份验证"
 msgid "Generating..."
 msgstr "正在生成……"
 
-#: src/utilities/meta.ts:132
+#: src/utilities/meta.ts:123
 msgid "Generators"
 msgstr "生成器"
 
-#: src/utilities/meta.ts:143
+#: src/utilities/meta.ts:134
 msgid "Hash Generator"
 msgstr "哈希生成器"
 
@@ -491,7 +592,7 @@ msgstr "您创建的密钥包含多少位数字"
 msgid "How much digits should the OTP have"
 msgstr "一次性密码（OTP）应包含多少位数字"
 
-#: src/utilities/meta.ts:100
+#: src/utilities/meta.ts:104
 msgid "HTML Beautify/Minify"
 msgstr "HTML 美化/压缩"
 
@@ -503,14 +604,37 @@ msgstr "图片"
 msgid "Image URL, e.g 'https://foo.bar/otp.png ..."
 msgstr "图像 URL，例如 'https://foo.bar/otp.png ……"
 
+#: src/utilities/converter/unix-time.tsx:169
+msgid "In {days} day(s)"
+msgstr ""
+
+#: src/utilities/converter/unix-time.tsx:166
+msgid "In {hours} hour(s)"
+msgstr ""
+
+#: src/utilities/converter/unix-time.tsx:163
+msgid "In {minutes} minute(s)"
+msgstr ""
+
+#: src/utilities/converter/unix-time.tsx:158
+msgid "In a moment"
+msgstr ""
+
 #: src/utilities/cryptography/fido/fido2.tsx:120
 msgid "Inactive"
 msgstr ""
 
-#: src/utilities/generators/hash.tsx:140
+#: src/utilities/generators/hash.tsx:136
+#: src/utilities/converter/unix-time.tsx:236
+#: src/utilities/converter/string-inspector.tsx:326
+#: src/utilities/codec/jwt.tsx:254
 #: src/components/layout/input-output.tsx:58
 msgid "Input"
 msgstr "输入"
+
+#: src/utilities/generators/id.tsx:181
+msgid "Input:"
+msgstr ""
 
 #: src/utilities/cryptography/oath/totp.tsx:786
 msgid "Invalid"
@@ -520,13 +644,21 @@ msgstr "无效"
 msgid "IP Address"
 msgstr "IP 地址"
 
-#: src/utilities/meta.ts:237
+#: src/utilities/meta.ts:258
 #: src/utilities/network/ip.tsx:195
 msgid "IP Address Calculator"
 msgstr ""
 
 #: src/utilities/network/ip.tsx:265
 msgid "IP Address with CIDR"
+msgstr ""
+
+#: src/utilities/converter/unix-time.tsx:339
+msgid "Is leap year?"
+msgstr ""
+
+#: src/utilities/converter/unix-time.tsx:291
+msgid "ISO 8601 format"
 msgstr ""
 
 #: src/utilities/cryptography/oath/totp.tsx:172
@@ -537,11 +669,19 @@ msgstr "签发者，例如您的服务名称 ……"
 #~ msgid "JS Beautify/Minify"
 #~ msgstr "JS 美化/压缩"
 
-#: src/utilities/meta.ts:94
+#: src/utilities/meta.ts:98
 msgid "JSON Format/Validate"
 msgstr "JSON 格式/验证"
 
-#: src/utilities/meta.ts:204
+#: src/utilities/converter/unix-time.tsx:158
+msgid "Just now"
+msgstr ""
+
+#: src/utilities/meta.ts:240
+msgid "JWT Decoder"
+msgstr ""
+
+#: src/utilities/meta.ts:213
 msgid "Key Analyzer"
 msgstr "密钥分析器"
 
@@ -549,7 +689,7 @@ msgstr "密钥分析器"
 msgid "Key Features"
 msgstr ""
 
-#: src/utilities/meta.ts:198
+#: src/utilities/meta.ts:207
 msgid "Key Generator"
 msgstr "密钥生成器"
 
@@ -562,16 +702,37 @@ msgid "Last Used"
 msgstr ""
 
 #. placeholder {0}: input.length
-#: src/utilities/generators/hash.tsx:87
+#: src/utilities/generators/hash.tsx:85
 msgid "Length: {0}"
+msgstr ""
+
+#: src/utilities/converter/string-inspector.tsx:210
+msgid "Lines"
+msgstr ""
+
+#: src/utilities/generators/id.tsx:213
+msgid "Load Sample ID"
 msgstr ""
 
 #: src/components/tools.tsx:106
 msgid "Load Sample JSON"
 msgstr "加载示例 JSON"
 
-#: src/utilities/generators/hash.tsx:96
+#: src/utilities/converter/unix-time.tsx:310
+msgid "Local"
+msgstr ""
+
+#: src/utilities/converter/string-inspector.tsx:246
+msgid "Location"
+msgstr ""
+
+#: src/utilities/generators/id.tsx:470
+#: src/utilities/generators/hash.tsx:94
 msgid "lowercased"
+msgstr ""
+
+#: src/utilities/generators/id.tsx:275
+msgid "Mac Address"
 msgstr ""
 
 #: src/utilities/cryptography/fido/fido2.tsx:110
@@ -594,7 +755,16 @@ msgstr "消息："
 msgid "Multi-factor authentication"
 msgstr ""
 
-#: src/utilities/meta.ts:232
+#: src/utilities/generators/id.tsx:296
+#: src/utilities/generators/id.tsx:319
+msgid "Namespace Info"
+msgstr ""
+
+#: src/utilities/generators/id.tsx:250
+msgid "NanoID Settings..."
+msgstr ""
+
+#: src/utilities/meta.ts:253
 msgid "Network"
 msgstr "Network"
 
@@ -602,11 +772,15 @@ msgstr "Network"
 msgid "Network Address"
 msgstr ""
 
+#: src/utilities/converter/unix-time.tsx:77
+msgid "No"
+msgstr ""
+
 #: src/utilities/cryptography/fido/fido2.tsx:750
 msgid "No credentials stored"
 msgstr ""
 
-#: src/components/sidebar/index.tsx:146
+#: src/components/sidebar/index.tsx:165
 msgid "No results found."
 msgstr "未找到结果。"
 
@@ -614,7 +788,11 @@ msgstr "未找到结果。"
 msgid "Normally the secret is securely saved on server-side DB, however on test you have to enter manually"
 msgstr "通常，密钥会安全地存储在服务器端的数据库中，但在测试时需要手动输入"
 
-#: src/utilities/meta.ts:155
+#: src/utilities/converter/unix-time.tsx:245
+msgid "Now"
+msgstr ""
+
+#: src/utilities/meta.ts:146
 msgid "Number Base Converter"
 msgstr ""
 
@@ -622,11 +800,16 @@ msgstr ""
 msgid "Number of time windows to check before and after current time (0 = only current window)"
 msgstr "在当前时间前后需要检查的时间窗口数量（0 表示仅检查当前时间窗口）"
 
-#: src/utilities/meta.ts:174
+#: src/utilities/meta.ts:183
 msgid "OATH Debugger"
 msgstr "OATH 调试器"
 
-#: src/utilities/generators/hash.tsx:143
+#: src/utilities/converter/unix-time.tsx:344
+msgid "Other formats (local)"
+msgstr ""
+
+#: src/utilities/generators/hash.tsx:139
+#: src/utilities/codec/jwt.tsx:257
 #: src/components/layout/input-output.tsx:62
 msgid "Output"
 msgstr "输出"
@@ -635,6 +818,7 @@ msgstr "输出"
 msgid "Passwordless authentication"
 msgstr ""
 
+#: src/utilities/generators/id.tsx:198
 #: src/components/tools.tsx:78
 msgid "Paste from Clipboard"
 msgstr "从剪贴板粘贴"
@@ -680,6 +864,11 @@ msgstr ""
 msgid "QR Code"
 msgstr "二维码"
 
+#: src/utilities/generators/id.tsx:290
+#: src/utilities/generators/id.tsx:312
+msgid "Random Bits"
+msgstr ""
+
 #: src/utilities/cryptography/fido/fido2.tsx:752
 msgid "Register with a service to see credentials here"
 msgstr ""
@@ -694,6 +883,14 @@ msgstr ""
 
 #: src/utilities/cryptography/fido/fido2.tsx:403
 msgid "Registration Result"
+msgstr ""
+
+#: src/utilities/converter/unix-time.tsx:318
+msgid "Relative"
+msgstr ""
+
+#: src/utilities/converter/unix-time.tsx:294
+msgid "Relative time"
 msgstr ""
 
 #: src/utilities/cryptography/fido/fido2.tsx:296
@@ -714,11 +911,14 @@ msgstr ""
 msgid "Resident Keys"
 msgstr ""
 
-#: src/utilities/meta.ts:193
+#: src/utilities/meta.ts:202
 msgid "RSA Debugger"
 msgstr "RSA 调试器"
 
+#: src/utilities/generators/id.tsx:209
+#: src/utilities/converter/string-inspector.tsx:152
 #: src/utilities/converter/number-case.tsx:281
+#: src/utilities/codec/jwt.tsx:115
 msgid "Sample"
 msgstr ""
 
@@ -746,6 +946,14 @@ msgstr ""
 msgid "Select base:"
 msgstr ""
 
+#: src/utilities/generators/id.tsx:439
+msgid "Select ID type"
+msgstr ""
+
+#: src/utilities/converter/string-inspector.tsx:241
+msgid "Selection"
+msgstr ""
+
 #: src/utilities/cryptography/fido/fido2.tsx:175
 msgid "Set"
 msgstr ""
@@ -766,6 +974,7 @@ msgstr ""
 msgid "Set the period how long the OTP is valid, recommend is 30 seconds"
 msgstr ""
 
+#: src/utilities/generators/id.tsx:245
 #: src/utilities/cryptography/fido/fido2.tsx:936
 msgid "Settings"
 msgstr ""
@@ -780,6 +989,10 @@ msgstr ""
 
 #: src/utilities/cryptography/oath/totp.tsx:182
 msgid "Some applications such as FreeOTP can load images from an URI (image parameter). It need to be a valid URL to an image."
+msgstr ""
+
+#: src/utilities/generators/id.tsx:264
+msgid "Standard String Format"
 msgstr ""
 
 #: src/utilities/cryptography/fido/fido2.tsx:571
@@ -802,6 +1015,10 @@ msgstr ""
 msgid "Stored Credentials"
 msgstr ""
 
+#: src/utilities/meta.ts:152
+msgid "String Inspector"
+msgstr ""
+
 #: src/utilities/network/ip.tsx:211
 msgid "Subnet Calculator"
 msgstr ""
@@ -820,6 +1037,10 @@ msgstr ""
 msgid "Test and manage FIDO2 WebAuthn operations with a beautiful, Apple-inspired interface."
 msgstr ""
 
+#: src/utilities/converter/unix-time.tsx:352
+msgid "Time"
+msgstr ""
+
 #: src/utilities/cryptography/oath/totp.tsx:792
 msgid "Time Offset:"
 msgstr ""
@@ -828,7 +1049,20 @@ msgstr ""
 msgid "Time Window:"
 msgstr ""
 
-#: src/utilities/meta.ts:81
+#: src/utilities/generators/id.tsx:283
+#: src/utilities/generators/id.tsx:303
+msgid "Timestamp"
+msgstr ""
+
+#: src/utilities/generators/id.tsx:308
+msgid "Timestamp (ms)"
+msgstr ""
+
+#: src/utilities/converter/unix-time.tsx:301
+msgid "Tips: Mathematical operators + - * / are supported"
+msgstr ""
+
+#: src/utilities/meta.ts:85
 msgid "Tokenizer"
 msgstr "Tokenizer"
 
@@ -836,7 +1070,7 @@ msgstr "Tokenizer"
 msgid "Total Hosts"
 msgstr ""
 
-#: src/utilities/meta.ts:185
+#: src/utilities/meta.ts:194
 #: src/utilities/cryptography/oath/totp.tsx:850
 msgid "TOTP Debugger"
 msgstr "TOTP 调试器"
@@ -845,23 +1079,40 @@ msgstr "TOTP 调试器"
 msgid "TOTP QR Code"
 msgstr ""
 
+#: src/utilities/converter/unix-time.tsx:322
+msgid "Unix time"
+msgstr ""
+
+#: src/utilities/converter/unix-time.tsx:288
+msgid "Unix time (milliseconds)"
+msgstr ""
+
+#: src/utilities/converter/unix-time.tsx:285
+msgid "Unix time (seconds since epoch)"
+msgstr ""
+
+#: src/utilities/meta.ts:158
+#: src/utilities/meta.ts:246
+msgid "Unix Time Converter"
+msgstr ""
+
 #: src/utilities/cryptography/oath/totp.tsx:783
 msgid "Unknown"
 msgstr ""
 
-#: src/pages/settings.tsx:161
+#: src/pages/settings.tsx:158
 msgid "Up to date"
 msgstr "已是最新"
 
-#: src/pages/settings.tsx:147
+#: src/pages/settings.tsx:144
 msgid "Update"
 msgstr "更新"
 
-#: src/pages/settings.tsx:171
+#: src/pages/settings.tsx:168
 msgid "Update Now"
 msgstr "立刻更新"
 
-#: src/pages/settings.tsx:151
+#: src/pages/settings.tsx:148
 msgid "Updating"
 msgstr "正在更新中"
 
@@ -904,7 +1155,15 @@ msgstr ""
 msgid "User Verification"
 msgstr ""
 
-#: src/utilities/meta.ts:137
+#: src/utilities/converter/unix-time.tsx:313
+msgid "UTC (ISO 8601)"
+msgstr ""
+
+#: src/utilities/generators/id.tsx:249
+msgid "UUID Settings..."
+msgstr ""
+
+#: src/utilities/meta.ts:128
 msgid "UUID/ULID Generate/Decode"
 msgstr "UUID/ULID 生成/解码"
 
@@ -918,6 +1177,34 @@ msgstr ""
 
 #: src/utilities/cryptography/oath/totp.tsx:698
 msgid "Validation Window"
+msgstr ""
+
+#: src/utilities/generators/id.tsx:271
+msgid "Variant"
+msgstr ""
+
+#: src/utilities/codec/jwt.tsx:243
+msgid "Verification Status: Invalid JWT Format"
+msgstr ""
+
+#: src/utilities/codec/jwt.tsx:241
+msgid "Verification Status: No Input"
+msgstr ""
+
+#: src/utilities/codec/jwt.tsx:247
+msgid "Verification Status: Signature Not Verified"
+msgstr ""
+
+#: src/utilities/codec/jwt.tsx:245
+msgid "Verification Status: Signature Verified"
+msgstr ""
+
+#: src/utilities/generators/id.tsx:270
+msgid "Version"
+msgstr ""
+
+#: src/utilities/converter/unix-time.tsx:334
+msgid "Week of year"
 msgstr ""
 
 #: src/utilities/cryptography/oath/totp.tsx:651
@@ -937,10 +1224,22 @@ msgstr ""
 msgid "windows"
 msgstr ""
 
+#: src/utilities/converter/string-inspector.tsx:271
+msgid "Word distribution"
+msgstr ""
+
+#: src/utilities/converter/string-inspector.tsx:204
+msgid "Words"
+msgstr ""
+
+#: src/utilities/converter/unix-time.tsx:76
+msgid "Yes"
+msgstr ""
+
 #: src/utilities/cryptography/oath/totp.tsx:224
 msgid "You must verify that the algorithm you want to use is supported by the application your clients might be using."
 msgstr ""
 
-#: src/pages/settings.tsx:251
+#: src/pages/settings.tsx:250
 msgid "Zoom"
 msgstr "缩放"

@@ -43,7 +43,7 @@ pub fn generate_nanoid(count: u32) -> String {
 pub fn generate_uuid_v1(
     count: u32,
     timestamp: Option<u64>,
-    mac_address: Option<[u8; 6]>,
+    mac_address: Vec<u8>,
 ) -> String {
     let context = uuid::Context::new_random();
 
@@ -52,18 +52,34 @@ pub fn generate_uuid_v1(
         now.as_secs()
     });
 
+    // Convert Vec<u8> to [u8; 6], using default if not provided or wrong size
+    let mac_array: [u8; 6] = if mac_address.len() == 6 {
+        [
+            mac_address[0],
+            mac_address[1],
+            mac_address[2],
+            mac_address[3],
+            mac_address[4],
+            mac_address[5],
+        ]
+    } else {
+        [0; 6]
+    };
+
     (0..count)
         .map(|i| {
             let nanos = i;
             let time = Timestamp::from_unix(&context, base_seconds, nanos);
-            Uuid::new_v1(time, &mac_address.unwrap_or_else(|| [0; 6])).to_string()
+            Uuid::new_v1(time, &mac_array).to_string()
         })
         .collect::<Vec<String>>()
         .join("\n")
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
+#[cfg_attr(target_arch = "wasm32", derive(tsify::Tsify))]
+#[cfg_attr(target_arch = "wasm32", tsify(into_wasm_abi, from_wasm_abi))]
 pub enum Namespace {
     Dns,
     Url,
@@ -171,6 +187,8 @@ pub fn generate_uuid_v7(count: u32, timestamp: Option<u64>) -> String {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
+#[cfg_attr(target_arch = "wasm32", derive(tsify::Tsify))]
+#[cfg_attr(target_arch = "wasm32", tsify(into_wasm_abi, from_wasm_abi))]
 pub struct IdAnalyzer {
     pub uuid: Uuid,
     pub version: Option<String>,
@@ -180,6 +198,8 @@ pub struct IdAnalyzer {
 
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
+#[cfg_attr(target_arch = "wasm32", derive(tsify::Tsify))]
+#[cfg_attr(target_arch = "wasm32", tsify(into_wasm_abi, from_wasm_abi))]
 pub enum Content {
     V1(V1Content),
     V3(V3Content),
@@ -191,6 +211,8 @@ pub enum Content {
 
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
+#[cfg_attr(target_arch = "wasm32", derive(tsify::Tsify))]
+#[cfg_attr(target_arch = "wasm32", tsify(into_wasm_abi, from_wasm_abi))]
 pub struct V1Content {
     #[serde(skip_serializing_if = "Option::is_none")]
     #[serde(default)]
@@ -203,24 +225,32 @@ pub struct V1Content {
 
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
+#[cfg_attr(target_arch = "wasm32", derive(tsify::Tsify))]
+#[cfg_attr(target_arch = "wasm32", tsify(into_wasm_abi, from_wasm_abi))]
 pub struct V3Content {
     pub namespace_info: String,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
+#[cfg_attr(target_arch = "wasm32", derive(tsify::Tsify))]
+#[cfg_attr(target_arch = "wasm32", tsify(into_wasm_abi, from_wasm_abi))]
 pub struct V4Content {
     pub random_bits: String,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
+#[cfg_attr(target_arch = "wasm32", derive(tsify::Tsify))]
+#[cfg_attr(target_arch = "wasm32", tsify(into_wasm_abi, from_wasm_abi))]
 pub struct V5Content {
     pub namespace_info: String,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
+#[cfg_attr(target_arch = "wasm32", derive(tsify::Tsify))]
+#[cfg_attr(target_arch = "wasm32", tsify(into_wasm_abi, from_wasm_abi))]
 pub struct V7Content {
     pub timestamp: Option<SystemTime>,
     pub timestamp_ms: u64,
@@ -469,7 +499,7 @@ mod tests {
 
     #[test]
     fn test_generate_uuid_v1() {
-        let result = generate_uuid_v1(2, None, None);
+        let result = generate_uuid_v1(2, None, vec![]);
         let uuids: Vec<&str> = result.split('\n').collect();
         assert_eq!(uuids.len(), 2);
 
@@ -482,8 +512,8 @@ mod tests {
     #[test]
     fn test_generate_uuid_v1_with_custom_params() {
         let timestamp = 1234567890u64;
-        let mac = [0x12, 0x34, 0x56, 0x78, 0x9A, 0xBC];
-        let result = generate_uuid_v1(1, Some(timestamp), Some(mac));
+        let mac = vec![0x12, 0x34, 0x56, 0x78, 0x9A, 0xBC];
+        let result = generate_uuid_v1(1, Some(timestamp), mac);
 
         let uuid = Uuid::parse_str(result.trim()).unwrap();
         assert_eq!(uuid.get_version(), Some(Version::Mac));
@@ -492,8 +522,7 @@ mod tests {
     #[test]
     fn test_generate_uuid_v3() {
         // Test with DNS namespace
-        let result =
-            generate_uuid_v3(2, "dns".to_string(), vec!["example.com".to_string()]).unwrap();
+        let result = generate_uuid_v3(2, Namespace::Dns, vec!["example.com".to_string()]).unwrap();
         let uuids: Vec<&str> = result.split('\n').collect();
         assert_eq!(uuids.len(), 2);
 
@@ -511,7 +540,7 @@ mod tests {
         // Test with multiple names
         let result = generate_uuid_v3(
             3,
-            "url".to_string(),
+            Namespace::Url,
             vec![
                 "http://example.com".to_string(),
                 "http://test.com".to_string(),
@@ -526,7 +555,7 @@ mod tests {
     fn test_generate_uuid_v5() {
         // Test with URL namespace
         let result =
-            generate_uuid_v5(2, "url".to_string(), vec!["http://example.com".to_string()]).unwrap();
+            generate_uuid_v5(2, Namespace::Url, vec!["http://example.com".to_string()]).unwrap();
         let uuids: Vec<&str> = result.split('\n').collect();
         assert_eq!(uuids.len(), 2);
 
@@ -541,9 +570,8 @@ mod tests {
             assert_eq!(uuid_str, expected_uuid);
         }
 
-        // Test with custom namespace
-        let custom_ns = "6ba7b810-9dad-11d1-80b4-00c04fd430c8";
-        let result = generate_uuid_v5(1, custom_ns.to_string(), vec!["test".to_string()]).unwrap();
+        // Test with OID namespace as another example
+        let result = generate_uuid_v5(1, Namespace::Oid, vec!["test".to_string()]).unwrap();
         let uuid = Uuid::parse_str(result.trim()).unwrap();
         assert_eq!(uuid.get_version(), Some(Version::Sha1));
     }
@@ -575,17 +603,18 @@ mod tests {
     #[test]
     fn test_generate_uuid_v3_v5_edge_cases() {
         // Test with empty names - should generate default names
-        let result = generate_uuid_v3(3, "dns".to_string(), vec![]).unwrap();
+        let result = generate_uuid_v3(3, Namespace::Dns, vec![]).unwrap();
         let uuids: Vec<&str> = result.split('\n').collect();
         assert_eq!(uuids.len(), 3);
 
-        // Test invalid namespace
-        let result = generate_uuid_v3(1, "invalid-uuid".to_string(), vec!["test".to_string()]);
-        assert!(result.is_err());
-
         // Test with all standard namespaces
-        for ns in &["dns", "url", "oid", "x500", "DNS", "URL", "OID", "X500"] {
-            let result = generate_uuid_v5(1, ns.to_string(), vec!["test".to_string()]);
+        for ns in &[
+            Namespace::Dns,
+            Namespace::Url,
+            Namespace::Oid,
+            Namespace::X500,
+        ] {
+            let result = generate_uuid_v5(1, ns.clone(), vec!["test".to_string()]);
             assert!(result.is_ok());
         }
     }

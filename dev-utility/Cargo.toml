@@ -23,10 +23,9 @@ getrandom = { version = "0.3", features = ["wasm_js"] }
 
 # Codec
 base64 = "0.22.1"
-jsonwebtoken = "9"
 
 # Cryptography
-rsa = "0.9.8"
+rsa = { version = "0.9.8" }
 rand = "0.8"
 pkcs8 = { version = "0.10", features = ["pem"] }
 pkcs1 = { version = "0.7", features = ["pem"] }

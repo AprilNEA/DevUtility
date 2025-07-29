@@ -111,11 +111,8 @@ pub fn run() {
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
-            // #[cfg(desktop)]
-            // dev_utility_core::hardware::list_hid_devices,
             dev_utility_core::codec::decode_base64,
             dev_utility_core::codec::encode_base64,
-            #[cfg(desktop)]
             dev_utility_core::codec::decode_jwt,
             dev_utility_core::cryptography::generate_rsa_key,
             dev_utility_core::cryptography::analyze_rsa_key,
