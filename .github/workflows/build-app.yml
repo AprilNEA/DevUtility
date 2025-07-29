@@ -18,12 +18,16 @@ jobs:
         include:          
           - platform: 'macos-latest' # for Arm based macs (M1 and above).
             args: '--target aarch64-apple-darwin'
+            arch: 'aarch64'
           - platform: 'macos-latest' # for Intel based macs.
             args: '--target x86_64-apple-darwin'
+            arch: 'x86_64'
           - platform: 'ubuntu-22.04' # for Tauri v1 you could replace this with ubuntu-20.04.
             args: ''
+            arch: 'x86_64'
           - platform: 'windows-latest'
             args: ''
+            arch: 'x86_64'
 
     runs-on: ${{ matrix.platform }}
 
@@ -100,6 +104,6 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: build-artifacts-${{ matrix.platform }}-${{ env.CUSTOM_VERSION }}
+          name: build-artifacts-${{ matrix.platform }}-${{ matrix.arch }}-${{ env.CUSTOM_VERSION }}
           path: artifacts/
           retention-days: 30
