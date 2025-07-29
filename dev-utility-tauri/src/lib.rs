@@ -123,6 +123,8 @@ pub fn run() {
             dev_utility_core::cryptography::generate_totp_secret,
             dev_utility_core::cryptography::generate_totp_code,
             dev_utility_core::cryptography::validate_totp_code,
+            dev_utility_core::generator::analyze_uuid,
+            dev_utility_core::generator::generate_uuid_v1,
             dev_utility_core::generator::generate_uuid_v4,
             dev_utility_core::generator::generate_uuid_v7,
             dev_utility_core::generator::generate_ulid,

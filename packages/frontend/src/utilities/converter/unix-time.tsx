@@ -226,8 +226,6 @@ export default function UnixTimePage() {
     setInput("");
   };
 
-  // const allTimezones = getAllTimezones();
-
   return (
     <div className="flex flex-col h-full gap-4 p-4">
       {/* Input Section */}

@@ -16,8 +16,10 @@
 export enum InvokeFunction {
   GenerateUlid = "generate_ulid",
   GenerateNanoid = "generate_nanoid",
+  GenerateUuidV1 = "generate_uuid_v1",
   GenerateUuidV4 = "generate_uuid_v4",
   GenerateUuidV7 = "generate_uuid_v7",
+  AnalyzeUuid = "analyze_uuid",
   GenerateHashes = "generate_hashes",
   FormatJson = "format_json",
   FormatCss = "format_css",

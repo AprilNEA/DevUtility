@@ -30,6 +30,7 @@ import type {
   TotpValidateCodeParams,
   TotpValidationResult,
 } from "./cryptography/oath/types";
+import type { GenerateUuidV1Params } from "./generators/id";
 import {
   type Base64Engine,
   type HashResult,
@@ -47,8 +48,10 @@ export const IS_TAURI = "__TAURI__" in window;
 export interface UtilitiesArgs {
   [InvokeFunction.GenerateUlid]: { count: number };
   [InvokeFunction.GenerateNanoid]: { count: number };
+  [InvokeFunction.GenerateUuidV1]: GenerateUuidV1Params;
   [InvokeFunction.GenerateUuidV4]: { count: number };
   [InvokeFunction.GenerateUuidV7]: { count: number; timestamp?: number };
+  [InvokeFunction.AnalyzeUuid]: { input: string };
   [InvokeFunction.FormatJson]: { input: string; style: IndentStyle };
   [InvokeFunction.FormatCss]: { input: string };
   [InvokeFunction.GenerateHashes]: { input: string };
@@ -70,8 +73,10 @@ export interface UtilitiesArgs {
 export interface UtilitiesReturns {
   [InvokeFunction.GenerateUlid]: string;
   [InvokeFunction.GenerateNanoid]: string;
+  [InvokeFunction.GenerateUuidV1]: string;
   [InvokeFunction.GenerateUuidV4]: string;
   [InvokeFunction.GenerateUuidV7]: string;
+  [InvokeFunction.AnalyzeUuid]: any;
   [InvokeFunction.FormatJson]: string;
   [InvokeFunction.FormatCss]: string;
   [InvokeFunction.GenerateHashes]: HashResult;
