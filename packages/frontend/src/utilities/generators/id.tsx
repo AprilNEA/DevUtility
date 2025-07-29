@@ -13,6 +13,8 @@
  * See LICENSE file for details or contact admin@aprilnea.com
  */
 
+import { msg } from "@lingui/core/macro";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { useFastClick } from "foxact/use-fast-click";
 import {
   ClipboardIcon,
@@ -23,6 +25,12 @@ import {
   Trash2,
   XIcon,
 } from "lucide-react";
+import {
+  parseAsBoolean,
+  parseAsInteger,
+  parseAsStringEnum,
+  useQueryState,
+} from "nuqs";
 import { useCallback, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -122,6 +130,7 @@ interface FieldWithCopyProps {
 }
 
 const FieldWithCopy: React.FC<FieldWithCopyProps> = ({ label, value }) => {
+  const { t } = useLingui();
   return (
     <div className="space-y-1">
       <Label className="text-xs text-muted-foreground">{label}</Label>
@@ -144,7 +153,7 @@ const FieldWithCopy: React.FC<FieldWithCopyProps> = ({ label, value }) => {
             </Button>
           </TooltipTrigger>
           <TooltipContent side="right">
-            <p>Copy</p>
+            <p>{t(msg`Copy`)}</p>
           </TooltipContent>
         </Tooltip>
       </div>
@@ -154,6 +163,7 @@ const FieldWithCopy: React.FC<FieldWithCopyProps> = ({ label, value }) => {
 
 // Left Panel: Input & Details
 const IdAnalyzer = () => {
+  const { t } = useLingui();
   const [input, setInputValue] = useState(sampleUuid);
   const { data, trigger } = useUtilityInvoke(InvokeFunction.AnalyzeUuid, {
     onSuccess: (data) => {
@@ -168,36 +178,54 @@ const IdAnalyzer = () => {
     <div className="flex flex-col gap-4 bg-card p-3 rounded-lg">
       <div className="flex items-center gap-1 mb-2">
         <span className="text-sm font-medium text-card-foreground mr-2">
-          Input:
+          <Trans>Input:</Trans>
         </span>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button variant="outline" size="sm" className="h-8 px-3">
-              <ClipboardIcon size={14} className="mr-1.5" /> Clipboard
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="h-8 px-3"
+              onClick={async () => {
+                const text = await navigator.clipboard.readText();
+                if (text) setInputValue(text);
+              }}
+            >
+              <ClipboardIcon size={14} className="mr-1.5" /> {t(msg`Clipboard`)}
             </Button>
           </TooltipTrigger>
           <TooltipContent side="bottom">
-            <p>Paste from Clipboard</p>
+            <p>{t(msg`Paste from Clipboard`)}</p>
           </TooltipContent>
         </Tooltip>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button variant="outline" size="sm" className="h-8 px-3">
-              <FileText size={14} className="mr-1.5" /> Sample
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="h-8 px-3"
+              onClick={() => setInputValue(sampleUuid)}
+            >
+              <FileText size={14} className="mr-1.5" /> {t(msg`Sample`)}
             </Button>
           </TooltipTrigger>
           <TooltipContent side="bottom">
-            <p>Load Sample ID</p>
+            <p>{t(msg`Load Sample ID`)}</p>
           </TooltipContent>
         </Tooltip>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button variant="outline" size="sm" className="h-8 px-3">
-              <Trash2 size={14} className="mr-1.5" /> Clear
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="h-8 px-3"
+              onClick={() => setInputValue("")}
+            >
+              <Trash2 size={14} className="mr-1.5" /> {t(msg`Clear`)}
             </Button>
           </TooltipTrigger>
           <TooltipContent side="bottom">
-            <p>Clear Input</p>
+            <p>{t(msg`Clear Input`)}</p>
           </TooltipContent>
         </Tooltip>
         <DropdownMenu>
@@ -214,12 +242,12 @@ const IdAnalyzer = () => {
               </DropdownMenuTrigger>
             </TooltipTrigger>
             <TooltipContent side="bottom">
-              <p>Settings</p>
+              <p>{t(msg`Settings`)}</p>
             </TooltipContent>
           </Tooltip>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem>UUID Settings...</DropdownMenuItem>
-            <DropdownMenuItem>NanoID Settings...</DropdownMenuItem>
+            <DropdownMenuItem>{t(msg`UUID Settings...`)}</DropdownMenuItem>
+            <DropdownMenuItem>{t(msg`NanoID Settings...`)}</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
@@ -228,65 +256,67 @@ const IdAnalyzer = () => {
         type="text"
         value={input}
         onChange={(e) => setInputValue(e.target.value)}
-        placeholder="Enter UUID or trigger generation"
+        placeholder={t(msg`Enter UUID or trigger generation`)}
         className="bg-background border-input text-foreground"
       />
 
       <div className="space-y-3 mt-2">
-        <FieldWithCopy label="Standard String Format" value={data?.uuid} />
+        <FieldWithCopy label={t(msg`Standard String Format`)} value={data?.uuid} />
         {/* <FieldWithCopy
           label="Raw Contents"
           value={data?.con}
           onCopy={handleCopy}
         /> */}
-        <FieldWithCopy label="Version" value={data?.version} />
-        <FieldWithCopy label="Variant" value={data?.variant} />
+        <FieldWithCopy label={t(msg`Version`)} value={data?.version} />
+        <FieldWithCopy label={t(msg`Variant`)} value={data?.variant} />
         {data?.content?.v1 && (
           <>
             <FieldWithCopy
-              label="Mac Address"
+              label={t(msg`Mac Address`)}
               value={data.content.v1.macAddress}
             />
             <FieldWithCopy
-              label="Clock Sequence"
+              label={t(msg`Clock Sequence`)}
               value={data.content.v1.clockSequence}
             />
             <FieldWithCopy
-              label="Timestamp"
+              label={t(msg`Timestamp`)}
               value={data.content.v1.timestampRaw}
             />
           </>
         )}
         {data?.content?.v4 && (
           <FieldWithCopy
-            label="Random Bits"
+            label={t(msg`Random Bits`)}
             value={data.content.v4.randomBits}
           />
         )}
         {(data?.content?.v5 || data?.content?.v3) && (
           <FieldWithCopy
-            label="Namespace Info"
-            value={data.content.v5?.namespaceInfo || data.content.v3?.namespaceInfo}
+            label={t(msg`Namespace Info`)}
+            value={
+              data.content.v5?.namespaceInfo || data.content.v3?.namespaceInfo
+            }
           />
         )}
         {data?.content?.v6 && (
-          <FieldWithCopy label="Timestamp" value={data.content.v6.timestamp} />
+          <FieldWithCopy label={t(msg`Timestamp`)} value={data.content.v6.timestamp} />
         )}
         {data?.content?.v7 && (
           <>
             <FieldWithCopy
-              label="Timestamp (ms)"
+              label={t(msg`Timestamp (ms)`)}
               value={data.content.v7.timestampMs}
             />
             <FieldWithCopy
-              label="Random Bits"
+              label={t(msg`Random Bits`)}
               value={data.content.v7.randomBits}
             />
           </>
         )}
         {data?.content?.v8 && (
           <FieldWithCopy
-            label="Namespace Info"
+            label={t(msg`Namespace Info`)}
             value={data.content.v8.namespaceInfo}
           />
         )}
@@ -297,11 +327,18 @@ const IdAnalyzer = () => {
 
 // Right Panel: Generate New IDs
 const IdGenerator = () => {
-  const [idType, setIdType] = useState<IdType>(IdType.NANOID);
-  const [generatedIds, setGeneratedIds] = useState(sampleGeneratedIds);
-  const [generateCount, setGenerateCount] = useState(100);
+  const { t } = useLingui();
+  const [idType, setIdType] = useQueryState(
+    "t",
+    parseAsStringEnum<IdType>(Object.values(IdType)).withDefault(IdType.NANOID),
+  );
+  const [count, setCount] = useQueryState("c", parseAsInteger.withDefault(100));
+  const [isLowercase, setIsLowercase] = useQueryState(
+    "lowercase",
+    parseAsBoolean.withDefault(true),
+  );
 
-  const [isLowercase, setIsLowercase] = useState(false);
+  const [generatedIds, setGeneratedIds] = useState(sampleGeneratedIds);
 
   const generateIds = useCallback(async (idType: IdType, count: number) => {
     switch (idType) {
@@ -365,16 +402,20 @@ const IdGenerator = () => {
   return (
     <div className="flex flex-col gap-3 bg-card p-3 rounded-lg">
       <h2 className="text-md font-semibold text-card-foreground">
-        Generate new IDs
+        <Trans>Generate new IDs</Trans>
       </h2>
       <div className="flex items-center gap-2">
-        <Button size="sm" onClick={() => generateIds(idType, generateCount)}>
+        <Button size="sm" onClick={() => generateIds(idType, count)}>
           <RefreshCw size={16} className="mr-2" />
-          Generate
+          {t(msg`Generate`)}
         </Button>
-        <Button variant="outline" size="sm">
+        <Button 
+          variant="outline" 
+          size="sm"
+          onClick={() => copyToClipboard(generatedIds)}
+        >
           <Copy size={16} className="mr-2" />
-          Copy
+          {t(msg`Copy`)}
         </Button>
         <Button
           variant="outline"
@@ -386,7 +427,7 @@ const IdGenerator = () => {
           )}
         >
           <XIcon size={16} className="mr-2" />
-          Clear
+          {t(msg`Clear`)}
         </Button>
       </div>
       <div className="flex items-center gap-2">
@@ -395,7 +436,7 @@ const IdGenerator = () => {
           onValueChange={(value: string) => setIdType(value as IdType)}
         >
           <SelectTrigger className="w-[180px] h-9">
-            <SelectValue placeholder="Select ID type" />
+            <SelectValue placeholder={t(msg`Select ID type`)} />
           </SelectTrigger>
           <SelectContent>
             <SelectItem value={IdType.NANOID}>Nano ID</SelectItem>
@@ -412,9 +453,9 @@ const IdGenerator = () => {
         <span className="text-sm text-muted-foreground">x</span>
         <Input
           type="number"
-          value={generateCount}
+          value={count}
           onChange={(e) => {
-            setGenerateCount(Number.parseInt(e.target.value, 10) || 1);
+            setCount(Number.parseInt(e.target.value, 10) || 1);
           }}
           className="w-20 h-9 bg-input border-border"
           min="1"
@@ -426,14 +467,18 @@ const IdGenerator = () => {
             onCheckedChange={(checked) => setIsLowercase(checked as boolean)}
           />
           <Label htmlFor="lowercase" className="text-sm font-medium">
-            lowercased
+            {t(msg`lowercased`)}
           </Label>
         </div>
       </div>
       <Textarea
-        value={generatedIds}
+        value={
+          isLowercase
+            ? generatedIds.toLocaleLowerCase()
+            : generatedIds.toLocaleUpperCase()
+        }
         readOnly
-        placeholder="Generated IDs will appear here"
+        placeholder={t(msg`Generated IDs will appear here`)}
         className="flex-grow bg-background border-input text-foreground font-mono text-sm resize-none"
         spellCheck="false"
       />
