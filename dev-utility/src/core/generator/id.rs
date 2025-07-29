@@ -13,7 +13,10 @@
 
 use nanoid::nanoid;
 use serde::{Deserialize, Serialize};
-use std::time::{Duration, SystemTime, UNIX_EPOCH};
+use std::{
+    fmt::Display,
+    time::{Duration, SystemTime, UNIX_EPOCH},
+};
 use ulid::Ulid;
 use universal_function_macro::universal_function;
 use uuid::{Timestamp, Uuid, Variant, Version};
@@ -59,28 +62,59 @@ pub fn generate_uuid_v1(
         .join("\n")
 }
 
-// #[universal_function]
-// pub fn generate_uuid_v2(count: u32, timestamp: Option<u64>, mac_address: Option<[u8; 6]>) -> String {
-//     let context = uuid::Context::new_random();
+#[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub enum Namespace {
+    Dns,
+    Url,
+    Oid,
+    X500,
+}
 
-//     let base_seconds = timestamp.unwrap_or_else(|| {
-//         let now = SystemTime::now().duration_since(UNIX_EPOCH).unwrap();
-//         now.as_secs()
-//     });
+impl Namespace {
+    pub fn to_uuid(&self) -> Uuid {
+        match self {
+            Namespace::Dns => Uuid::NAMESPACE_DNS,
+            Namespace::Url => Uuid::NAMESPACE_URL,
+            Namespace::Oid => Uuid::NAMESPACE_OID,
+            Namespace::X500 => Uuid::NAMESPACE_X500,
+        }
+    }
+}
 
-//     (0..count)
-//         .map(|i| {
-//             let nanos = i;
-//             let time = Timestamp::from_unix(&context, base_seconds, nanos);
-//             Uuid::new_v1(
-//                 time,
-//                 &mac_address.unwrap_or_else(|| [0; 6]),
-//             )
-//             .to_string()
-//         })
-//         .collect::<Vec<String>>()
-//         .join("\n")
-// }
+impl Display for Namespace {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
+}
+
+#[universal_function]
+pub fn generate_uuid_v3(
+    count: u32,
+    namespace: Namespace,
+    names: Vec<String>,
+) -> Result<String, UtilityError> {
+    let namespace_uuid = namespace.to_uuid();
+
+    let result = if names.is_empty() {
+        // Generate using default names if none provided
+        (0..count)
+            .map(|i| Uuid::new_v3(&namespace_uuid, format!("name{}", i).as_bytes()).to_string())
+            .collect::<Vec<String>>()
+            .join("\n")
+    } else {
+        // Generate using provided names, cycling through them if count > names.len()
+        (0..count)
+            .map(|i| {
+                let name = &names[i as usize % names.len()];
+                Uuid::new_v3(&namespace_uuid, name.as_bytes()).to_string()
+            })
+            .collect::<Vec<String>>()
+            .join("\n")
+    };
+
+    Ok(result)
+}
 
 #[universal_function]
 pub fn generate_uuid_v4(count: u32) -> String {
@@ -88,6 +122,34 @@ pub fn generate_uuid_v4(count: u32) -> String {
         .map(|_| Uuid::new_v4().to_string())
         .collect::<Vec<String>>()
         .join("\n")
+}
+
+#[universal_function]
+pub fn generate_uuid_v5(
+    count: u32,
+    namespace: Namespace,
+    names: Vec<String>,
+) -> Result<String, UtilityError> {
+    let namespace_uuid = namespace.to_uuid();
+
+    let result = if names.is_empty() {
+        // Generate using default names if none provided
+        (0..count)
+            .map(|i| Uuid::new_v5(&namespace_uuid, format!("name{}", i).as_bytes()).to_string())
+            .collect::<Vec<String>>()
+            .join("\n")
+    } else {
+        // Generate using provided names, cycling through them if count > names.len()
+        (0..count)
+            .map(|i| {
+                let name = &names[i as usize % names.len()];
+                Uuid::new_v5(&namespace_uuid, name.as_bytes()).to_string()
+            })
+            .collect::<Vec<String>>()
+            .join("\n")
+    };
+
+    Ok(result)
 }
 
 #[universal_function]
@@ -123,6 +185,7 @@ pub enum Content {
     V3(V3Content),
     V4(V4Content),
     V5(V5Content),
+    V7(V7Content),
     Unknown,
 }
 
@@ -156,6 +219,14 @@ pub struct V5Content {
     pub namespace_info: String,
 }
 
+#[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct V7Content {
+    pub timestamp: Option<SystemTime>,
+    pub timestamp_ms: u64,
+    pub random_bits: String,
+}
+
 impl IdAnalyzer {
     fn analyze(uuid_str: &str) -> Result<Self, uuid::Error> {
         let uuid = Uuid::parse_str(uuid_str)?;
@@ -167,6 +238,7 @@ impl IdAnalyzer {
             Some(Version::Md5) => Content::V3(Self::analyze_v3(&uuid)),
             Some(Version::Random) => Content::V4(Self::analyze_v4(&uuid)),
             Some(Version::Sha1) => Content::V5(Self::analyze_v5(&uuid)),
+            Some(Version::SortRand) => Content::V7(Self::analyze_v7(&uuid)),
             _ => Content::Unknown,
         };
 
@@ -198,15 +270,15 @@ impl IdAnalyzer {
     fn analyze_v1(uuid: &Uuid) -> V1Content {
         let bytes = uuid.as_bytes();
 
-        // 提取时间戳 (60-bit)
+        // Extract timestamp (60-bit)
         let time_low = u32::from_be_bytes([bytes[0], bytes[1], bytes[2], bytes[3]]) as u64;
         let time_mid = u16::from_be_bytes([bytes[4], bytes[5]]) as u64;
         let time_hi = u16::from_be_bytes([bytes[6], bytes[7]]) as u64 & 0x0FFF;
 
         let timestamp_100ns = (time_hi << 48) | (time_mid << 32) | time_low;
 
-        // UUID v1 时间戳是从 1582-10-15 00:00:00 开始的 100 纳秒间隔数
-        // 转换为 Unix 时间戳
+        // UUID v1 timestamp is the number of 100-nanosecond intervals since 1582-10-15 00:00:00
+        // Convert to Unix timestamp
         const UUID_EPOCH_OFFSET: u64 = 122192928000000000; // 100ns intervals between 1582-10-15 and 1970-01-01
         let timestamp = if timestamp_100ns >= UUID_EPOCH_OFFSET {
             let unix_100ns = timestamp_100ns - UUID_EPOCH_OFFSET;
@@ -217,12 +289,12 @@ impl IdAnalyzer {
             None
         };
 
-        // 提取时钟序列 (14-bit)
+        // Extract clock sequence (14-bit)
         let clock_seq_hi = bytes[8] & 0x3F;
         let clock_seq_low = bytes[9];
         let clock_sequence = ((clock_seq_hi as u16) << 8) | clock_seq_low as u16;
 
-        // 提取节点 ID (MAC 地址)
+        // Extract node ID (MAC address)
         let node_id = [
             bytes[10], bytes[11], bytes[12], bytes[13], bytes[14], bytes[15],
         ];
@@ -265,6 +337,42 @@ impl IdAnalyzer {
     fn analyze_v5(uuid: &Uuid) -> V5Content {
         V5Content {
             namespace_info: "SHA-1 hash-based UUID (namespace and name are hashed)".to_string(),
+        }
+    }
+
+    fn analyze_v7(uuid: &Uuid) -> V7Content {
+        let bytes = uuid.as_bytes();
+
+        // Extract Unix timestamp in milliseconds (first 48 bits)
+        let timestamp_ms = ((bytes[0] as u64) << 40)
+            | ((bytes[1] as u64) << 32)
+            | ((bytes[2] as u64) << 24)
+            | ((bytes[3] as u64) << 16)
+            | ((bytes[4] as u64) << 8)
+            | (bytes[5] as u64);
+
+        // Convert milliseconds to SystemTime
+        let timestamp = UNIX_EPOCH + Duration::from_millis(timestamp_ms);
+
+        // Extract random bits (excluding version and variant bits)
+        let random_bits = format!(
+            "{:02x}{:02x}{:02x}{:02x}{:02x}{:02x}{:02x}{:02x}{:02x}{:02x}",
+            bytes[6] & 0x0F, // Lower 4 bits of byte 6 (upper 4 bits are version)
+            bytes[7],
+            bytes[8] & 0x3F, // Lower 6 bits of byte 8 (upper 2 bits are variant)
+            bytes[9],
+            bytes[10],
+            bytes[11],
+            bytes[12],
+            bytes[13],
+            bytes[14],
+            bytes[15]
+        );
+
+        V7Content {
+            timestamp: Some(timestamp),
+            timestamp_ms,
+            random_bits,
         }
     }
 
@@ -316,6 +424,19 @@ impl IdAnalyzer {
                 println!("UUID Version 5 (SHA-1 Name-based) Details:");
                 println!("-----------------------------------------");
                 println!("{}", info.namespace_info);
+            }
+            Content::V7(info) => {
+                println!("UUID Version 7 (Time-ordered) Details:");
+                println!("-------------------------------------");
+                if let Some(timestamp) = info.timestamp {
+                    println!("Timestamp: {:?}", timestamp);
+                    if let Ok(duration) = timestamp.duration_since(UNIX_EPOCH) {
+                        println!("Unix timestamp (seconds): {}", duration.as_secs());
+                        println!("Unix timestamp (milliseconds): {}", info.timestamp_ms);
+                    }
+                }
+                println!("Random bits: {}", info.random_bits);
+                println!("Total random bits: 74");
             }
             Content::Unknown => {
                 println!("Unknown or unsupported UUID version");
@@ -369,6 +490,65 @@ mod tests {
     }
 
     #[test]
+    fn test_generate_uuid_v3() {
+        // Test with DNS namespace
+        let result =
+            generate_uuid_v3(2, "dns".to_string(), vec!["example.com".to_string()]).unwrap();
+        let uuids: Vec<&str> = result.split('\n').collect();
+        assert_eq!(uuids.len(), 2);
+
+        // Get the expected UUID for verification
+        let expected_uuid =
+            Uuid::new_v3(&Uuid::NAMESPACE_DNS, "example.com".as_bytes()).to_string();
+
+        for uuid_str in uuids {
+            let uuid = Uuid::parse_str(uuid_str).unwrap();
+            assert_eq!(uuid.get_version(), Some(Version::Md5));
+            // V3 UUIDs with same namespace and name should be identical
+            assert_eq!(uuid_str, expected_uuid);
+        }
+
+        // Test with multiple names
+        let result = generate_uuid_v3(
+            3,
+            "url".to_string(),
+            vec![
+                "http://example.com".to_string(),
+                "http://test.com".to_string(),
+            ],
+        )
+        .unwrap();
+        let uuids: Vec<&str> = result.split('\n').collect();
+        assert_eq!(uuids.len(), 3);
+    }
+
+    #[test]
+    fn test_generate_uuid_v5() {
+        // Test with URL namespace
+        let result =
+            generate_uuid_v5(2, "url".to_string(), vec!["http://example.com".to_string()]).unwrap();
+        let uuids: Vec<&str> = result.split('\n').collect();
+        assert_eq!(uuids.len(), 2);
+
+        // Get the expected UUID for verification
+        let expected_uuid =
+            Uuid::new_v5(&Uuid::NAMESPACE_URL, "http://example.com".as_bytes()).to_string();
+
+        for uuid_str in uuids {
+            let uuid = Uuid::parse_str(uuid_str).unwrap();
+            assert_eq!(uuid.get_version(), Some(Version::Sha1));
+            // V5 UUIDs with same namespace and name should be identical
+            assert_eq!(uuid_str, expected_uuid);
+        }
+
+        // Test with custom namespace
+        let custom_ns = "6ba7b810-9dad-11d1-80b4-00c04fd430c8";
+        let result = generate_uuid_v5(1, custom_ns.to_string(), vec!["test".to_string()]).unwrap();
+        let uuid = Uuid::parse_str(result.trim()).unwrap();
+        assert_eq!(uuid.get_version(), Some(Version::Sha1));
+    }
+
+    #[test]
     fn test_generate_uuid_v4() {
         let result = generate_uuid_v4(5);
         let uuids: Vec<&str> = result.split('\n').collect();
@@ -389,6 +569,24 @@ mod tests {
         for uuid_str in uuids {
             let uuid = Uuid::parse_str(uuid_str).unwrap();
             assert_eq!(uuid.get_version(), Some(Version::SortRand));
+        }
+    }
+
+    #[test]
+    fn test_generate_uuid_v3_v5_edge_cases() {
+        // Test with empty names - should generate default names
+        let result = generate_uuid_v3(3, "dns".to_string(), vec![]).unwrap();
+        let uuids: Vec<&str> = result.split('\n').collect();
+        assert_eq!(uuids.len(), 3);
+
+        // Test invalid namespace
+        let result = generate_uuid_v3(1, "invalid-uuid".to_string(), vec!["test".to_string()]);
+        assert!(result.is_err());
+
+        // Test with all standard namespaces
+        for ns in &["dns", "url", "oid", "x500", "DNS", "URL", "OID", "X500"] {
+            let result = generate_uuid_v5(1, ns.to_string(), vec!["test".to_string()]);
+            assert!(result.is_ok());
         }
     }
 
@@ -438,6 +636,25 @@ mod tests {
     }
 
     #[test]
+    fn test_analyze_uuid_v7() {
+        // Generate a fresh UUID v7 to analyze
+        let uuid_v7 = Uuid::new_v7(Timestamp::now(uuid::NoContext));
+        let uuid_str = uuid_v7.to_string();
+        let analyzer = IdAnalyzer::analyze(&uuid_str).unwrap();
+
+        assert_eq!(analyzer.version, Some("V7 (Sortable Random)".to_string()));
+
+        if let Content::V7(ref v7_content) = analyzer.content {
+            // V7 UUIDs should have a valid timestamp
+            assert!(v7_content.timestamp.is_some());
+            assert!(v7_content.timestamp_ms > 0);
+            assert!(!v7_content.random_bits.is_empty());
+        } else {
+            panic!("Expected V7 content");
+        }
+    }
+
+    #[test]
     fn test_analyze_invalid_uuid() {
         let invalid_uuid = "not-a-valid-uuid";
         let result = IdAnalyzer::analyze(invalid_uuid);
@@ -448,15 +665,24 @@ mod tests {
     fn test_multiple_uuid_versions() {
         let test_uuids = vec![
             // V1 - Time-based
-            ("550e8400-e29b-11d4-a716-446655440000", Some("V1 (Time-based)".to_string())),
-            ("6ba7b810-9dad-11d1-80b4-00c04fd430c8", Some("V1 (Time-based)".to_string())),
+            (
+                "550e8400-e29b-11d4-a716-446655440000",
+                Some("V1 (Time-based)".to_string()),
+            ),
+            (
+                "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+                Some("V1 (Time-based)".to_string()),
+            ),
             // V4 - Random
             (
                 "c9a5e2ec-386c-4d28-b44d-8e7a3c6f5e48",
                 Some("V4 (Random)".to_string()),
             ),
             // V5 - SHA-1 name-based
-            ("74738ff5-5367-5958-9aee-98fffdcd1876", Some("V5 (SHA-1 Name-based)".to_string())),
+            (
+                "74738ff5-5367-5958-9aee-98fffdcd1876",
+                Some("V5 (SHA-1 Name-based)".to_string()),
+            ),
         ];
 
         for (uuid_str, expected_version) in test_uuids {

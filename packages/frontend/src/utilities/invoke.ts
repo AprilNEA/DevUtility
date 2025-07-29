@@ -30,7 +30,7 @@ import type {
   TotpValidateCodeParams,
   TotpValidationResult,
 } from "./cryptography/oath/types";
-import type { GenerateUuidV1Params } from "./generators/id";
+import type { GenerateUuidV1Params, UuidNamespace } from "./generators/id";
 import {
   type Base64Engine,
   type HashResult,
@@ -50,6 +50,16 @@ export interface UtilitiesArgs {
   [InvokeFunction.GenerateNanoid]: { count: number };
   [InvokeFunction.GenerateUuidV1]: GenerateUuidV1Params;
   [InvokeFunction.GenerateUuidV4]: { count: number };
+  [InvokeFunction.GenerateUuidV3]: {
+    count: number;
+    namespace?: UuidNamespace;
+    names: string[];
+  };
+  [InvokeFunction.GenerateUuidV5]: {
+    count: number;
+    namespace?: UuidNamespace;
+    names: string[];
+  };
   [InvokeFunction.GenerateUuidV7]: { count: number; timestamp?: number };
   [InvokeFunction.AnalyzeUuid]: { input: string };
   [InvokeFunction.FormatJson]: { input: string; style: IndentStyle };
@@ -75,6 +85,8 @@ export interface UtilitiesReturns {
   [InvokeFunction.GenerateNanoid]: string;
   [InvokeFunction.GenerateUuidV1]: string;
   [InvokeFunction.GenerateUuidV4]: string;
+  [InvokeFunction.GenerateUuidV3]: string;
+  [InvokeFunction.GenerateUuidV5]: string;
   [InvokeFunction.GenerateUuidV7]: string;
   [InvokeFunction.AnalyzeUuid]: any;
   [InvokeFunction.FormatJson]: string;

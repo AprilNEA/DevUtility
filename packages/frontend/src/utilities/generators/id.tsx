@@ -57,6 +57,13 @@ export type GenerateUuidV1Params = {
   macAddress?: string;
 };
 
+export enum UuidNamespace {
+  Dns = "dns",
+  Url = "url",
+  Oid = "oid",
+  X500 = "x500",
+}
+
 const sampleUuid = "f469e069-221e-401e-b495-646a773b055f";
 const sampleRawContents = "f4:69:e0:69:22:1e:40:1e:b4:95:64:6a:77:3b:05:5f";
 const sampleVersion = "4 (random)";
@@ -92,12 +99,12 @@ enum IdType {
   NANOID = "nanoid",
   ULID = "ulid",
   UUID_V4 = "uuidv4",
+  UUID_V7 = "uuidv7",
   UUID_V1 = "uuidv1",
   UUID_V3 = "uuidv3",
   UUID_V5 = "uuidv5",
-  UUID_V6 = "uuidv6",
-  UUID_V7 = "uuidv7",
-  UUID_V8 = "uuidv8",
+  // UUID_V6 = "uuidv6",
+  // UUID_V8 = "uuidv8",
 }
 
 export default function IdGeneratorPage() {
@@ -256,17 +263,26 @@ const IdAnalyzer = () => {
             value={data.content.v4.randomBits}
           />
         )}
-        {data?.content?.v5 && (
+        {(data?.content?.v5 || data?.content?.v3) && (
           <FieldWithCopy
             label="Namespace Info"
-            value={data.content.v5.namespaceInfo}
+            value={data.content.v5?.namespaceInfo || data.content.v3?.namespaceInfo}
           />
         )}
         {data?.content?.v6 && (
           <FieldWithCopy label="Timestamp" value={data.content.v6.timestamp} />
         )}
         {data?.content?.v7 && (
-          <FieldWithCopy label="Timestamp" value={data.content.v7.timestamp} />
+          <>
+            <FieldWithCopy
+              label="Timestamp (ms)"
+              value={data.content.v7.timestampMs}
+            />
+            <FieldWithCopy
+              label="Random Bits"
+              value={data.content.v7.randomBits}
+            />
+          </>
         )}
         {data?.content?.v8 && (
           <FieldWithCopy
@@ -278,6 +294,7 @@ const IdAnalyzer = () => {
     </div>
   );
 };
+
 // Right Panel: Generate New IDs
 const IdGenerator = () => {
   const [idType, setIdType] = useState<IdType>(IdType.NANOID);
@@ -306,6 +323,24 @@ const IdGenerator = () => {
         const result = await utilityInvoke(InvokeFunction.GenerateUuidV1, {
           count,
           // timestamp: 0,
+        });
+        setGeneratedIds(result);
+        break;
+      }
+      case IdType.UUID_V3: {
+        const result = await utilityInvoke(InvokeFunction.GenerateUuidV3, {
+          count,
+          namespace: UuidNamespace.Dns,
+          names: [],
+        });
+        setGeneratedIds(result);
+        break;
+      }
+      case IdType.UUID_V5: {
+        const result = await utilityInvoke(InvokeFunction.GenerateUuidV5, {
+          count,
+          namespace: UuidNamespace.Dns,
+          names: [],
         });
         setGeneratedIds(result);
         break;
@@ -366,12 +401,12 @@ const IdGenerator = () => {
             <SelectItem value={IdType.NANOID}>Nano ID</SelectItem>
             <SelectItem value={IdType.ULID}>ULID</SelectItem>
             <SelectItem value={IdType.UUID_V4}>UUID v4</SelectItem>
+            <SelectItem value={IdType.UUID_V7}>UUID v7</SelectItem>
             <SelectItem value={IdType.UUID_V1}>UUID v1</SelectItem>
             <SelectItem value={IdType.UUID_V3}>UUID v3</SelectItem>
             <SelectItem value={IdType.UUID_V5}>UUID v5</SelectItem>
-            <SelectItem value={IdType.UUID_V6}>UUID v6</SelectItem>
-            <SelectItem value={IdType.UUID_V7}>UUID v7</SelectItem>
-            <SelectItem value={IdType.UUID_V8}>UUID v8</SelectItem>
+            {/* <SelectItem value={IdType.UUID_V6}>UUID v6</SelectItem> */}
+            {/* <SelectItem value={IdType.UUID_V8}>UUID v8</SelectItem> */}
           </SelectContent>
         </Select>
         <span className="text-sm text-muted-foreground">x</span>
