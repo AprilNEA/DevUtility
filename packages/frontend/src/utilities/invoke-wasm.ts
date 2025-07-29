@@ -34,14 +34,14 @@ const wasmFunctions: Partial<WasmFunctions> = {
       args.digits,
       args.period,
       args.image,
-      args.add_issuer_prefix
+      args.add_issuer_prefix,
     ),
   [InvokeFunction.GenerateTotpCode]: (args) =>
     wasm.generate_totp_code(
       args.secret,
       args.algorithm,
       args.digits,
-      args.period
+      args.period,
     ),
   [InvokeFunction.ValidateTotpCode]: (args) =>
     wasm.validate_totp_code(
@@ -50,7 +50,7 @@ const wasmFunctions: Partial<WasmFunctions> = {
       args.algorithm,
       args.digits,
       args.period,
-      args.window
+      args.window,
     ),
 };
 

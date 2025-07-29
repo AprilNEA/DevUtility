@@ -182,9 +182,9 @@ const IdAnalyzer = () => {
         </span>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button 
-              variant="outline" 
-              size="sm" 
+            <Button
+              variant="outline"
+              size="sm"
               className="h-8 px-3"
               onClick={async () => {
                 const text = await navigator.clipboard.readText();
@@ -200,9 +200,9 @@ const IdAnalyzer = () => {
         </Tooltip>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button 
-              variant="outline" 
-              size="sm" 
+            <Button
+              variant="outline"
+              size="sm"
               className="h-8 px-3"
               onClick={() => setInputValue(sampleUuid)}
             >
@@ -215,9 +215,9 @@ const IdAnalyzer = () => {
         </Tooltip>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button 
-              variant="outline" 
-              size="sm" 
+            <Button
+              variant="outline"
+              size="sm"
               className="h-8 px-3"
               onClick={() => setInputValue("")}
             >
@@ -261,7 +261,10 @@ const IdAnalyzer = () => {
       />
 
       <div className="space-y-3 mt-2">
-        <FieldWithCopy label={t(msg`Standard String Format`)} value={data?.uuid} />
+        <FieldWithCopy
+          label={t(msg`Standard String Format`)}
+          value={data?.uuid}
+        />
         {/* <FieldWithCopy
           label="Raw Contents"
           value={data?.con}
@@ -300,7 +303,10 @@ const IdAnalyzer = () => {
           />
         )}
         {data?.content?.v6 && (
-          <FieldWithCopy label={t(msg`Timestamp`)} value={data.content.v6.timestamp} />
+          <FieldWithCopy
+            label={t(msg`Timestamp`)}
+            value={data.content.v6.timestamp}
+          />
         )}
         {data?.content?.v7 && (
           <>
@@ -409,8 +415,8 @@ const IdGenerator = () => {
           <RefreshCw size={16} className="mr-2" />
           {t(msg`Generate`)}
         </Button>
-        <Button 
-          variant="outline" 
+        <Button
+          variant="outline"
           size="sm"
           onClick={() => copyToClipboard(generatedIds)}
         >
