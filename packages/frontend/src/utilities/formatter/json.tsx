@@ -382,15 +382,13 @@ export default function JsonFormatterPage() {
     </>
   );
 
-  const inputBottombar = (
+  const inputBottombar = error ? (
     <div className="flex items-center gap-2 mt-2">
-      {error && (
-        <Callout variant="error" className="w-full">
-          {String(error)}
-        </Callout>
-      )}
+      <Callout variant="error" className="w-full">
+        {String(error)}
+      </Callout>
     </div>
-  );
+  ) : null;
 
   const outputToolbar = (
     <>
@@ -459,7 +457,7 @@ export default function JsonFormatterPage() {
   );
 
   const outputBottomBar = (
-    <div className="flex items-center gap-2 mt-2">
+    <div className="flex items-center gap-2">
       <Input
         type="text"
         placeholder="JSON Path (e.g., $.store.book[*].author)"
@@ -502,6 +500,14 @@ export default function JsonFormatterPage() {
         placeholder: "Formatted JSON will appear here",
       }}
       language="json"
+      // (3+1)rem is the height of the header and bottom margin
+      // 2rem is the height of the toolbar
+      // 2rem is the padding between the toolbar and the content
+      // 2rem is the height of the bottom bar
+      // 0.5rem is the padding between the content and the bottom bar
+      classNames={{
+        outputLanguageContainer: "h-[calc(100vh-4rem-2rem-2rem-2rem-0.5rem)]",
+      }}
     />
   );
 }

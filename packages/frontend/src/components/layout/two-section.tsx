@@ -54,60 +54,60 @@ const TwoSectionLayout = ({
 }: TwoSectionLayoutProps) => {
   const { t } = useLingui();
   return (
-    <div className={cn("flex flex-col h-full gap-4", classNames?.container)}>
+    <div
+      className={cn(
+        "grid grid-cols-1 gap-4 h-[calc(100vh-3rem-1rem)]",
+        orientation === "vertical" && "md:grid-cols-2",
+        orientation === "horizontal" && "grid-rows-2",
+        classNames?.container,
+      )}
+    >
+      {/* Input Section */}
       <div
         className={cn(
-          "grid grid-cols-1 gap-4 flex-grow",
-          orientation !== "horizontal" && "md:grid-cols-2",
+          "flex flex-col gap-2 bg-background/95 p-3 rounded-lg",
+          classNames?.firstSection,
         )}
       >
-        {/* Input Section */}
         <div
           className={cn(
-            "flex flex-col gap-2 bg-background/95 p-3 rounded-lg",
-            classNames?.firstSection,
+            "flex items-center justify-between gap-2 mb-2",
+            classNames?.firstSectionToolbar,
           )}
         >
+          {firstLabel && (
+            <Label className="text-sm font-medium text-foreground/80">
+              {t(firstLabel)}
+            </Label>
+          )}
+          <div className="flex items-center gap-1">{firstToolbar}</div>
+        </div>
+        {firstContent}
+      </div>
+
+      {/* Output Section */}
+      <div
+        className={cn(
+          "flex flex-col gap-2 bg-background/95 p-3 rounded-lg",
+          classNames?.secondSection,
+        )}
+      >
+        {secondToolbar && (
           <div
             className={cn(
               "flex items-center justify-between gap-2 mb-2",
-              classNames?.firstSectionToolbar,
+              classNames?.secondSectionToolbar,
             )}
           >
-            {firstLabel && (
+            {secondLabel && (
               <Label className="text-sm font-medium text-foreground/80">
-                {t(firstLabel)}
+                {t(secondLabel)}
               </Label>
             )}
-            <div className="flex items-center gap-1">{firstToolbar}</div>
+            <div className="flex items-center gap-1">{secondToolbar}</div>
           </div>
-          {firstContent}
-        </div>
-
-        {/* Output Section */}
-        <div
-          className={cn(
-            "flex flex-col gap-2 bg-background/95 p-3 rounded-lg",
-            classNames?.secondSection,
-          )}
-        >
-          {secondToolbar && (
-            <div
-              className={cn(
-                "flex items-center justify-between gap-2 mb-2",
-                classNames?.secondSectionToolbar,
-              )}
-            >
-              {secondLabel && (
-                <Label className="text-sm font-medium text-foreground/80">
-                  {t(secondLabel)}
-                </Label>
-              )}
-              <div className="flex items-center gap-1">{secondToolbar}</div>
-            </div>
-          )}
-          {secondContent}
-        </div>
+        )}
+        {secondContent}
       </div>
     </div>
   );
