@@ -33,7 +33,12 @@ import {
 } from "lucide-react";
 import { lazy } from "react";
 import type { RouteComponentProps } from "wouter";
+import Base64Icon from "@/assets/base64-icon";
+import CssIcon from "@/assets/css-icon";
 import FIDOPasskeyMarkA from "@/assets/fido-passkey-mark-a";
+import JWTIcon from "@/assets/jwt-icon";
+import NumberIcon from "@/assets/number-icon";
+import StringIcon from "@/assets/string-icon";
 import UUIDIcon from "@/assets/uuid-icon";
 import JwtDecoderPage from "./codec/jwt";
 import NumberCasePage from "./converter/number-case";
@@ -107,7 +112,7 @@ const utilities: UtilityMeta[] = [
       },
       {
         key: "css",
-        icon: FileIcon,
+        icon: CssIcon,
         title: msg`CSS Beautify/Minify`,
         page: CssBeautifyMinifyToolPage,
       },
@@ -143,13 +148,13 @@ const utilities: UtilityMeta[] = [
     items: [
       {
         key: "number-case",
-        icon: HashIcon,
+        icon: NumberIcon,
         title: msg`Number Base Converter`,
         page: NumberCaseConverterPage,
       },
       {
         key: "string-inspector",
-        icon: FileTextIcon,
+        icon: StringIcon,
         title: msg`String Inspector`,
         page: StringInspectorPage,
       },
@@ -178,24 +183,12 @@ const utilities: UtilityMeta[] = [
         title: msg`FIDO Debugger`,
         page: Fido2Page,
       },
+
       {
-        key: "oath",
+        key: "totp",
         icon: KeyIcon,
-        title: msg`OATH Debugger`,
-        items: [
-          // {
-          //   key: "hotp",
-          //   icon: KeyIcon,
-          //   title: msg`HOTP Debugger`,
-          //   page: HotpDebuggerPage,
-          // },
-          {
-            key: "totp",
-            icon: KeyIcon,
-            title: msg`TOTP Debugger`,
-            page: TotpDebuggerPage,
-          },
-        ],
+        title: msg`TOTP Debugger`,
+        page: TotpDebuggerPage,
       },
       {
         key: "rsa",
@@ -231,21 +224,15 @@ const utilities: UtilityMeta[] = [
     items: [
       {
         key: "base64",
-        icon: FileTextIcon,
+        icon: Base64Icon,
         title: msg`Base64 Encode/Decode`,
         page: Base64EncoderDecoderPage,
       },
       {
         key: "jwt",
-        icon: FileCodeIcon,
+        icon: JWTIcon,
         title: msg`JWT Decoder`,
         page: JwtDecoderPage,
-      },
-      {
-        key: "unix-time",
-        icon: ClockIcon,
-        title: msg`Unix Time Converter`,
-        page: lazy(() => import("./converter/unix-time")),
       },
     ],
   },
