@@ -31,7 +31,7 @@ pub fn generate_ulid(count: u32) -> String {
         .join("\n")
 }
 
-#[universal_function(desktop_only)]
+#[universal_function]
 pub fn generate_nanoid(count: u32) -> String {
     (0..count)
         .map(|_| nanoid!())
