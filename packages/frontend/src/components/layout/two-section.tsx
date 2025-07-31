@@ -88,7 +88,7 @@ const TwoSectionLayout = ({
       {/* Output Section */}
       <div
         className={cn(
-          "flex flex-col gap-2 bg-background/95 p-3 rounded-lg",
+          "flex flex-col gap-2 bg-background/95 p-3 rounded-lg h-full overflow-hidden",
           classNames?.secondSection,
         )}
       >

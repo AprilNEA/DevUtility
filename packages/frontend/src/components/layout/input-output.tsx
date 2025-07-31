@@ -51,14 +51,6 @@ export type InputOutputLayoutProps = {
   outputBottomBar?: React.ReactNode;
   outputProps?: React.ComponentProps<"textarea">;
   language?: string;
-  classNames?: {
-    // container?: string;
-    // firstSection?: string;
-    // firstSectionToolbar?: string;
-    // secondSection?: string;
-    // secondSectionToolbar?: string;
-    outputLanguageContainer?: string;
-  };
 };
 
 const InputOutputLayout = ({
@@ -73,7 +65,6 @@ const InputOutputLayout = ({
   outputBottomBar,
   outputProps,
   language,
-  classNames,
 }: InputOutputLayoutProps) => {
   const { theme } = useTheme();
   return (
@@ -98,32 +89,19 @@ const InputOutputLayout = ({
       secondLabel={outputLabel}
       secondToolbar={outputToolbar}
       secondContent={
-        <div className="flex-1 flex flex-col gap-2">
+        <div className="flex-1 flex flex-col gap-2 h-full overflow-hidden">
           {language ? (
-            <div
-              className={cn(
-                "overflow-hidden",
-                // (3+1)rem is the height of the header and bottom margin
-                // 2rem is the height of the toolbar
-                // 2rem is the padding between the toolbar and the content
-                orientation === "vertical" && "h-[calc(100vh-4rem-2rem-2rem)]",
-                orientation === "horizontal" &&
-                  "h-[calc(((100vh-4rem-1rem)/2)-4rem)]",
-                classNames?.outputLanguageContainer,
-              )}
-            >
-              <div className="bg-[#FFFFFF] dark:bg-[#1E1E1E] rounded-md h-full border border-input text-foreground font-mono text-sm resize-none overflow-y-auto">
-                <ShikiHighlighter
-                  highlighter={highlighter}
-                  language={language}
-                  theme={theme === "dark" ? "dark-plus" : "light-plus"}
-                  className="px-3 py-2 select-text"
-                  addDefaultStyles={false}
-                  showLanguage={false}
-                  // biome-ignore lint/correctness/noChildrenProp: string
-                  children={outputProps?.value as string}
-                />
-              </div>
+            <div className="bg-[#FFFFFF] dark:bg-[#1E1E1E] rounded-md h-full border border-input text-foreground font-mono text-sm resize-none overflow-y-auto">
+              <ShikiHighlighter
+                highlighter={highlighter}
+                language={language}
+                theme={theme === "dark" ? "dark-plus" : "light-plus"}
+                className="px-3 py-2 select-text"
+                addDefaultStyles={false}
+                showLanguage={false}
+                // biome-ignore lint/correctness/noChildrenProp: string
+                children={outputProps?.value as string}
+              />
             </div>
           ) : (
             <Textarea
@@ -135,7 +113,6 @@ const InputOutputLayout = ({
               spellCheck="false"
             />
           )}
-
           {outputBottomBar && <div className="shrink-0">{outputBottomBar}</div>}
         </div>
       }
