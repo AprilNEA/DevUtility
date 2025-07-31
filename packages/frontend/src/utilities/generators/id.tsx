@@ -175,7 +175,7 @@ const IdAnalyzer = () => {
     trigger({ input });
   }, [input, trigger]);
   return (
-    <div className="flex flex-col gap-4 bg-card p-3 rounded-lg">
+    <div className="flex flex-col gap-4 bg-card p-3 rounded-lg h-full overflow-hidden">
       <div className="flex items-center gap-1 mb-2">
         <span className="text-sm font-medium text-card-foreground mr-2">
           <Trans>Input:</Trans>
@@ -260,7 +260,7 @@ const IdAnalyzer = () => {
         className="bg-background border-input text-foreground"
       />
 
-      <div className="space-y-3 mt-2">
+      <div className="space-y-3 mt-2 flex-grow overflow-y-auto min-h-0">
         <FieldWithCopy
           label={t(msg`Standard String Format`)}
           value={data?.uuid}
@@ -406,7 +406,7 @@ const IdGenerator = () => {
     }
   }, []);
   return (
-    <div className="flex flex-col gap-3 bg-card p-3 rounded-lg">
+    <div className="flex flex-col gap-3 bg-card p-3 rounded-lg h-full overflow-hidden">
       <h2 className="text-md font-semibold text-card-foreground">
         <Trans>Generate new IDs</Trans>
       </h2>
@@ -485,7 +485,7 @@ const IdGenerator = () => {
         }
         readOnly
         placeholder={t(msg`Generated IDs will appear here`)}
-        className="flex-grow bg-background border-input text-foreground font-mono text-sm resize-none"
+        className="flex-grow bg-background border-input text-foreground font-mono text-sm resize-none min-h-0 overflow-auto"
         spellCheck="false"
       />
     </div>
