@@ -41,6 +41,7 @@ import NumberIcon from "@/assets/number-icon";
 import StringIcon from "@/assets/string-icon";
 import UUIDIcon from "@/assets/uuid-icon";
 import JwtDecoderPage from "./codec/jwt";
+import BackslashEscapistPage from "./converter/backslash-escapist";
 import NumberCasePage from "./converter/number-case";
 import StringInspectorPage from "./converter/string-inspector";
 import Fido2Page from "./cryptography/fido/fido2";
@@ -61,6 +62,7 @@ const NumberCaseConverterPage = lazy(() => import("./converter/number-case"));
 const TotpDebuggerPage = lazy(() => import("./cryptography/oath/totp"));
 // const HidDevicesPage = lazy(() => import("./hardware/hid"));
 const UnixTimePage = lazy(() => import("./converter/unix-time"));
+const IpInfoPage = lazy(() => import("./network/ip-info"));
 
 export type Utility = {
   key: string;
@@ -164,6 +166,12 @@ const utilities: UtilityMeta[] = [
         title: msg`Unix Time Converter`,
         page: UnixTimePage,
       },
+      {
+        key: "backslash-escapist",
+        icon: FileCodeIcon,
+        title: msg`Backslash Escape/Unescape`,
+        page: BackslashEscapistPage,
+      },
       // {
       //   key: "url-parser",
       //   title: msg`URL Parser`,
@@ -245,6 +253,12 @@ const utilities: UtilityMeta[] = [
         icon: LinkIcon,
         title: msg`IP Address Calculator`,
         page: IpPage,
+      },
+      {
+        key: "ip-info",
+        icon: LinkIcon,
+        title: msg`IP Info`,
+        page: IpInfoPage,
       },
     ],
   },
