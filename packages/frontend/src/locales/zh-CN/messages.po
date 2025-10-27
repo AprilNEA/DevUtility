@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: devutility\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-06-30 12:45\n"
+"PO-Revision-Date: 2025-07-29 08:12\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -19,8 +19,7 @@ msgstr ""
 "X-Crowdin-File-ID: 34\n"
 
 #: src/utilities/generators/hash.tsx:72
-msgid ""
-"- Enter Your Text\n"
+msgid "- Enter Your Text\n"
 "- Drag/Drop Files\n"
 "- Right Click • Load from File...\n"
 "- ⌘ + F to Search\n"
@@ -483,8 +482,7 @@ msgid "Enter UUID or trigger generation"
 msgstr ""
 
 #: src/utilities/codec/jwt.tsx:133
-msgid ""
-"Enter Your JWT Token\n"
+msgid "Enter Your JWT Token\n"
 "Drag/Drop Files\n"
 "Right Click → Load from File...\n"
 "⌘ + F to Search\n"
@@ -667,7 +665,7 @@ msgstr "签发者，例如您的服务名称 ……"
 
 #: src/utilities/meta.ts:105
 #~ msgid "JS Beautify/Minify"
-#~ msgstr "JS 美化/压缩"
+#~ msgstr "JS Beautify/Minify"
 
 #: src/utilities/meta.ts:98
 msgid "JSON Format/Validate"
@@ -1243,3 +1241,4 @@ msgstr ""
 #: src/pages/settings.tsx:250
 msgid "Zoom"
 msgstr "缩放"
+
