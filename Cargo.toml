@@ -7,8 +7,16 @@ members = [
 ]
 resolver = "2"
 
+[workspace.package]
+version = "0.2.0"
+edition = "2021"
+authors = ["AprilNEA  <github@sku.moe>"]
+description = "⚡ Universal developer toolkit for software, hardware, and security professionals."
+license-file = "LICENSE"
+repository = "https://github.com/AprilNEA/DevUtility"
+
 [workspace.dependencies]
-serde_json = "1.0"
+serde_json = "1"
 tauri = "2"
 
 [workspace.dependencies.serde]

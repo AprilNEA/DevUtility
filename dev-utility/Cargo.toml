@@ -1,11 +1,11 @@
 [package]
 name = "dev-utility-core"
-version = "0.2.0"
-authors = ["AprilNEA  <github@sku.moe>"]
-description = "⚡ Universal developer toolkit for software, hardware, and security professionals."
-license-file = "../LICENSE"
-repository = "https://github.com/AprilNEA/DevUtility"
-edition = "2021"
+version = { workspace = true }
+edition = { workspace = true }
+authors = { workspace = true }
+description = { workspace = true }
+license-file = { workspace = true }
+repository = { workspace = true }
 
 [lib]
 crate-type = ["cdylib", "rlib"]

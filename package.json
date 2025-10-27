@@ -13,13 +13,14 @@
     "copy-artifacts": "pnpm tsx scripts/copy-artifacts.ts"
   },
   "dependencies": {
+    "@monaco-editor/react": "^4.7.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },
   "devDependencies": {
     "@biomejs/biome": "2.0.5",
     "@tauri-apps/cli": "^2",
-    "@types/node": "^22.15.30",
+    "@types/node": "^24.9.1",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "tsx": "^4.20.3",

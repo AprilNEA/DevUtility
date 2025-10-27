@@ -1,0 +1,41 @@
+experimental_monorepo_root = true
+
+[tools]
+node = "24"
+rust = "1.90"
+"npm:pnpm" = "10"
+"npm:@biomejs/biome" = "2.3.1"
+
+[tools."http:prek"]
+version = "0.2.11"
+
+[tools."http:prek".platforms]
+macos-x64 = { url = "https://github.com/j178/prek/releases/download/v0.2.11/prek-x86_64-apple-darwin.tar.gz" }
+macos-arm64 = { url = "https://github.com/j178/prek/releases/download/v0.2.11/prek-aarch64-apple-darwin.tar.gz" }
+linux-x64 = { url = "https://github.com/j178/prek/releases/download/v0.2.11/prek-x86_64-unknown-linux-gnu.tar.gz" }
+
+[hooks]
+postinstall = ["prek install", "pnpm install --prefer-offline"]
+
+[task_config]
+dir = "{{cwd}}"
+
+[tasks.pnpm-install]
+alias = "pnpm-install"
+description = "Installs dependencies with pnpm"
+run = "pnpm install --prefer-offline"
+sources = ["package.json", "**/*/package.json", "pnpm-lock.yaml"]
+outputs = ["node_modules/.pnpm/lock.yaml"]
+
+[tasks.dev]
+alias = "dev"
+run = ["pnpm tauri dev"]
+
+
+[tasks.check]
+alias = "check"
+description = "Lint and format code"
+depends = [
+  "cargo fmt --all",
+  "cargo clippy --all-targets --all-features -- -D warnings",
+]

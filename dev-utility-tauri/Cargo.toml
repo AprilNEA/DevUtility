@@ -1,13 +1,11 @@
 [package]
 name = "dev-utility"
-version = "0.2.0"
-authors = ["AprilNEA  <github@sku.moe>"]
-description = "⚡ Universal developer toolkit for software, hardware, and security professionals."
-license-file = "../LICENSE"
-repository = "https://github.com/AprilNEA/DevUtility"
-edition = "2021"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+version = { workspace = true }
+edition = { workspace = true }
+authors = { workspace = true }
+description = { workspace = true }
+license-file = { workspace = true }
+repository = { workspace = true }
 
 [lib]
 # The `_lib` suffix may seem redundant but it is necessary
