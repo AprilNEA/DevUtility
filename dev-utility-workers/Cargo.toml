@@ -18,7 +18,7 @@ wasm-opt = false
 crate-type = ["cdylib"]
 
 [dependencies]
-worker = { version = "0.6.0", features = ["http", "axum"] }
+worker = { version = "0.7.0", features = ["http", "axum"] }
 worker-macros = { version = "0.6.0", features = ["http"] }
 axum = { version = "0.8", default-features = false, features = [
   "json",
