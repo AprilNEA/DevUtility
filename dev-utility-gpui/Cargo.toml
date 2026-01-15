@@ -1,0 +1,42 @@
+[package]
+name = "dev-utility-gpui"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+description.workspace = true
+license-file.workspace = true
+repository.workspace = true
+
+[[bin]]
+name = "dev-utility-gpui"
+path = "src/main.rs"
+
+[dependencies]
+gpui = "0.2"
+gpui-component = "0.5"
+gpui-component-assets = "0.5"
+serde.workspace = true
+serde_json.workspace = true
+anyhow = "1"
+log = "0.4"
+env_logger = "0.11"
+
+# Codec
+base64 = "0.22"
+
+# ID Generators
+uuid = { version = "1.17", features = ["v4", "v7"] }
+ulid = "1.2"
+
+[target.'cfg(target_os = "macos")'.dependencies]
+cocoa = "0.26"
+objc = "0.2"
+
+[package.metadata.bundle]
+name = "DevUtility"
+identifier = "dev.utility.gpui"
+icon = ["bundle/AppIcon.icns"]
+copyright = "Copyright 2024-2025 AprilNEA LLC. All rights reserved."
+category = "public.app-category.developer-tools"
+short_description = "Universal developer toolkit for software, hardware, and security professionals."
+osx_minimum_system_version = "12.0"

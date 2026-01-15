@@ -3,6 +3,7 @@ members = [
     "crates/universal-function-macro",
     "dev-utility-workers",
     "dev-utility-tauri",
+    "dev-utility-gpui",
     "dev-utility",
 ]
 resolver = "2"
