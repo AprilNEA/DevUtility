@@ -11,7 +11,6 @@
 // See LICENSE file for details or contact admin@aprilnea.com
 
 use std::net::Ipv4Addr;
-use universal_function_macro::universal_function;
 
 /// The result of analyzing an IPv4 address and subnet mask.
 #[derive(Debug, Clone, PartialEq, Eq)]

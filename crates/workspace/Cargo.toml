@@ -1,0 +1,10 @@
+[package]
+name = "workspace"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+description = "Workspace, dock, panel, and item model for DevUtility"
+license-file.workspace = true
+repository.workspace = true
+
+[dependencies]

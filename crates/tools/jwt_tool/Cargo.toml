@@ -1,0 +1,17 @@
+[package]
+name = "jwt_tool"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+description = "JWT decoder tool for DevUtility"
+license-file.workspace = true
+repository.workspace = true
+
+[dependencies]
+gpui.workspace = true
+gpui-component.workspace = true
+dev-utility-core = { path = "../../../dev-utility", default-features = false }
+jsonwebtoken = "9.3"
+base64 = "0.22"
+serde_json = { workspace = true }
+ui = { path = "../../ui" }

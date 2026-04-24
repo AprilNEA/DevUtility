@@ -12,8 +12,8 @@ name = "dev-utility-gpui"
 path = "src/main.rs"
 
 [dependencies]
-gpui = "0.2"
-gpui-component = "0.5"
+gpui.workspace = true
+gpui-component.workspace = true
 gpui-component-assets = "0.5"
 serde.workspace = true
 serde_json.workspace = true
@@ -21,12 +21,28 @@ anyhow = "1"
 log = "0.4"
 env_logger = "0.11"
 
-# Codec
-base64 = "0.22"
+# Shared core logic (no Tauri runtime)
+dev-utility-core = { path = "../dev-utility", default-features = false }
 
-# ID Generators
-uuid = { version = "1.17", features = ["v4", "v7"] }
-ulid = "1.2"
+# Shared UI primitives
+ui = { path = "../crates/ui" }
+
+# Per-tool crates (one crate per tool, Zed-style)
+base64_tool = { path = "../crates/tools/base64_tool" }
+id_tool = { path = "../crates/tools/id_tool" }
+hash_tool = { path = "../crates/tools/hash_tool" }
+jwt_tool = { path = "../crates/tools/jwt_tool" }
+json_formatter_tool = { path = "../crates/tools/json_formatter_tool" }
+css_formatter_tool = { path = "../crates/tools/css_formatter_tool" }
+number_base_tool = { path = "../crates/tools/number_base_tool" }
+unix_time_tool = { path = "../crates/tools/unix_time_tool" }
+string_inspector_tool = { path = "../crates/tools/string_inspector_tool" }
+backslash_escapist_tool = { path = "../crates/tools/backslash_escapist_tool" }
+ip_calculator_tool = { path = "../crates/tools/ip_calculator_tool" }
+rsa_tool = { path = "../crates/tools/rsa_tool" }
+totp_tool = { path = "../crates/tools/totp_tool" }
+ip_info_tool = { path = "../crates/tools/ip_info_tool" }
+html_formatter_tool = { path = "../crates/tools/html_formatter_tool" }
 
 [target.'cfg(target_os = "macos")'.dependencies]
 cocoa = "0.26"

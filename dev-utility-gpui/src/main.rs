@@ -6,7 +6,6 @@ use gpui_component_assets::Assets;
 mod app;
 mod layout;
 mod theme;
-mod views;
 
 use app::DevUtilityApp;
 

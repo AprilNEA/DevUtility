@@ -1,3 +1,7 @@
+# Environment Variables
+[env]
+BINDGEN_EXTRA_CLANG_ARGS = "--sysroot=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk"
+
 # General Debug Configuration (For All Platforms)
 [build]
 rustdocflags = ["-C", "target-cpu=native"]

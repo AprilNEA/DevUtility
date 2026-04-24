@@ -1,0 +1,10 @@
+[package]
+name = "actions"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+description = "Global actions for DevUtility (Quit, Settings, AlwaysOnTop, tab nav)"
+license-file.workspace = true
+repository.workspace = true
+
+[dependencies]

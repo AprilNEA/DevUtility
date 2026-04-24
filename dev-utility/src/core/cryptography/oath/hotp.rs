@@ -13,7 +13,6 @@
 
 use super::{HashAlgorithm, SyncStatus};
 use serde::{Deserialize, Serialize};
-use universal_function_macro::universal_function;
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct HotpConfig {

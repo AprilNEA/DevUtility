@@ -15,5 +15,5 @@ pub mod css;
 pub use css::*;
 pub mod json;
 pub use json::*;
-// pub mod html;
-// pub use html::*;
+pub mod html;
+pub use html::*;

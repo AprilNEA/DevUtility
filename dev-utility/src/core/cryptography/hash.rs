@@ -90,38 +90,20 @@ pub fn generate_hashes(input: &str) -> HashResult {
     ];
 
     #[cfg(not(target_arch = "wasm32"))]
-    let results: Vec<(String, String)> = tasks
+    let results: Vec<String> = tasks
         .into_par_iter()
-        .map(|(name, hasher)| {
-            let hash = hasher(&data);
-            (name.to_string(), hash)
-        })
+        .map(|(_, hasher)| hasher(&data))
         .collect();
 
     #[cfg(target_arch = "wasm32")]
-    let results: Vec<(String, String)> = tasks
+    let results: Vec<String> = tasks
         .into_iter()
-        .map(|(name, hasher)| {
-            let hash = hasher(&data);
-            (name.to_string(), hash)
-        })
+        .map(|(_, hasher)| hasher(&data))
         .collect();
 
-    let mut hash_map = std::collections::HashMap::new();
-    for (name, hash) in results {
-        hash_map.insert(name, hash);
-    }
+    // tasks order: MD2, MD5, MD4, SHA1, SHA224, SHA256, SHA384, SHA512, SHA3-256, Keccak256
+    let [md2, md5, md4, sha1, sha224, sha256, sha384, sha512, sha3_256, keccak256]: [String; 10] =
+        results.try_into().expect("10 hashers defined");
 
-    HashResult {
-        md2: hash_map.get("MD2").unwrap().clone(),
-        md4: hash_map.get("MD4").unwrap().clone(),
-        md5: hash_map.get("MD5").unwrap().clone(),
-        sha1: hash_map.get("SHA1").unwrap().clone(),
-        sha224: hash_map.get("SHA224").unwrap().clone(),
-        sha256: hash_map.get("SHA256").unwrap().clone(),
-        sha384: hash_map.get("SHA384").unwrap().clone(),
-        sha512: hash_map.get("SHA512").unwrap().clone(),
-        sha3_256: hash_map.get("SHA3-256").unwrap().clone(),
-        keccak256: hash_map.get("Keccak256").unwrap().clone(),
-    }
+    HashResult { md2, md4, md5, sha1, sha224, sha256, sha384, sha512, sha3_256, keccak256 }
 }

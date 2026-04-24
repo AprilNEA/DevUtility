@@ -16,7 +16,7 @@ use std::time::{SystemTime, UNIX_EPOCH};
 #[cfg(target_arch = "wasm32")]
 use web_time::{SystemTime, UNIX_EPOCH};
 
-use super::{HashAlgorithm, SyncStatus};
+use super::HashAlgorithm;
 use crate::error::UtilityError;
 use base32::Alphabet;
 use hmac::{Hmac, Mac};

@@ -40,15 +40,11 @@ pub fn generate_nanoid(count: u32) -> String {
 }
 
 #[universal_function]
-pub fn generate_uuid_v1(
-    count: u32,
-    timestamp: Option<u64>,
-    mac_address: Vec<u8>,
-) -> String {
+pub fn generate_uuid_v1(count: u32, timestamp: Option<u64>, mac_address: Vec<u8>) -> String {
     let context = uuid::Context::new_random();
 
     let base_seconds = timestamp.unwrap_or_else(|| {
-        let now = SystemTime::now().duration_since(UNIX_EPOCH).unwrap();
+        let now = SystemTime::now().duration_since(UNIX_EPOCH).unwrap_or_default();
         now.as_secs()
     });
 
@@ -173,7 +169,7 @@ pub fn generate_uuid_v7(count: u32, timestamp: Option<u64>) -> String {
     let context = uuid::Context::new_random();
 
     let base_seconds = timestamp.unwrap_or_else(|| {
-        let now = SystemTime::now().duration_since(UNIX_EPOCH).unwrap();
+        let now = SystemTime::now().duration_since(UNIX_EPOCH).unwrap_or_default();
         now.as_secs()
     });
     (0..count)
@@ -364,7 +360,7 @@ impl IdAnalyzer {
         V4Content { random_bits }
     }
 
-    fn analyze_v5(uuid: &Uuid) -> V5Content {
+    fn analyze_v5(_uuid: &Uuid) -> V5Content {
         V5Content {
             namespace_info: "SHA-1 hash-based UUID (namespace and name are hashed)".to_string(),
         }
@@ -406,7 +402,7 @@ impl IdAnalyzer {
         }
     }
 
-    fn display(&self) {
+    fn _display(&self) {
         println!("UUID Analysis");
         println!("=============");
         println!("UUID: {}", self.uuid);

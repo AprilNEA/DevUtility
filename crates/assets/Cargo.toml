@@ -1,0 +1,10 @@
+[package]
+name = "assets"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+description = "Embedded fonts, icons, themes, and keymaps for DevUtility"
+license-file.workspace = true
+repository.workspace = true
+
+[dependencies]

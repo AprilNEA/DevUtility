@@ -1,6 +1,28 @@
 [workspace]
 members = [
     "crates/universal-function-macro",
+    "crates/assets",
+    "crates/theme",
+    "crates/settings",
+    "crates/ui",
+    "crates/workspace",
+    "crates/actions",
+    "crates/dev_utility",
+    "crates/tools/base64_tool",
+    "crates/tools/id_tool",
+    "crates/tools/hash_tool",
+    "crates/tools/jwt_tool",
+    "crates/tools/json_formatter_tool",
+    "crates/tools/css_formatter_tool",
+    "crates/tools/number_base_tool",
+    "crates/tools/unix_time_tool",
+    "crates/tools/string_inspector_tool",
+    "crates/tools/backslash_escapist_tool",
+    "crates/tools/ip_calculator_tool",
+    "crates/tools/rsa_tool",
+    "crates/tools/totp_tool",
+    "crates/tools/ip_info_tool",
+    "crates/tools/html_formatter_tool",
     "dev-utility-workers",
     "dev-utility-tauri",
     "dev-utility-gpui",
@@ -17,6 +39,8 @@ license-file = "LICENSE"
 repository = "https://github.com/AprilNEA/DevUtility"
 
 [workspace.dependencies]
+gpui = "0.2"
+gpui-component = "0.5"
 serde_json = "1"
 tauri = "2"
 

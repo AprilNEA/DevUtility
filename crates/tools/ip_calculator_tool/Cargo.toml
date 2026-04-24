@@ -1,0 +1,14 @@
+[package]
+name = "ip_calculator_tool"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+description = "IPv4 subnet calculator tool for DevUtility"
+license-file.workspace = true
+repository.workspace = true
+
+[dependencies]
+gpui.workspace = true
+gpui-component.workspace = true
+dev-utility-core = { path = "../../../dev-utility", default-features = false }
+ui = { path = "../../ui" }

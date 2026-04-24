@@ -1,0 +1,13 @@
+[package]
+name = "string_inspector_tool"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+description = "String inspector tool for DevUtility"
+license-file.workspace = true
+repository.workspace = true
+
+[dependencies]
+gpui.workspace = true
+gpui-component.workspace = true
+dev-utility-core = { path = "../../../dev-utility", default-features = false }

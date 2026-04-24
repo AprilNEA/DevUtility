@@ -1,0 +1,10 @@
+[package]
+name = "settings"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+description = "Typed, layered settings store for DevUtility"
+license-file.workspace = true
+repository.workspace = true
+
+[dependencies]

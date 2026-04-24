@@ -1,0 +1,23 @@
+[package]
+name = "dev_utility"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+description.workspace = true
+license-file.workspace = true
+repository.workspace = true
+
+[[bin]]
+name = "dev_utility"
+path = "src/main.rs"
+
+[dependencies]
+
+[package.metadata.bundle]
+name = "DevUtility"
+identifier = "dev.utility.gpui"
+icon = ["bundle/AppIcon.icns"]
+copyright = "Copyright 2024-2026 AprilNEA LLC. All rights reserved."
+category = "public.app-category.developer-tools"
+short_description = "Universal developer toolkit for software, hardware, and security professionals."
+osx_minimum_system_version = "12.0"

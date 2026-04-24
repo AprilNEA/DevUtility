@@ -110,8 +110,8 @@ impl Render for Sidebar {
             .border_r_1()
             .border_color(border_color)
             .child(
-                // Header spacer for title bar
-                div().h(px(52.)),
+                // Reserve room for the macOS traffic lights at top-left.
+                div().h(px(52.)).flex_shrink_0(),
             )
             .child(
                 // Navigation groups
@@ -133,7 +133,7 @@ impl Render for Sidebar {
                         div()
                             .text_xs()
                             .text_color(muted_fg)
-                            .child("DevUtility v0.3.0"),
+                            .child(format!("DevUtility v{}", env!("CARGO_PKG_VERSION"))),
                     ),
             )
     }

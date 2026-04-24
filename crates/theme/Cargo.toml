@@ -1,0 +1,10 @@
+[package]
+name = "theme"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+description = "Light/dark/system palette layer for DevUtility on top of gpui-component"
+license-file.workspace = true
+repository.workspace = true
+
+[dependencies]

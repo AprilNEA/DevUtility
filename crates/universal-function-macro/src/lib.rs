@@ -74,7 +74,7 @@ pub fn universal_function(args: TokenStream, input: TokenStream) -> TokenStream 
         (false, true) => {
             quote! {
                 #(#attrs)*
-                #[cfg_attr(not(target_arch = "wasm32"), tauri::command)]
+                #[cfg_attr(all(not(target_arch = "wasm32"), feature = "tauri"), tauri::command)]
                 #vis #sig #block
             }
         }
@@ -82,7 +82,7 @@ pub fn universal_function(args: TokenStream, input: TokenStream) -> TokenStream 
             quote! {
                 #(#attrs)*
                 #[cfg_attr(target_arch = "wasm32", wasm_bindgen::prelude::wasm_bindgen)]
-                #[cfg_attr(not(target_arch = "wasm32"), tauri::command)]
+                #[cfg_attr(all(not(target_arch = "wasm32"), feature = "tauri"), tauri::command)]
                 #vis #sig #block
             }
         }

@@ -10,6 +10,10 @@ repository = { workspace = true }
 [lib]
 crate-type = ["cdylib", "rlib"]
 
+[features]
+default = ["tauri"]
+tauri = ["dep:tauri"]
+
 [dependencies]
 universal-function-macro = { path = "../crates/universal-function-macro" }
 
@@ -79,7 +83,7 @@ urlencoding = "2.1"
 markup5ever_rcdom = "0.3.0"
 
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
-tauri = { workspace = true }
+tauri = { workspace = true, optional = true }
 jsonwebtoken = { version = "9.3.1" }
 
 # Web-specific dependencies
