@@ -23,7 +23,7 @@ serde_json_path = "0.7.2"
 thiserror = "2.0.10"
 rayon = "1.7"
 
-getrandom = { version = "0.3", features = ["wasm_js"] }
+getrandom = { version = "0.4", features = ["wasm_js"] }
 
 # Codec
 base64 = "0.22.1"
